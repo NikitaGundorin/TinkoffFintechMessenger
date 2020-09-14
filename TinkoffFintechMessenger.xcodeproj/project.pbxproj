@@ -8,22 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		7276ABEE250E67510017245A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276ABED250E67510017245A /* AppDelegate.swift */; };
-		7276ABF0250E67510017245A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276ABEF250E67510017245A /* SceneDelegate.swift */; };
 		7276ABF2250E67510017245A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276ABF1250E67510017245A /* ViewController.swift */; };
 		7276ABF5250E67510017245A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7276ABF3250E67510017245A /* Main.storyboard */; };
 		7276ABF7250E67520017245A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7276ABF6250E67520017245A /* Assets.xcassets */; };
 		7276ABFA250E67520017245A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7276ABF8250E67520017245A /* LaunchScreen.storyboard */; };
+		7276AC05250E81DF0017245A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276AC04250E81DF0017245A /* Logger.swift */; };
+		72DAD5FF250F4489008C8762 /* UIApplication.State+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DAD5FE250F4489008C8762 /* UIApplication.State+description.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7276ABEA250E67510017245A /* TinkoffFintechMessenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffFintechMessenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7276ABEA250E67510017245A /* Messanger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messanger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7276ABED250E67510017245A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7276ABEF250E67510017245A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		7276ABF1250E67510017245A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7276ABF4250E67510017245A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7276ABF6250E67520017245A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7276ABF9250E67520017245A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7276ABFB250E67520017245A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7276AC04250E81DF0017245A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		72DAD5FE250F4489008C8762 /* UIApplication.State+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication.State+description.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,7 +50,7 @@
 		7276ABEB250E67510017245A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7276ABEA250E67510017245A /* TinkoffFintechMessenger.app */,
+				7276ABEA250E67510017245A /* Messanger.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -56,15 +58,48 @@
 		7276ABEC250E67510017245A /* TinkoffFintechMessenger */ = {
 			isa = PBXGroup;
 			children = (
-				7276ABED250E67510017245A /* AppDelegate.swift */,
-				7276ABEF250E67510017245A /* SceneDelegate.swift */,
-				7276ABF1250E67510017245A /* ViewController.swift */,
-				7276ABF3250E67510017245A /* Main.storyboard */,
-				7276ABF6250E67520017245A /* Assets.xcassets */,
-				7276ABF8250E67520017245A /* LaunchScreen.storyboard */,
-				7276ABFB250E67520017245A /* Info.plist */,
+				7276AC03250E74C90017245A /* Controllers */,
+				7276AC02250E74C10017245A /* View */,
+				72DAD5FD250F445F008C8762 /* Extensions */,
+				7276AC01250E74AB0017245A /* SupportingFiles */,
 			);
 			path = TinkoffFintechMessenger;
+			sourceTree = "<group>";
+		};
+		7276AC01250E74AB0017245A /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				7276ABED250E67510017245A /* AppDelegate.swift */,
+				7276ABF6250E67520017245A /* Assets.xcassets */,
+				7276ABFB250E67520017245A /* Info.plist */,
+				7276AC04250E81DF0017245A /* Logger.swift */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		7276AC02250E74C10017245A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7276ABF3250E67510017245A /* Main.storyboard */,
+				7276ABF8250E67520017245A /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7276AC03250E74C90017245A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7276ABF1250E67510017245A /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		72DAD5FD250F445F008C8762 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				72DAD5FE250F4489008C8762 /* UIApplication.State+description.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -84,7 +119,7 @@
 			);
 			name = TinkoffFintechMessenger;
 			productName = TinkoffFintechMessenger;
-			productReference = 7276ABEA250E67510017245A /* TinkoffFintechMessenger.app */;
+			productReference = 7276ABEA250E67510017245A /* Messanger.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -139,8 +174,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7276ABF2250E67510017245A /* ViewController.swift in Sources */,
+				7276AC05250E81DF0017245A /* Logger.swift in Sources */,
 				7276ABEE250E67510017245A /* AppDelegate.swift in Sources */,
-				7276ABF0250E67510017245A /* SceneDelegate.swift in Sources */,
+				72DAD5FF250F4489008C8762 /* UIApplication.State+description.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +252,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -270,7 +306,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -286,13 +322,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T6696YN386;
-				INFOPLIST_FILE = TinkoffFintechMessenger/Info.plist;
+				INFOPLIST_FILE = TinkoffFintechMessenger/SupportingFiles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nikitagundorin.TinkoffFintechMessenger;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Messanger;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -304,13 +341,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T6696YN386;
-				INFOPLIST_FILE = TinkoffFintechMessenger/Info.plist;
+				INFOPLIST_FILE = TinkoffFintechMessenger/SupportingFiles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nikitagundorin.TinkoffFintechMessenger;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Messanger;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
