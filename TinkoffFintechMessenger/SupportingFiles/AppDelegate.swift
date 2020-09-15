@@ -15,37 +15,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    // MARK: - Private properties
+    
+    private let loggerSourceName = "Application"
+    
     // MARK: - App lifecycle methods
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
-        Logger.stateInfo(from: "Not running", to: application.applicationState.description, methodName: #function)
+        Logger.stateInfo(loggerSourceName,
+                         from: "Not running",
+                         to: application.applicationState.description,
+                         methodName: #function)
         
         return true
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
 
-        Logger.stateInfo(from: UIApplication.State.inactive.description, to: application.applicationState.description, methodName: #function)
+        Logger.stateInfo(loggerSourceName,
+                         from: UIApplication.State.inactive.description,
+                         to: application.applicationState.description,
+                         methodName: #function)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
         
-        Logger.stateInfo(from: application.applicationState.description, to: UIApplication.State.inactive.description, methodName: #function)
+        Logger.stateInfo(loggerSourceName,
+                         from: application.applicationState.description,
+                         to: UIApplication.State.inactive.description,
+                         methodName: #function)
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         
-        Logger.stateInfo(from: UIApplication.State.inactive.description, to: application.applicationState.description, methodName: #function)
+        Logger.stateInfo(loggerSourceName,
+                         from: UIApplication.State.inactive.description,
+                         to: application.applicationState.description,
+                         methodName: #function)
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         
-        Logger.stateInfo(from: application.applicationState.description, to: UIApplication.State.inactive.description, methodName: #function)
+        Logger.stateInfo(loggerSourceName,
+                         from: application.applicationState.description,
+                         to: UIApplication.State.inactive.description,
+                         methodName: #function)
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
         
-        Logger.stateInfo(from: application.applicationState.description, to: "Not running", methodName: #function)
+        Logger.stateInfo(loggerSourceName,
+                         from: application.applicationState.description,
+                         to: "Not running",
+                         methodName: #function)
     }
 }

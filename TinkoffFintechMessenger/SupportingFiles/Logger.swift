@@ -17,15 +17,15 @@ public class Logger {
     
     // MARK: - Public methods
     
-    public static func info(_ message: String) {
+    public static func info(_ sourceName: String, _ message: String) {
         guard isEnabled else { return }
         
-        print(message)
+        print("\(sourceName): \(message)")
     }
     
-    public static func stateInfo(from: String, to: String, methodName: String) {
+    public static func stateInfo(_ sourceName: String, from: String, to: String, methodName: String) {
         guard isEnabled else { return }
         
-        print("Application moved from \(from) to \(to): \(methodName)")
+        print("\(sourceName) moved from \(from) to \(to): \(methodName)")
     }
 }
