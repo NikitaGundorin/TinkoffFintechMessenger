@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ProfileViewController.swift
 //  TinkoffFintechMessenger
 //
 //  Created by Nikita Gundorin on 13.09.2020.
@@ -8,13 +8,32 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ProfileViewController: UIViewController {
+    
+    // MARK: - IBOutlets
+    
+    @IBOutlet private weak var profileImageView: UIImageView!
+    @IBOutlet private weak var profileImageEditButton: UIButton!
+    @IBOutlet private weak var profileImageLabel: UILabel!
+    @IBOutlet private weak var saveButton: UIButton!
+    @IBOutlet private weak var userNameLabel: UILabel!
+    @IBOutlet weak var userDescriptionLabel: UILabel!
     
     // MARK: - Private properties
     
-    private let loggerSourceName = "ViewController"
+    private let loggerSourceName = "ProfileViewController"
     private var currentState = UIViewController.State.loading
-
+    private let buttonCornerRadius: CGFloat = 14
+    
+    // MARK: - Initializer
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        //Logger.info(loggerSourceName, "\(profileImageEditButton.frame)")
+        //This throws an exception, because UI elements have not been loaded yet
+    }
+    
     // MARK: - UIViewController lifecycle methods
     
     override func viewDidLoad() {
@@ -26,6 +45,8 @@ class ViewController: UIViewController {
                          to: newState.rawValue,
                          methodName: #function)
         currentState = newState
+        
+        Logger.info(loggerSourceName, "\(profileImageEditButton.frame)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,6 +69,13 @@ class ViewController: UIViewController {
                          to: newState.rawValue,
                          methodName: #function)
         currentState = newState
+        
+        Logger.info(loggerSourceName, "\(profileImageEditButton.frame)")
+        
+        //When the viewDidLoad is called constraints of view controller's view subviews
+        //are not properly set and its sizes are not finalised
+        //After the viewDidLayoutSubviews is called all sizes have already been calculated
+        //and are actual
     }
     
     override func viewWillLayoutSubviews() {
@@ -60,6 +88,8 @@ class ViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         Logger.info(loggerSourceName, #function)
+        
+        setupLayout()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -83,5 +113,18 @@ class ViewController: UIViewController {
                          methodName: #function)
         currentState = newState
     }
+    
+    // MARK: - IBActions
+    
+    @IBAction private func profileImageEditButtonPressed(_ sender: Any) {
+        //set profile image
+    }
+    
+    // MARK: - Private methods
+    
+    private func setupLayout() {
+        profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
+        saveButton.layer.cornerRadius = buttonCornerRadius
+        profileImageLabel.isHidden = profileImageView.image != nil
+    }
 }
-
