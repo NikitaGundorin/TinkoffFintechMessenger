@@ -177,13 +177,17 @@ final class ProfileViewController: UIViewController {
         }
         
         imagePickerController.sourceType = sourceType
-        present(self.imagePickerController, animated: true)
+        DispatchQueue.main.async {
+            self.present(self.imagePickerController, animated: true)
+        }
     }
     
     private func showErrorAlert() {
         let alertController = UIAlertController(title: "Error", message: "This action is not allowed.", preferredStyle: .alert)
         alertController.addAction(.init(title: "OK", style: .cancel, handler: nil))
-        present(alertController, animated: true)
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true)
+        }
     }
 }
 
