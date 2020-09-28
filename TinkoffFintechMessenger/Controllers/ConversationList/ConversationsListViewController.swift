@@ -60,6 +60,12 @@ final class ConversationsListViewController: UITableViewController {
         return 75
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = ConversationViewController()
+        vc.conversationName = items[indexPath.row].name
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     // MARK: - Private methods
     
     private func setupLayout() {
@@ -86,7 +92,6 @@ final class ConversationsListViewController: UITableViewController {
         tableView.register(ConversationListTableViewCell.self, forCellReuseIdentifier: baseCellId)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.allowsSelection = false
     }
     
     @objc private func presentProfileViewController() {

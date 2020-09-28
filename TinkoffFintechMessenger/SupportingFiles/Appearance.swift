@@ -32,7 +32,7 @@ class Appearance {
     
     // MARK: - Sizes
     
-    static let buttonCornerRadius: CGFloat = 14
+    static let baseCornerRadius: CGFloat = 14
     
     // MARK: - Colors
     
@@ -40,4 +40,7 @@ class Appearance {
     static let lightYellow = UIColor(named: "LightYellow")
     static let labelLight = UIColor(named: "LabelLight")
     static let darkGray = UIColor(named: "DarkGray")
+    static let incomingMessageColor = UIColor(named: "IncomingMessage")
+    static let outgoingMessageColor = UIColor(named: "OutgoingMessage")
+    static let selectionColor = UIColor(named: "SelectionColor")
 }

@@ -155,7 +155,7 @@ final class ProfileViewController: UIViewController {
     
     private func setupLayout() {
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
-        saveButton.layer.cornerRadius = Appearance.buttonCornerRadius
+        saveButton.layer.cornerRadius = Appearance.baseCornerRadius
     }
     
     func checkCameraPermission() {

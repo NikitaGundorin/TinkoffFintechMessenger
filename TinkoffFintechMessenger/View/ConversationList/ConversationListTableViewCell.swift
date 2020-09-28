@@ -74,6 +74,10 @@ class ConversationListTableViewCell: UITableViewCell {
             verticalSV.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
             verticalSV.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -padding),
         ])
+        
+        let selectedBGView = UIView()
+        selectedBGView.backgroundColor = Appearance.selectionColor
+        selectedBackgroundView = selectedBGView
     }
 }
 
