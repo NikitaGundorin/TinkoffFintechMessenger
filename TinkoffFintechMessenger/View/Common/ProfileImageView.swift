@@ -14,7 +14,7 @@ class ProfileImageView: UIView {
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = UIColor(named: "Yellow")
+        imageView.backgroundColor = Appearance.yellow
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -23,16 +23,18 @@ class ProfileImageView: UIView {
     
     private lazy var initialsLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(named: "DarkGray")
+        label.textColor = Appearance.darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 115, weight: .medium)
+        label.font = Appearance.mediumFont115
         label.adjustsFontSizeToFitWidth = true
         label.baselineAdjustment = .alignCenters
         label.textAlignment  = .center
         
         return label
     }()
+    
+    private let labelSizeMultiplier: CGFloat = 0.7
     
     // MARK: - Initializers
     
@@ -64,15 +66,15 @@ class ProfileImageView: UIView {
         addSubview(initialsLabel)
         
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1),
+            heightAnchor.constraint(equalTo: widthAnchor),
             imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             imageView.topAnchor.constraint(equalTo: topAnchor),
             imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             initialsLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             initialsLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            initialsLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.7),
-            initialsLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7)
+            initialsLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: labelSizeMultiplier),
+            initialsLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: labelSizeMultiplier)
         ])
     }
 }

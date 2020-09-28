@@ -22,10 +22,10 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Private properties
     
-    private var person = DummyDataFabric.getUser()
+    private let dataProvider: DataProvider = DummyDataProvider()
     private let loggerSourceName = "ProfileViewController"
     private var currentState = UIViewController.State.loading
-    private let buttonCornerRadius: CGFloat = 14
+    private lazy var person = dataProvider.getUser()
     private lazy var imagePickerController: UIImagePickerController = {
         let vc = UIImagePickerController()
         vc.sourceType = .photoLibrary
@@ -155,7 +155,7 @@ final class ProfileViewController: UIViewController {
     
     private func setupLayout() {
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
-        saveButton.layer.cornerRadius = buttonCornerRadius
+        saveButton.layer.cornerRadius = Appearance.buttonCornerRadius
     }
     
     func checkCameraPermission() {
