@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class ConversationViewController: UITableViewController {
+final class ConversationViewController: UIViewController {
     
     // MARK: - Public properties
     
@@ -20,22 +20,57 @@ final class ConversationViewController: UITableViewController {
     private let messageCellId = "messageCellId"
     private lazy var messages = dataProvider.getMessages()
     
+    // MARK: - UI
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(MessageCell.self, forCellReuseIdentifier: messageCellId)
+        tableView.allowsSelection = false
+        tableView.separatorStyle = .none
+        tableView.dataSource = self
+        
+        return tableView
+    }()
+    
     // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupTableView()
-        setupNavigationBar()
+        setupLayout()
     }
+
+    // MARK: - Private methods
     
-    // MARK: - UITableView methods
+    private func setupLayout() {
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        if #available(iOS 13.0, *) {
+            navigationController?.navigationBar.tintColor = .label
+        } else {
+            navigationController?.navigationBar.tintColor = .black
+        }
+        navigationItem.title = conversationName
+    }
+}
+
+// MARK: - UITableViewDataSource
+
+extension ConversationViewController: UITableViewDataSource {
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: messageCellId) as? MessageCell else {
             return UITableViewCell()
         }
@@ -43,22 +78,5 @@ final class ConversationViewController: UITableViewController {
         cell.configure(with: messages[indexPath.row])
         
         return cell
-    }
-    
-    // MARK: - Private methods
-    
-    private func setupTableView() {
-        tableView.register(MessageCell.self, forCellReuseIdentifier: messageCellId)
-        tableView.allowsSelection = false
-        tableView.separatorStyle = .none
-    }
-    
-    private func setupNavigationBar() {
-        if #available(iOS 13.0, *) {
-            navigationController?.navigationBar.tintColor = .label
-        } else {
-            navigationController?.navigationBar.tintColor = .black
-        }
-        navigationItem.title = conversationName
     }
 }
