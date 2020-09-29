@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		6DD805D5251151910070594D /* UIViewController+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD805D4251151910070594D /* UIViewController+State.swift */; };
 		7276ABEE250E67510017245A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276ABED250E67510017245A /* AppDelegate.swift */; };
-		7276ABF2250E67510017245A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276ABF1250E67510017245A /* ViewController.swift */; };
-		7276ABF5250E67510017245A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7276ABF3250E67510017245A /* Main.storyboard */; };
+		7276ABF2250E67510017245A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276ABF1250E67510017245A /* ProfileViewController.swift */; };
+		7276ABF5250E67510017245A /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7276ABF3250E67510017245A /* Profile.storyboard */; };
 		7276ABF7250E67520017245A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7276ABF6250E67520017245A /* Assets.xcassets */; };
 		7276ABFA250E67520017245A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7276ABF8250E67520017245A /* LaunchScreen.storyboard */; };
 		7276AC05250E81DF0017245A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276AC04250E81DF0017245A /* Logger.swift */; };
@@ -19,10 +19,10 @@
 
 /* Begin PBXFileReference section */
 		6DD805D4251151910070594D /* UIViewController+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+State.swift"; sourceTree = "<group>"; };
-		7276ABEA250E67510017245A /* Messanger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messanger.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7276ABEA250E67510017245A /* Messenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7276ABED250E67510017245A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7276ABF1250E67510017245A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		7276ABF4250E67510017245A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7276ABF1250E67510017245A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		7276ABF4250E67510017245A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Profile.storyboard; sourceTree = "<group>"; };
 		7276ABF6250E67520017245A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7276ABF9250E67520017245A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7276ABFB250E67520017245A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -41,6 +41,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D8F569B2517CCE80042B6FC /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				7276ABF1250E67510017245A /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		6D8F569C2517CCF90042B6FC /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				7276ABF3250E67510017245A /* Profile.storyboard */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		7276ABE1250E67510017245A = {
 			isa = PBXGroup;
 			children = (
@@ -52,7 +68,7 @@
 		7276ABEB250E67510017245A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7276ABEA250E67510017245A /* Messanger.app */,
+				7276ABEA250E67510017245A /* Messenger.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,7 +98,7 @@
 		7276AC02250E74C10017245A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7276ABF3250E67510017245A /* Main.storyboard */,
+				6D8F569C2517CCF90042B6FC /* Profile */,
 				7276ABF8250E67520017245A /* LaunchScreen.storyboard */,
 			);
 			path = View;
@@ -91,7 +107,7 @@
 		7276AC03250E74C90017245A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				7276ABF1250E67510017245A /* ViewController.swift */,
+				6D8F569B2517CCE80042B6FC /* Profile */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -121,8 +137,10 @@
 			dependencies = (
 			);
 			name = TinkoffFintechMessenger;
+			packageProductDependencies = (
+			);
 			productName = TinkoffFintechMessenger;
-			productReference = 7276ABEA250E67510017245A /* Messanger.app */;
+			productReference = 7276ABEA250E67510017245A /* Messenger.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -132,7 +150,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1170;
-				LastUpgradeCheck = 1170;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Nikita Gundorin";
 				TargetAttributes = {
 					7276ABE9250E67510017245A = {
@@ -149,6 +167,8 @@
 				Base,
 			);
 			mainGroup = 7276ABE1250E67510017245A;
+			packageReferences = (
+			);
 			productRefGroup = 7276ABEB250E67510017245A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -165,7 +185,7 @@
 			files = (
 				7276ABFA250E67520017245A /* LaunchScreen.storyboard in Resources */,
 				7276ABF7250E67520017245A /* Assets.xcassets in Resources */,
-				7276ABF5250E67510017245A /* Main.storyboard in Resources */,
+				7276ABF5250E67510017245A /* Profile.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,7 +196,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7276ABF2250E67510017245A /* ViewController.swift in Sources */,
+				7276ABF2250E67510017245A /* ProfileViewController.swift in Sources */,
 				6DD805D5251151910070594D /* UIViewController+State.swift in Sources */,
 				7276AC05250E81DF0017245A /* Logger.swift in Sources */,
 				7276ABEE250E67510017245A /* AppDelegate.swift in Sources */,
@@ -187,12 +207,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		7276ABF3250E67510017245A /* Main.storyboard */ = {
+		7276ABF3250E67510017245A /* Profile.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				7276ABF4250E67510017245A /* Base */,
 			);
-			name = Main.storyboard;
+			name = Profile.storyboard;
 			sourceTree = "<group>";
 		};
 		7276ABF8250E67520017245A /* LaunchScreen.storyboard */ = {
@@ -232,6 +252,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -292,6 +313,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -333,7 +355,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nikitagundorin.TinkoffFintechMessenger;
-				PRODUCT_NAME = Messanger;
+				PRODUCT_NAME = Messenger;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -352,7 +374,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nikitagundorin.TinkoffFintechMessenger;
-				PRODUCT_NAME = Messanger;
+				PRODUCT_NAME = Messenger;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
