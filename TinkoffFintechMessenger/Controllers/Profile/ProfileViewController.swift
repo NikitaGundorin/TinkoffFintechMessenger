@@ -151,6 +151,10 @@ final class ProfileViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
+    @IBAction func saveButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     // MARK: - Private methods
     
     private func setupLayout() {
