@@ -160,6 +160,10 @@ final class ProfileViewController: UIViewController {
     private func setupLayout() {
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
         saveButton.layer.cornerRadius = Appearance.baseCornerRadius
+        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .cancel,
+                                                  target: self,
+                                                  action: #selector(cancel))
+        navigationItem.title = "My Profile"
     }
     
     func checkCameraPermission() {
@@ -204,6 +208,10 @@ final class ProfileViewController: UIViewController {
     private func setProfileImage(image: UIImage?) {
         person.profileImage = image
         profileImageView.configure(with: person)
+    }
+    
+    @objc private func cancel() {
+        dismiss(animated: true, completion: nil)
     }
 }
 

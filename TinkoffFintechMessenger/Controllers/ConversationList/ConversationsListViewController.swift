@@ -75,7 +75,9 @@ final class ConversationsListViewController: UIViewController {
     @objc private func presentProfileViewController() {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
         if let vc = storyboard.instantiateInitialViewController() {
-            present(vc, animated: true, completion: nil)
+            let nc = UINavigationController(rootViewController: vc)
+
+            present(nc, animated: true, completion: nil)
         }
     }
 }
