@@ -42,13 +42,19 @@ class Appearance {
     // MARK: - Colors
     
     static let yellow = UIColor(named: "Yellow")
-    static let lightYellow = UIColor(named: "LightYellow")
-    static let labelLight = UIColor(named: "LabelLight")
+    static let yellowLight = UIColor(named: "YellowLight")
+    static let yellowDark = UIColor(named: "YellowDark")
+    static let labelSecondary = UIColor(named: "LabelSecondary")
     static let darkGray = UIColor(named: "DarkGray")
-    static let incomingMessageColor = UIColor(named: "IncomingMessage")
-    static let outgoingMessageColor = UIColor(named: "OutgoingMessage")
-    static let selectionColor = UIColor(named: "SelectionColor")
+    static let lightGray = UIColor(named: "LightGray")
+    static let incomingMessageLightColor = UIColor(named: "IncomingMessageLight")
+    static let incomingMessageDarkColor = UIColor(named: "IncomingMessageDark")
+    static let outgoingMessageLightColor = UIColor(named: "OutgoingMessageLight")
+    static let outgoingMessageDarkColor = UIColor(named: "OutgoingMessageDark")
+    static let outgoingMessageDay = UIColor(named: "OutgoingMessageDay")
+    static let selectionColor = UIColor(named: "Selection")
     static let navyColor = UIColor(named: "Navy")
+    
     // MARK: - Icons
     
     static let settingsIcon = UIImage(named: "Settings")
@@ -56,6 +62,36 @@ class Appearance {
     // MARK: - Theme
     
     var themes: [ThemeModel] = [
+        .init(id: 0,
+              name: "Classic",
+              incomingMessageColor: incomingMessageLightColor,
+              outgoingMessageColor: outgoingMessageLightColor,
+              labelColor: .black,
+              backgroundColor: .white,
+              statusBarStyle: .default,
+              grayColor: lightGray,
+              yellowColor: yellowLight,
+              uiUserInterfaceStyle: .light),
+        .init(id: 1,
+              name: "Day",
+              incomingMessageColor: incomingMessageLightColor,
+              outgoingMessageColor: outgoingMessageDay,
+              labelColor: .black,
+              backgroundColor: .white,
+              statusBarStyle: .default,
+              grayColor: lightGray,
+              yellowColor: yellowLight,
+              uiUserInterfaceStyle: .light),
+        .init(id: 2,
+              name: "Night",
+              incomingMessageColor: incomingMessageDarkColor,
+              outgoingMessageColor: outgoingMessageDarkColor,
+              labelColor: .white,
+              backgroundColor: .black,
+              statusBarStyle: .lightContent,
+              grayColor: darkGray,
+              yellowColor: yellowDark,
+              uiUserInterfaceStyle: .dark),
     ]
     
     private var currentThemeId: Int {
@@ -69,6 +105,28 @@ class Appearance {
     }
     
     func setupTheme() {
+        let theme = themes.first(where: { $0.isSelected }) ?? themes[0]
+        UINavigationBar.appearance().tintColor = theme.labelColor
+        UINavigationBar.appearance().barTintColor = theme.backgroundColor
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: theme.labelColor ?? .black]
+        UILabel.appearance().textColor = theme.labelColor
+        UITableView.appearance().backgroundColor = theme.backgroundColor
+        UIButton.appearance().tintColor = theme.labelColor
+        if #available(iOS 13.0, *) {
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            window.overrideUserInterfaceStyle = theme.uiUserInterfaceStyle
+            window.subviews.forEach { view in
+                view.removeFromSuperview()
+                window.addSubview(view)
+            }
+        } else {
+            let window = UIApplication.shared.keyWindow
+            window?.rootViewController?.setNeedsStatusBarAppearanceUpdate()
+            window?.subviews.forEach { view in
+                view.removeFromSuperview()
+                window?.addSubview(view)
+            }
+        }
     }
     
     lazy var themeSelectedCallback = { (identifier: Int) in
@@ -84,7 +142,26 @@ class Appearance {
     // MARK: - Current theme
     
     private(set) lazy var currentTheme = themes.first(where: { $0.id == currentThemeId })
-
+    
+    static var yellowSecondaryColor: UIColor? {
+        shared.currentTheme?.yellowColor
+    }
+    static var incomingMessageColor: UIColor? {
+        shared.currentTheme?.incomingMessageColor
+    }
+    static var outgoingMessageColor: UIColor? {
+        shared.currentTheme?.outgoingMessageColor
+    }
+    static var backgroundColor: UIColor? {
+        shared.currentTheme?.backgroundColor
+    }
+    static var labelColor: UIColor? {
+        shared.currentTheme?.labelColor
+    }
+    static var grayColor: UIColor? {
+        shared.currentTheme?.grayColor
+    }
+}
 
 // MARK: - ThemesPickerDelegate
 

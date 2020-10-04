@@ -16,10 +16,7 @@ final class ConversationsListViewController: UIViewController {
     private let rowHeight: CGFloat = 75
     private let baseCellId = "baseCellId"
     private lazy var items = dataProvider.getConversations()
-    private lazy var sectionsModels = [
-        ConversationListSectionModel(sectionName: "Online", backgroundColor: Appearance.lightYellow, items: items.filter { $0.isOnline }),
-        ConversationListSectionModel(sectionName: "History", backgroundColor: nil, items: items.filter { !$0.isOnline && $0.message != "" }),
-    ]
+    private lazy var sectionsModels: [ConversationListSectionModel] = []
     
     // MARK: - UI
     
@@ -41,12 +38,18 @@ final class ConversationsListViewController: UIViewController {
         setupLayout()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateData()
+        tableView.reloadData()
+    }
+    
     // MARK: - Private methods
     
     private func setupLayout() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
         navigationItem.title = "Tinkoff Chat"
         
         let profileImageView = ProfileImageView()
@@ -78,7 +81,7 @@ final class ConversationsListViewController: UIViewController {
     @objc private func presentProfileViewController() {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
         if let vc = storyboard.instantiateInitialViewController() {
-            let nc = UINavigationController(rootViewController: vc)
+            let nc = BaseNavigationController(rootViewController: vc)
 
             present(nc, animated: true, completion: nil)
         }
@@ -86,10 +89,21 @@ final class ConversationsListViewController: UIViewController {
     
     @objc private func presentThemesViewController() {
         let vc = ThemesViewController()
-        vc.themesPickerDelegate = Appearance.shared
+        //vc.themesPickerDelegate = Appearance.shared
         vc.themeSelectedCallback = Appearance.shared.themeSelectedCallback
         
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func updateData() {
+        sectionsModels = [
+            ConversationListSectionModel(sectionName: "Online",
+                                         backgroundColor: Appearance.yellowSecondaryColor,
+                                         items: items.filter { $0.isOnline }),
+            ConversationListSectionModel(sectionName: "History",
+                                         backgroundColor: nil,
+                                         items: items.filter { !$0.isOnline && $0.message != "" }),
+        ]
     }
 }
 
