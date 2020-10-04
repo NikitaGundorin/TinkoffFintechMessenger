@@ -70,6 +70,9 @@ final class ConversationsListViewController: UIViewController {
         
         let rightBarButton = UIBarButtonItem(customView: rightBarButtonView)
         navigationItem.rightBarButtonItem = rightBarButton
+        
+        let leftBarButtonItem = UIBarButtonItem(image: Appearance.settingsIcon, style: .plain, target: self, action: #selector(presentThemesViewController))
+        navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     
     @objc private func presentProfileViewController() {
@@ -79,6 +82,14 @@ final class ConversationsListViewController: UIViewController {
 
             present(nc, animated: true, completion: nil)
         }
+    }
+    
+    @objc private func presentThemesViewController() {
+        let vc = ThemesViewController()
+        vc.themesPickerDelegate = Appearance.shared
+        vc.themeSelectedCallback = Appearance.shared.themeSelectedCallback
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

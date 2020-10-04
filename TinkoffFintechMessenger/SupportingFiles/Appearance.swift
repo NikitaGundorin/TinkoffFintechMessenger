@@ -10,6 +10,11 @@ import UIKit
 
 class Appearance {
     
+    // MARK: - Singleton
+    
+    static let shared = Appearance()
+    private init() {}
+    
     // MARK: - Regular fonts
     
     static let font13 = UIFont.systemFont(ofSize: 13)
@@ -43,4 +48,55 @@ class Appearance {
     static let incomingMessageColor = UIColor(named: "IncomingMessage")
     static let outgoingMessageColor = UIColor(named: "OutgoingMessage")
     static let selectionColor = UIColor(named: "SelectionColor")
+    static let navyColor = UIColor(named: "Navy")
+    // MARK: - Icons
+    
+    static let settingsIcon = UIImage(named: "Settings")
+    
+    // MARK: - Theme
+    
+    var themes: [ThemeModel] = [
+    ]
+    
+    private var currentThemeId: Int {
+        get {
+            UserDefaults.standard.integer(forKey: "CurrentTheme")
+        }
+        set {
+            currentTheme = themes.first(where: { $0.id == newValue })
+            UserDefaults.standard.setValue(newValue, forKey: "CurrentTheme")
+        }
+    }
+    
+    func setupTheme() {
+    }
+    
+    lazy var themeSelectedCallback = { (identifier: Int) in
+        guard self.themes.first(where: { $0.id == identifier && !$0.isSelected }) != nil else { return }
+        
+        self.currentThemeId = identifier
+        
+        UIView.animate(withDuration: 0.3) {
+            self.setupTheme()
+        }
+    }
+    
+    // MARK: - Current theme
+    
+    private(set) lazy var currentTheme = themes.first(where: { $0.id == currentThemeId })
+
+
+// MARK: - ThemesPickerDelegate
+
+extension Appearance: ThemesPickerDelegate {
+    
+    func themeSelected(width identifier: Int) {
+        guard themes.first(where: { $0.id == identifier && !$0.isSelected }) != nil else { return }
+        
+        currentThemeId = identifier
+        
+        UIView.animate(withDuration: 0.3) {
+            self.setupTheme()
+        }
+    }
 }
