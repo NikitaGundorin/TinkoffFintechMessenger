@@ -59,7 +59,7 @@ class ConversationListTableViewCell: UITableViewCell {
     
     private func setupLayout() {
         let horizontalSV = UIStackView(arrangedSubviews: [nameLabel, dateLabel])
-        nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         let verticalSV = UIStackView(arrangedSubviews: [horizontalSV, messageLabel])
         verticalSV.spacing = 1
         verticalSV.axis = .vertical
