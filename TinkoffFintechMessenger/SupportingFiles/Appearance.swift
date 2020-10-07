@@ -129,13 +129,16 @@ class Appearance {
         }
     }
     
-    lazy var themeSelectedCallback = { (identifier: Int) in
-        guard self.themes.first(where: { $0.id == identifier && !$0.isSelected }) != nil else { return }
+    // weak здесь не обязателен, так как класс Appearance - singleton с приватным инициализатором,
+    // во время жизни приложения будет существовать в единственном экземпляре
+    // и данный блок не создаст утечек памяти
+    lazy var themeSelectedCallback = { [weak self] (identifier: Int) in
+        guard self?.themes.first(where: { $0.id == identifier && !$0.isSelected }) != nil else { return }
         
-        self.currentThemeId = identifier
+        self?.currentThemeId = identifier
         
         UIView.animate(withDuration: 0.3) {
-            self.setupTheme()
+            self?.setupTheme()
         }
     }
     

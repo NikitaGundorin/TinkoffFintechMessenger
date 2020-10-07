@@ -89,8 +89,8 @@ final class ConversationsListViewController: UIViewController {
     
     @objc private func presentThemesViewController() {
         let vc = ThemesViewController()
-        //vc.themesPickerDelegate = Appearance.shared
-        vc.themeSelectedCallback = Appearance.shared.themeSelectedCallback
+        vc.themesPickerDelegate = Appearance.shared
+        //vc.themeSelectedCallback = Appearance.shared.themeSelectedCallback
         
         navigationController?.pushViewController(vc, animated: true)
     }
