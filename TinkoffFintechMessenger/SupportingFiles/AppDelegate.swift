@@ -28,6 +28,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                          to: application.applicationState.description,
                          methodName: #function)
         
+        let conversationListVC = ConversationsListViewController()
+        let navigationController = UINavigationController(rootViewController: conversationListVC)
+        
+        window = UIWindow()
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+        
         return true
     }
     

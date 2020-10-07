@@ -14,18 +14,18 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet private weak var profileImageView: UIImageView!
+    @IBOutlet private weak var profileImageView: ProfileImageView!
     @IBOutlet private weak var profileImageEditButton: UIButton!
-    @IBOutlet private weak var profileImageLabel: UILabel!
     @IBOutlet private weak var saveButton: UIButton!
     @IBOutlet private weak var userNameLabel: UILabel!
     @IBOutlet private weak var userDescriptionLabel: UILabel!
     
     // MARK: - Private properties
     
+    private let dataProvider: DataProvider = DummyDataProvider()
     private let loggerSourceName = "ProfileViewController"
     private var currentState = UIViewController.State.loading
-    private let buttonCornerRadius: CGFloat = 14
+    private lazy var person = dataProvider.getUser()
     private lazy var imagePickerController: UIImagePickerController = {
         let vc = UIImagePickerController()
         vc.sourceType = .photoLibrary
@@ -55,6 +55,8 @@ final class ProfileViewController: UIViewController {
                          to: newState.rawValue,
                          methodName: #function)
         currentState = newState
+        
+        profileImageView.configure(with: person)
         
         Logger.info(loggerSourceName, "\(saveButton.frame)")
     }
@@ -128,27 +130,40 @@ final class ProfileViewController: UIViewController {
     
     @IBAction private func profileImageEditButtonPressed(_ sender: Any) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                
-        let actions = [
+        
+        var actions = [
             UIAlertAction(title: "Open Gallery", style: .default) { [unowned self] _ in
                 self.presentImagePicker(sourceType: .photoLibrary)
             },
             UIAlertAction(title: "Take Photo", style: .default) { [unowned self] _ in
                 self.checkCameraPermission()
-            },
-            UIAlertAction(title: "Cancel", style: .cancel)]
-
+            }]
+        
+        if (person.profileImage != nil) {
+            actions.append(UIAlertAction(title: "Remove Photo", style: .destructive) { [unowned self] _ in
+                self.setProfileImage(image: nil)
+            })
+        }
+        
+        actions.append(UIAlertAction(title: "Cancel", style: .cancel))
         actions.forEach { alertController.addAction($0) }
         
         present(alertController, animated: true, completion: nil)
+    }
+    
+    @IBAction func saveButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Private methods
     
     private func setupLayout() {
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
-        saveButton.layer.cornerRadius = buttonCornerRadius
-        profileImageLabel.isHidden = profileImageView.image != nil
+        saveButton.layer.cornerRadius = Appearance.baseCornerRadius
+        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .cancel,
+                                                  target: self,
+                                                  action: #selector(cancel))
+        navigationItem.title = "My Profile"
     }
     
     func checkCameraPermission() {
@@ -189,6 +204,15 @@ final class ProfileViewController: UIViewController {
             self.present(alertController, animated: true)
         }
     }
+    
+    private func setProfileImage(image: UIImage?) {
+        person.profileImage = image
+        profileImageView.configure(with: person)
+    }
+    
+    @objc private func cancel() {
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 // MARK: -  UINavigationControllerDelegate, UIImagePickerControllerDelegate
@@ -204,7 +228,6 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
             return
         }
         
-        profileImageView.image = image
-        profileImageLabel.isHidden = true
+        setProfileImage(image: image)
     }
 }
