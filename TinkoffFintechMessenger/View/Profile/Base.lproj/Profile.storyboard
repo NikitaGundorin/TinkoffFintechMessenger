@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="r0s-UV-J8k">
-                                <rect key="frame" x="20" y="20" width="335" height="371.5"/>
+                                <rect key="frame" x="20" y="20" width="335" height="403.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Few-gm-VbE">
                                         <rect key="frame" x="47.5" y="0.0" width="240" height="240"/>
@@ -48,21 +48,28 @@
                                             <constraint firstAttribute="bottom" secondItem="SlC-SM-dCO" secondAttribute="bottom" id="dn9-Hz-0cd"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nikita Gundorin" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4LI-dg-4j7">
-                                        <rect key="frame" x="80.5" y="272" width="174" height="29"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" text="Nikita Gundorin" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ST7-Tt-Ll3">
+                                        <rect key="frame" x="75.5" y="272" width="184" height="45"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" id="m6b-mC-bdr"/>
+                                        </constraints>
+                                        <color key="textColor" systemColor="labelColor"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iOS developer Saint-Petersburg, Russia" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8z0-E1-mEQ">
-                                        <rect key="frame" x="78" y="333" width="179.5" height="38.5"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="name"/>
+                                    </textView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="interactive" text="iOS developer Saint-Petersburg, Russia" translatesAutoresizingMaskIntoConstraints="NO" id="kGL-SG-wYc">
+                                        <rect key="frame" x="73" y="349" width="189.5" height="54.5"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="112" id="UWg-UR-TbS"/>
+                                        </constraints>
+                                        <color key="textColor" systemColor="labelColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ab2-UH-Wfw">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ab2-UH-Wfw">
                                 <rect key="frame" x="56" y="608" width="263" height="39"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="8" maxX="0.0" maxY="8"/>
@@ -89,8 +96,8 @@
                         <outlet property="profileImageEditButton" destination="pXS-LV-G7v" id="nSz-ue-0NU"/>
                         <outlet property="profileImageView" destination="SlC-SM-dCO" id="djm-iv-7hw"/>
                         <outlet property="saveButton" destination="ab2-UH-Wfw" id="G87-bt-1oM"/>
-                        <outlet property="userDescriptionLabel" destination="8z0-E1-mEQ" id="NrD-cb-8m5"/>
-                        <outlet property="userNameLabel" destination="4LI-dg-4j7" id="IJ7-kM-AD1"/>
+                        <outlet property="userDescriptionTextView" destination="kGL-SG-wYc" id="tex-qw-O6B"/>
+                        <outlet property="userNameTextView" destination="ST7-Tt-Ll3" id="qJo-fj-nsO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -99,6 +106,9 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

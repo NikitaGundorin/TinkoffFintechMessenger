@@ -17,126 +17,57 @@ final class ProfileViewController: UIViewController {
     @IBOutlet private weak var profileImageView: ProfileImageView!
     @IBOutlet private weak var profileImageEditButton: UIButton!
     @IBOutlet private weak var saveButton: UIButton!
-    @IBOutlet private weak var userNameLabel: UILabel!
-    @IBOutlet private weak var userDescriptionLabel: UILabel!
+    @IBOutlet private weak var userNameTextView: UITextView!
+    @IBOutlet private weak var userDescriptionTextView: UITextView!
     
     // MARK: - Private properties
     
     private let dataProvider: DataProvider = DummyDataProvider()
-    private let loggerSourceName = "ProfileViewController"
-    private var currentState = UIViewController.State.loading
     private lazy var person = dataProvider.getUser()
+    private lazy var imagePickerDelegate =
+        ImagePickerDelegate(errorHandler: { [weak self] in
+            self?.showErrorAlert()
+        }, imagePickedHandler: { [weak self] image in
+            self?.setProfileImage(image: image)
+        })
     private lazy var imagePickerController: UIImagePickerController = {
         let vc = UIImagePickerController()
         vc.sourceType = .photoLibrary
         vc.allowsEditing = true
-        vc.delegate = self
+        vc.delegate = imagePickerDelegate
         vc.mediaTypes = [kUTTypeImage as String]
         return vc
     }()
-    
-    // MARK: - Initializer
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        
-        //Logger.info(loggerSourceName, "\(saveButton.frame)")
-        //This throws an exception, because UI elements have not been loaded yet
-    }
     
     // MARK: - UIViewController lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let newState = UIViewController.State.loaded
-        Logger.stateInfo(loggerSourceName,
-                         from: currentState.rawValue,
-                         to: newState.rawValue,
-                         methodName: #function)
-        currentState = newState
-        
         profileImageView.configure(with: person)
-        
-        Logger.info(loggerSourceName, "\(saveButton.frame)")
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        let newState = UIViewController.State.appearing
-        Logger.stateInfo(loggerSourceName,
-                         from: currentState.rawValue,
-                         to: newState.rawValue,
-                         methodName: #function)
-        currentState = newState
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        let newState = UIViewController.State.appeared
-        Logger.stateInfo(loggerSourceName,
-                         from: currentState.rawValue,
-                         to: newState.rawValue,
-                         methodName: #function)
-        currentState = newState
-        
-        Logger.info(loggerSourceName, "\(saveButton.frame)")
-        
-        //When the viewDidLoad is called constraints of view controller's view subviews
-        //are not properly set and its sizes are not finalised
-        //After the viewDidLayoutSubviews is called all sizes have already been calculated
-        //and are actual
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        Logger.info(loggerSourceName, #function)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        Logger.info(loggerSourceName, #function)
-        
         setupLayout()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        let newState = UIViewController.State.disappearing
-        Logger.stateInfo(loggerSourceName,
-                         from: currentState.rawValue,
-                         to: newState.rawValue,
-                         methodName: #function)
-        currentState = newState
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        let newState = UIViewController.State.disappeared
-        Logger.stateInfo(loggerSourceName,
-                         from: currentState.rawValue,
-                         to: newState.rawValue,
-                         methodName: #function)
-        currentState = newState
-    }
-    
+
     // MARK: - IBActions
     
     @IBAction private func profileImageEditButtonPressed(_ sender: Any) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         var actions = [
-            UIAlertAction(title: "Open Gallery", style: .default) { [unowned self] _ in
-                self.presentImagePicker(sourceType: .photoLibrary)
+            UIAlertAction(title: "Open Gallery", style: .default) { [weak self] _ in
+                self?.presentImagePicker(sourceType: .photoLibrary)
             },
-            UIAlertAction(title: "Take Photo", style: .default) { [unowned self] _ in
-                self.checkCameraPermission()
+            UIAlertAction(title: "Take Photo", style: .default) { [weak self] _ in
+                if CameraManager.checkCameraPermission() {
+                    self?.presentImagePicker(sourceType: .camera)
+                } else {
+                    self?.showErrorAlert()
+                }
             }]
         
         if (person.profileImage != nil) {
@@ -152,7 +83,7 @@ final class ProfileViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        toggleEditMode()
     }
     
     // MARK: - Private methods
@@ -161,30 +92,17 @@ final class ProfileViewController: UIViewController {
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
         saveButton.layer.cornerRadius = Appearance.baseCornerRadius
         saveButton.backgroundColor = Appearance.grayColor
-        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .cancel,
+        navigationItem.leftBarButtonItem = .init(barButtonSystemItem: .cancel,
                                                   target: self,
                                                   action: #selector(cancel))
         navigationItem.title = "My Profile"
+        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .edit,
+                                                  target: self,
+                                                  action: #selector(edit))
         view.backgroundColor = Appearance.backgroundColor
-    }
-    
-    func checkCameraPermission() {
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-        case .authorized:
-            return presentImagePicker(sourceType: .camera)
-        case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { granted in
-                if granted {
-                    self.presentImagePicker(sourceType: .camera)
-                } else {
-                    self.showErrorAlert()
-                }
-            }
-        case .denied, .restricted:
-            showErrorAlert()
-        @unknown default:
-            showErrorAlert()
-        }
+
+        userNameTextView.layer.cornerRadius = Appearance.baseCornerRadius
+        userDescriptionTextView.layer.cornerRadius = Appearance.baseCornerRadius
     }
     
     private func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
@@ -212,24 +130,23 @@ final class ProfileViewController: UIViewController {
         profileImageView.configure(with: person)
     }
     
+    private func toggleEditMode() {
+        let backgroundColor = userNameTextView.isUserInteractionEnabled ? nil : Appearance.yellowSecondaryColor
+        UIView.animate(withDuration: 0.3) {
+            self.userNameTextView.backgroundColor = backgroundColor
+            self.userDescriptionTextView.backgroundColor = backgroundColor
+        }
+        userNameTextView.isUserInteractionEnabled.toggle()
+        userDescriptionTextView.isUserInteractionEnabled.toggle()
+        navigationItem.rightBarButtonItem?.isEnabled.toggle()
+        saveButton.isEnabled.toggle()
+    }
+    
     @objc private func cancel() {
         dismiss(animated: true, completion: nil)
     }
-}
-
-// MARK: -  UINavigationControllerDelegate, UIImagePickerControllerDelegate
-
-extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        picker.dismiss(animated: true)
-
-        guard let image = info[.editedImage] as? UIImage else {
-            showErrorAlert()
-            return
-        }
-        
-        setProfileImage(image: image)
+    @objc private func edit() {
+        toggleEditMode()
     }
 }
