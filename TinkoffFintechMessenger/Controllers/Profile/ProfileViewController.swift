@@ -19,6 +19,8 @@ final class ProfileViewController: UIViewController {
     @IBOutlet private weak var saveButton: UIButton!
     @IBOutlet private weak var userNameTextView: UITextView!
     @IBOutlet private weak var userDescriptionTextView: UITextView!
+    @IBOutlet private weak var userDescriptionBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var userNameBottomConstraint: NSLayoutConstraint!
     
     // MARK: - Private properties
     
@@ -38,6 +40,9 @@ final class ProfileViewController: UIViewController {
         vc.mediaTypes = [kUTTypeImage as String]
         return vc
     }()
+    private var nameTextViewDelegate = TextViewDelegate(textViewType: .nameTextView)
+    private var descriptionTextViewDelegate = TextViewDelegate(textViewType: .descriptionTextView)
+    private let lowPriority = UILayoutPriority(rawValue: 249)
     
     // MARK: - UIViewController lifecycle methods
     
@@ -45,6 +50,7 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         profileImageView.configure(with: person)
+        setupTextViews()
     }
     
     override func viewDidLayoutSubviews() {
@@ -103,6 +109,58 @@ final class ProfileViewController: UIViewController {
 
         userNameTextView.layer.cornerRadius = Appearance.baseCornerRadius
         userDescriptionTextView.layer.cornerRadius = Appearance.baseCornerRadius
+    }
+    
+    private func setupTextViews() {
+        userNameTextView.delegate = nameTextViewDelegate
+        userDescriptionTextView.delegate = descriptionTextViewDelegate
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func dismissKeyboard()
+    {
+        view.endEditing(false)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+           keyboardSize.height > 0
+        {
+            if userNameTextView.isFirstResponder {
+                userNameBottomConstraint.constant = keyboardSize.height
+                userNameBottomConstraint.priority = .required
+                userDescriptionBottomConstraint.constant = 0
+                userDescriptionBottomConstraint.priority = lowPriority
+            } else if userDescriptionTextView.isFirstResponder {
+                userDescriptionBottomConstraint.constant = keyboardSize.height
+                userDescriptionBottomConstraint.priority = .required
+                userNameBottomConstraint.constant = 0
+                userNameBottomConstraint.priority = lowPriority
+            }
+            
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        userNameBottomConstraint.constant = 0
+        userNameBottomConstraint.priority = lowPriority
+        userDescriptionBottomConstraint.constant = 0
+        userDescriptionBottomConstraint.priority = lowPriority
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     private func presentImagePicker(sourceType: UIImagePickerController.SourceType) {

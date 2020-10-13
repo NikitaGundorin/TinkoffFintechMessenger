@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
@@ -14,63 +14,51 @@
             <objects>
                 <viewController storyboardIdentifier="profileViewController" id="BYZ-38-t0r" customClass="ProfileViewController" customModule="Messenger" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="r0s-UV-J8k">
-                                <rect key="frame" x="20" y="20" width="335" height="403.5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Few-gm-VbE">
+                                <rect key="frame" x="67.666666666666686" y="64" width="240" height="240"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Few-gm-VbE">
-                                        <rect key="frame" x="47.5" y="0.0" width="240" height="240"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SlC-SM-dCO" customClass="ProfileImageView" customModule="Messenger" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
-                                            </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pXS-LV-G7v">
-                                                <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
-                                                <state key="normal" title="Edit"/>
-                                                <connections>
-                                                    <action selector="profileImageEditButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MOu-uZ-v0n"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="SlC-SM-dCO" firstAttribute="leading" secondItem="Few-gm-VbE" secondAttribute="leading" id="15u-zz-pqE"/>
-                                            <constraint firstItem="pXS-LV-G7v" firstAttribute="top" secondItem="Few-gm-VbE" secondAttribute="top" id="E8p-Uf-nqp"/>
-                                            <constraint firstAttribute="height" constant="240" id="FwY-xd-J4m"/>
-                                            <constraint firstAttribute="bottom" secondItem="pXS-LV-G7v" secondAttribute="bottom" id="LdP-Fe-cDh"/>
-                                            <constraint firstItem="SlC-SM-dCO" firstAttribute="top" secondItem="Few-gm-VbE" secondAttribute="top" id="LiB-tX-tju"/>
-                                            <constraint firstItem="pXS-LV-G7v" firstAttribute="leading" secondItem="Few-gm-VbE" secondAttribute="leading" id="OUo-JD-RVq"/>
-                                            <constraint firstAttribute="trailing" secondItem="pXS-LV-G7v" secondAttribute="trailing" id="P9z-Kn-hWu"/>
-                                            <constraint firstAttribute="width" constant="240" id="aZ6-yD-UR6"/>
-                                            <constraint firstAttribute="trailing" secondItem="SlC-SM-dCO" secondAttribute="trailing" id="dYv-88-dQJ"/>
-                                            <constraint firstAttribute="bottom" secondItem="SlC-SM-dCO" secondAttribute="bottom" id="dn9-Hz-0cd"/>
-                                        </constraints>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SlC-SM-dCO" customClass="ProfileImageView" customModule="Messenger" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
                                     </view>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" text="Nikita Gundorin" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ST7-Tt-Ll3">
-                                        <rect key="frame" x="75.5" y="272" width="184" height="45"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" id="m6b-mC-bdr"/>
-                                        </constraints>
-                                        <color key="textColor" systemColor="labelColor"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="name"/>
-                                    </textView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="interactive" text="iOS developer Saint-Petersburg, Russia" translatesAutoresizingMaskIntoConstraints="NO" id="kGL-SG-wYc">
-                                        <rect key="frame" x="73" y="349" width="189.5" height="54.5"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="112" id="UWg-UR-TbS"/>
-                                        </constraints>
-                                        <color key="textColor" systemColor="labelColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pXS-LV-G7v">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                        <state key="normal" title="Edit"/>
+                                        <connections>
+                                            <action selector="profileImageEditButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MOu-uZ-v0n"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
-                            </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ab2-UH-Wfw">
-                                <rect key="frame" x="56" y="608" width="263" height="39"/>
+                                <constraints>
+                                    <constraint firstItem="SlC-SM-dCO" firstAttribute="leading" secondItem="Few-gm-VbE" secondAttribute="leading" id="15u-zz-pqE"/>
+                                    <constraint firstItem="pXS-LV-G7v" firstAttribute="top" secondItem="Few-gm-VbE" secondAttribute="top" id="E8p-Uf-nqp"/>
+                                    <constraint firstAttribute="height" constant="240" id="FwY-xd-J4m"/>
+                                    <constraint firstAttribute="bottom" secondItem="pXS-LV-G7v" secondAttribute="bottom" id="LdP-Fe-cDh"/>
+                                    <constraint firstItem="SlC-SM-dCO" firstAttribute="top" secondItem="Few-gm-VbE" secondAttribute="top" id="LiB-tX-tju"/>
+                                    <constraint firstItem="pXS-LV-G7v" firstAttribute="leading" secondItem="Few-gm-VbE" secondAttribute="leading" id="OUo-JD-RVq"/>
+                                    <constraint firstAttribute="trailing" secondItem="pXS-LV-G7v" secondAttribute="trailing" id="P9z-Kn-hWu"/>
+                                    <constraint firstAttribute="width" constant="240" id="aZ6-yD-UR6"/>
+                                    <constraint firstAttribute="trailing" secondItem="SlC-SM-dCO" secondAttribute="trailing" id="dYv-88-dQJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="SlC-SM-dCO" secondAttribute="bottom" id="dn9-Hz-0cd"/>
+                                </constraints>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="kGL-SG-wYc">
+                                <rect key="frame" x="120.66666666666667" y="396.66666666666669" width="133.66666666666663" height="54.333333333333314"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" id="1wV-XL-x7j"/>
+                                </constraints>
+                                <string key="text">iOS developer
+Saint-Petersburg</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ab2-UH-Wfw">
+                                <rect key="frame" x="56" y="719" width="263" height="39"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="8" maxX="0.0" maxY="8"/>
                                 <state key="normal" title="Save"/>
@@ -78,25 +66,46 @@
                                     <action selector="saveButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ghK-8Q-Dtn"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" text="Nikita Gundorin" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ST7-Tt-Ll3">
+                                <rect key="frame" x="95.666666666666686" y="336" width="184" height="44.666666666666686"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" id="TPU-ac-uYR"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="name"/>
+                            </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="r0s-UV-J8k" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0sI-D9-sgN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ST7-Tt-Ll3" secondAttribute="bottom" priority="249" id="1Jx-Lq-Izp"/>
+                            <constraint firstItem="ST7-Tt-Ll3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3RT-QZ-bV4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ab2-UH-Wfw" secondAttribute="trailing" constant="56" id="Al9-Nh-us7"/>
-                            <constraint firstItem="ab2-UH-Wfw" firstAttribute="top" relation="greaterThanOrEqual" secondItem="r0s-UV-J8k" secondAttribute="bottom" constant="20" id="G4p-Rk-tqV"/>
-                            <constraint firstItem="ab2-UH-Wfw" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-20" id="Qrl-j1-qli"/>
-                            <constraint firstItem="r0s-UV-J8k" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="RER-i0-mQi"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="r0s-UV-J8k" secondAttribute="trailing" constant="20" id="baB-6w-xoR"/>
+                            <constraint firstItem="ST7-Tt-Ll3" firstAttribute="top" secondItem="Few-gm-VbE" secondAttribute="bottom" constant="32" id="Bab-sc-1ig"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="kGL-SG-wYc" secondAttribute="bottom" priority="249" id="D4T-pl-SEb"/>
+                            <constraint firstItem="kGL-SG-wYc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FR3-ck-D3C"/>
+                            <constraint firstItem="ab2-UH-Wfw" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" priority="750" constant="-20" id="Qrl-j1-qli"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kGL-SG-wYc" secondAttribute="trailing" constant="20" id="Twq-l3-GTf"/>
+                            <constraint firstItem="kGL-SG-wYc" firstAttribute="top" secondItem="ST7-Tt-Ll3" secondAttribute="bottom" constant="16" id="WR2-Xz-fDW"/>
+                            <constraint firstItem="Few-gm-VbE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="cT8-a1-s67"/>
+                            <constraint firstItem="ST7-Tt-Ll3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="d3j-PG-1jO"/>
+                            <constraint firstItem="Few-gm-VbE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jV5-av-NXd"/>
+                            <constraint firstItem="Few-gm-VbE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" priority="250" constant="20" id="kdV-hT-vaM"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Few-gm-VbE" secondAttribute="trailing" constant="20" id="oBL-5F-s3x"/>
                             <constraint firstItem="ab2-UH-Wfw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="56" id="pGB-41-NBF"/>
-                            <constraint firstItem="r0s-UV-J8k" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="tqw-PX-3RF"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ST7-Tt-Ll3" secondAttribute="trailing" constant="20" id="rMt-3x-sYP"/>
+                            <constraint firstItem="kGL-SG-wYc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="tTC-I9-nQP"/>
+                            <constraint firstItem="ab2-UH-Wfw" firstAttribute="top" relation="greaterThanOrEqual" secondItem="kGL-SG-wYc" secondAttribute="bottom" constant="32" id="wU4-lD-LvE"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="profileImageEditButton" destination="pXS-LV-G7v" id="nSz-ue-0NU"/>
                         <outlet property="profileImageView" destination="SlC-SM-dCO" id="djm-iv-7hw"/>
                         <outlet property="saveButton" destination="ab2-UH-Wfw" id="G87-bt-1oM"/>
+                        <outlet property="userDescriptionBottomConstraint" destination="D4T-pl-SEb" id="mTo-QS-OoD"/>
                         <outlet property="userDescriptionTextView" destination="kGL-SG-wYc" id="tex-qw-O6B"/>
+                        <outlet property="userNameBottomConstraint" destination="1Jx-Lq-Izp" id="kxc-Q7-JMO"/>
                         <outlet property="userNameTextView" destination="ST7-Tt-Ll3" id="qJo-fj-nsO"/>
                     </connections>
                 </viewController>
