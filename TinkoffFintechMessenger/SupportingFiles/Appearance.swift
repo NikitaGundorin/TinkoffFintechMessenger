@@ -100,7 +100,9 @@ class Appearance {
         }
         set {
             currentTheme = themes.first(where: { $0.id == newValue })
-            UserDefaults.standard.setValue(newValue, forKey: "CurrentTheme")
+            DispatchQueue.global(qos: .utility).async {
+                UserDefaults.standard.setValue(newValue, forKey: "CurrentTheme")
+            }
         }
     }
     

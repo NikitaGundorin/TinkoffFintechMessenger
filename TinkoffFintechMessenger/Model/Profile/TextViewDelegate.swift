@@ -19,6 +19,8 @@ class TextViewDelegate: NSObject {
     
     var textViewType: TextViewType?
     
+    let textChangedHandler: () -> ()
+    
     // MARK: - Public properties
     
     private var limitCharNumber: Int? {
@@ -43,7 +45,8 @@ class TextViewDelegate: NSObject {
 
     // MARK: - Initializer
     
-    init(textViewType: TextViewType? = nil) {
+    init(textViewType: TextViewType? = nil, textChangedHandler: @escaping () -> ()) {
+        self.textChangedHandler = textChangedHandler
         self.textViewType = textViewType
     }
 }
@@ -79,5 +82,9 @@ extension TextViewDelegate: UITextViewDelegate {
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
         return updatedText.count <= limitCharNumber
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        textChangedHandler()
     }
 }

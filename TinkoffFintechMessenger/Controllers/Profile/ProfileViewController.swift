@@ -12,11 +12,16 @@ import AVFoundation
 
 final class ProfileViewController: UIViewController {
     
+    // MARK: - Public properties
+    
+    var profileDataUpdatedHandler: (() -> ())?
+    
     // MARK: - IBOutlets
     
     @IBOutlet private weak var profileImageView: ProfileImageView!
     @IBOutlet private weak var profileImageEditButton: UIButton!
-    @IBOutlet private weak var saveButton: UIButton!
+    @IBOutlet private weak var gcdSaveButton: UIButton!
+    @IBOutlet private weak var operationSaveButton: UIButton!
     @IBOutlet private weak var userNameTextView: UITextView!
     @IBOutlet private weak var userDescriptionTextView: UITextView!
     @IBOutlet private weak var userDescriptionBottomConstraint: NSLayoutConstraint!
@@ -24,12 +29,24 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Private properties
     
+    private lazy var activityIndicator = UIActivityIndicatorView()
     private let dataProvider: DataProvider = DummyDataProvider()
-    private lazy var person = dataProvider.getUser()
+    private let gcdDataManager: DataManager = GCDDataManager()
+    private let operationDataManager: DataManager = OperationDataManager()
+    private var person: PersonViewModel?
+    private var personModel: PersonViewModel {
+        .init(fullName: userNameTextView.text,
+              description: userDescriptionTextView.text,
+              profileImage: person?.profileImage)
+    }
+    private var originalUserImage: UIImage?
     private lazy var imagePickerDelegate =
         ImagePickerDelegate(errorHandler: { [weak self] in
-            self?.showErrorAlert()
+            self?.showAlert()
         }, imagePickedHandler: { [weak self] image in
+            var imageChanged = !(self?.originalUserImage?.isEqual(to: image) ?? false)
+            self?.imageChanged = imageChanged
+            self?.setSaveButtonsEnabled(imageChanged || self?.nameChanged ?? true || self?.descriptionChanged ?? true)
             self?.setProfileImage(image: image)
         })
     private lazy var imagePickerController: UIImagePickerController = {
@@ -40,23 +57,60 @@ final class ProfileViewController: UIViewController {
         vc.mediaTypes = [kUTTypeImage as String]
         return vc
     }()
-    private var nameTextViewDelegate = TextViewDelegate(textViewType: .nameTextView)
-    private var descriptionTextViewDelegate = TextViewDelegate(textViewType: .descriptionTextView)
+    private lazy var nameTextViewDelegate = TextViewDelegate(textViewType: .nameTextView) { [weak self] in
+        var textChanged = self?.person?.fullName != self?.userNameTextView.text
+        self?.nameChanged = textChanged
+        self?.setSaveButtonsEnabled(textChanged || self?.imageChanged ?? true || self?.descriptionChanged ?? true)
+    }
+    private lazy var descriptionTextViewDelegate = TextViewDelegate(textViewType: .descriptionTextView) { [weak self] in
+        var textChanged = self?.person?.description != self?.userDescriptionTextView.text
+        self?.descriptionChanged = textChanged
+        self?.setSaveButtonsEnabled(textChanged || self?.imageChanged ?? true || self?.nameChanged ?? true)
+    }
     private let lowPriority = UILayoutPriority(rawValue: 249)
+    private var nameChanged = false
+    private var descriptionChanged = false
+    private var imageChanged = false
+    private lazy var saveCompletionHandler = { [weak self] (isSuccessful: Bool) in
+        DispatchQueue.main.async {
+            self?.activityIndicator.stopAnimating()
+        }
+        if isSuccessful {
+            if let profileDataUpdatedHandler = self?.profileDataUpdatedHandler {
+                profileDataUpdatedHandler()
+            }
+            
+            DispatchQueue.main.async {
+                if self?.profileImageView.profileImage == nil {
+                    self?.setProfileImage(image: nil)
+                }
+                self?.originalUserImage = self?.person?.profileImage
+                self?.showAlert(title: "Success", message: "Data saved successfully")
+            }
+        } else {
+            self?.showAlert(title: "Error", message: "Failed to save data")
+        }
+    }
+    
     
     // MARK: - UIViewController lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        profileImageView.configure(with: person)
-        setupTextViews()
+        loadData()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         setupLayout()
+    }
+    
+    // MARK: - Deinit
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     // MARK: - IBActions
@@ -72,13 +126,16 @@ final class ProfileViewController: UIViewController {
                 if CameraManager.checkCameraPermission() {
                     self?.presentImagePicker(sourceType: .camera)
                 } else {
-                    self?.showErrorAlert()
+                    self?.showAlert()
                 }
             }]
         
-        if (person.profileImage != nil) {
-            actions.append(UIAlertAction(title: "Remove Photo", style: .destructive) { [unowned self] _ in
-                self.setProfileImage(image: nil)
+        if (person?.profileImage != nil) {
+            actions.append(UIAlertAction(title: "Remove Photo", style: .destructive) { [weak self] _ in
+                self?.setProfileImage(image: nil)
+                let imageChanged = self?.originalUserImage != nil
+                self?.imageChanged = imageChanged
+                self?.setSaveButtonsEnabled(imageChanged || self?.nameChanged ?? true || self?.descriptionChanged ?? true)
             })
         }
         
@@ -88,30 +145,77 @@ final class ProfileViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    @IBAction func saveButtonPressed(_ sender: Any) {
-        toggleEditMode()
+    @IBAction func gcdSaveButtonPressed(_ sender: Any) {
+        exitEditMode()
+        activityIndicator.startAnimating()
+        gcdDataManager.savePersonData(personModel, completion: saveCompletionHandler)
+    }
+    
+    @IBAction func operationButtonPressed(_ sender: Any) {
+        exitEditMode()
+        activityIndicator.startAnimating()
+        operationDataManager.savePersonData(personModel, completion: saveCompletionHandler)
     }
     
     // MARK: - Private methods
     
+    private func loadData() {
+        activityIndicator.startAnimating()
+        let dataManager = gcdDataManager
+        //let dataManager = operationDataManager
+        
+        dataManager.loadPersonData { [weak self] personViewModel in
+            guard let person = personViewModel else {
+                self?.showAlert(title: "Error", message: "Failed to load data") { [weak self] _ in
+                    self?.cancel()
+                }
+                return
+            }
+            
+            self?.person = person
+            self?.originalUserImage = person.profileImage
+            
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+                self?.setupTextViews()
+                self?.setProfileImage(image: person.profileImage)
+                self?.view.layoutIfNeeded()
+            }
+        }
+    }
+    
     private func setupLayout() {
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
-        saveButton.layer.cornerRadius = Appearance.baseCornerRadius
-        saveButton.backgroundColor = Appearance.grayColor
+        gcdSaveButton.layer.cornerRadius = Appearance.baseCornerRadius
+        gcdSaveButton.backgroundColor = Appearance.grayColor
+        operationSaveButton.layer.cornerRadius = Appearance.baseCornerRadius
+        operationSaveButton.backgroundColor = Appearance.grayColor
         navigationItem.leftBarButtonItem = .init(barButtonSystemItem: .cancel,
                                                   target: self,
                                                   action: #selector(cancel))
         navigationItem.title = "My Profile"
         navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .edit,
                                                   target: self,
-                                                  action: #selector(edit))
+                                                  action: #selector(toggleEditMode))
         view.backgroundColor = Appearance.backgroundColor
 
         userNameTextView.layer.cornerRadius = Appearance.baseCornerRadius
         userDescriptionTextView.layer.cornerRadius = Appearance.baseCornerRadius
+        
+        view.addSubview(activityIndicator)
+        activityIndicator.backgroundColor = Appearance.selectionColor
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            activityIndicator.topAnchor.constraint(equalTo: view.topAnchor),
+            activityIndicator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            activityIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
     private func setupTextViews() {
+        userNameTextView.text = person?.fullName
+        userDescriptionTextView.text = person?.description
         userNameTextView.delegate = nameTextViewDelegate
         userDescriptionTextView.delegate = descriptionTextViewDelegate
         
@@ -125,12 +229,51 @@ final class ProfileViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    @objc private func dismissKeyboard()
-    {
+    private func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
+        if !UIImagePickerController.isSourceTypeAvailable(sourceType) {
+            showAlert()
+            return
+        }
+        
+        imagePickerController.sourceType = sourceType
+        DispatchQueue.main.async {
+            self.present(self.imagePickerController, animated: true)
+        }
+    }
+    
+    private func showAlert(title: String = "Error",
+                                message: String = "This action is not allowed",
+                                handler: ((UIAlertAction) -> Void)? = nil) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(.init(title: "OK", style: .cancel, handler: handler))
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true)
+        }
+    }
+    
+    private func setProfileImage(image: UIImage?) {
+        person?.profileImage = image
+        profileImageView.configure(with: personModel)
+    }
+    
+    private func exitEditMode() {
+        if (userNameTextView.isUserInteractionEnabled) {
+            toggleEditMode()
+        }
+        setSaveButtonsEnabled(false)
+    }
+    
+    private func setSaveButtonsEnabled(_ isEnabled: Bool) {
+        gcdSaveButton.isEnabled = isEnabled
+        operationSaveButton.isEnabled = isEnabled
+    }
+    
+    @objc private func dismissKeyboard() {
         view.endEditing(false)
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
+    @objc private func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
            keyboardSize.height > 0
         {
@@ -152,7 +295,7 @@ final class ProfileViewController: UIViewController {
         }
     }
 
-    @objc func keyboardWillHide(notification: NSNotification) {
+    @objc private func keyboardWillHide(notification: NSNotification) {
         userNameBottomConstraint.constant = 0
         userNameBottomConstraint.priority = lowPriority
         userDescriptionBottomConstraint.constant = 0
@@ -163,32 +306,11 @@ final class ProfileViewController: UIViewController {
         }
     }
     
-    private func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
-        if !UIImagePickerController.isSourceTypeAvailable(sourceType) {
-            showErrorAlert()
-            return
-        }
-        
-        imagePickerController.sourceType = sourceType
-        DispatchQueue.main.async {
-            self.present(self.imagePickerController, animated: true)
-        }
+    @objc private func cancel() {
+        dismiss(animated: true, completion: nil)
     }
     
-    private func showErrorAlert() {
-        let alertController = UIAlertController(title: "Error", message: "This action is not allowed.", preferredStyle: .alert)
-        alertController.addAction(.init(title: "OK", style: .cancel, handler: nil))
-        DispatchQueue.main.async {
-            self.present(alertController, animated: true)
-        }
-    }
-    
-    private func setProfileImage(image: UIImage?) {
-        person.profileImage = image
-        profileImageView.configure(with: person)
-    }
-    
-    private func toggleEditMode() {
+    @objc private func toggleEditMode() {
         let backgroundColor = userNameTextView.isUserInteractionEnabled ? nil : Appearance.yellowSecondaryColor
         UIView.animate(withDuration: 0.3) {
             self.userNameTextView.backgroundColor = backgroundColor
@@ -196,15 +318,5 @@ final class ProfileViewController: UIViewController {
         }
         userNameTextView.isUserInteractionEnabled.toggle()
         userDescriptionTextView.isUserInteractionEnabled.toggle()
-        navigationItem.rightBarButtonItem?.isEnabled.toggle()
-        saveButton.isEnabled.toggle()
-    }
-    
-    @objc private func cancel() {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @objc private func edit() {
-        toggleEditMode()
     }
 }

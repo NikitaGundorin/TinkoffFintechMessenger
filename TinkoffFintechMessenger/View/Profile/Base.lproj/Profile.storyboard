@@ -47,7 +47,6 @@
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="kGL-SG-wYc">
                                 <rect key="frame" x="120.66666666666667" y="396.66666666666669" width="133.66666666666663" height="54.333333333333314"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" id="1wV-XL-x7j"/>
                                 </constraints>
@@ -58,12 +57,12 @@ Saint-Petersburg</string>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ab2-UH-Wfw">
-                                <rect key="frame" x="56" y="719" width="263" height="39"/>
+                                <rect key="frame" x="20.000000000000007" y="719" width="112.66666666666669" height="39"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="8" maxX="0.0" maxY="8"/>
-                                <state key="normal" title="Save"/>
+                                <state key="normal" title="GCD"/>
                                 <connections>
-                                    <action selector="saveButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ghK-8Q-Dtn"/>
+                                    <action selector="gcdSaveButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ghK-8Q-Dtn"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" text="Nikita Gundorin" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ST7-Tt-Ll3">
@@ -75,34 +74,48 @@ Saint-Petersburg</string>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="name"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUr-ZU-Kzy">
+                                <rect key="frame" x="242.66666666666666" y="719" width="112.33333333333334" height="39"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="8" maxX="0.0" maxY="8"/>
+                                <state key="normal" title="Operation"/>
+                                <connections>
+                                    <action selector="operationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Q1-0D-Xae"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ST7-Tt-Ll3" secondAttribute="bottom" priority="249" id="1Jx-Lq-Izp"/>
                             <constraint firstItem="ST7-Tt-Ll3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3RT-QZ-bV4"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ab2-UH-Wfw" secondAttribute="trailing" constant="56" id="Al9-Nh-us7"/>
+                            <constraint firstItem="dUr-ZU-Kzy" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.3" id="8Wh-63-UL8"/>
+                            <constraint firstItem="dUr-ZU-Kzy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ab2-UH-Wfw" secondAttribute="trailing" constant="40" id="Al9-Nh-us7"/>
                             <constraint firstItem="ST7-Tt-Ll3" firstAttribute="top" secondItem="Few-gm-VbE" secondAttribute="bottom" constant="32" id="Bab-sc-1ig"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="kGL-SG-wYc" secondAttribute="bottom" priority="249" id="D4T-pl-SEb"/>
                             <constraint firstItem="kGL-SG-wYc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FR3-ck-D3C"/>
+                            <constraint firstItem="ab2-UH-Wfw" firstAttribute="width" secondItem="dUr-ZU-Kzy" secondAttribute="width" id="IvD-kn-RxQ"/>
                             <constraint firstItem="ab2-UH-Wfw" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" priority="750" constant="-20" id="Qrl-j1-qli"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kGL-SG-wYc" secondAttribute="trailing" constant="20" id="Twq-l3-GTf"/>
                             <constraint firstItem="kGL-SG-wYc" firstAttribute="top" secondItem="ST7-Tt-Ll3" secondAttribute="bottom" constant="16" id="WR2-Xz-fDW"/>
                             <constraint firstItem="Few-gm-VbE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="cT8-a1-s67"/>
                             <constraint firstItem="ST7-Tt-Ll3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="d3j-PG-1jO"/>
                             <constraint firstItem="Few-gm-VbE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jV5-av-NXd"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="dUr-ZU-Kzy" secondAttribute="bottom" priority="750" constant="20" id="ju1-7F-E11"/>
                             <constraint firstItem="Few-gm-VbE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" priority="250" constant="20" id="kdV-hT-vaM"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Few-gm-VbE" secondAttribute="trailing" constant="20" id="oBL-5F-s3x"/>
-                            <constraint firstItem="ab2-UH-Wfw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="56" id="pGB-41-NBF"/>
+                            <constraint firstItem="ab2-UH-Wfw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="pGB-41-NBF"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ST7-Tt-Ll3" secondAttribute="trailing" constant="20" id="rMt-3x-sYP"/>
                             <constraint firstItem="kGL-SG-wYc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="tTC-I9-nQP"/>
                             <constraint firstItem="ab2-UH-Wfw" firstAttribute="top" relation="greaterThanOrEqual" secondItem="kGL-SG-wYc" secondAttribute="bottom" constant="32" id="wU4-lD-LvE"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dUr-ZU-Kzy" secondAttribute="trailing" constant="20" id="xO5-Co-gSh"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="gcdSaveButton" destination="ab2-UH-Wfw" id="G87-bt-1oM"/>
+                        <outlet property="operationSaveButton" destination="dUr-ZU-Kzy" id="AZd-he-Rm0"/>
                         <outlet property="profileImageEditButton" destination="pXS-LV-G7v" id="nSz-ue-0NU"/>
                         <outlet property="profileImageView" destination="SlC-SM-dCO" id="djm-iv-7hw"/>
-                        <outlet property="saveButton" destination="ab2-UH-Wfw" id="G87-bt-1oM"/>
                         <outlet property="userDescriptionBottomConstraint" destination="D4T-pl-SEb" id="mTo-QS-OoD"/>
                         <outlet property="userDescriptionTextView" destination="kGL-SG-wYc" id="tex-qw-O6B"/>
                         <outlet property="userNameBottomConstraint" destination="1Jx-Lq-Izp" id="kxc-Q7-JMO"/>
@@ -111,7 +124,7 @@ Saint-Petersburg</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="109.29535232383809"/>
+            <point key="canvasLocation" x="136.80000000000001" y="108.62068965517241"/>
         </scene>
     </scenes>
     <resources>
