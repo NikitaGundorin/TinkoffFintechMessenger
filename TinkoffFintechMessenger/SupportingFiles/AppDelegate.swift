@@ -29,11 +29,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                          methodName: #function)
         
         let conversationListVC = ConversationsListViewController()
-        let navigationController = UINavigationController(rootViewController: conversationListVC)
+        let navigationController = BaseNavigationController(rootViewController: conversationListVC)
         
         window = UIWindow()
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        
+        Appearance.shared.setupTheme()
         
         return true
     }

@@ -21,7 +21,6 @@ class ConversationListTableViewCell: UITableViewCell {
     private lazy var messageLabel: UILabel = {
         let label = UILabel()
         label.font = Appearance.font13
-        label.textColor = Appearance.labelLight
         label.numberOfLines = 2
         return label
     }()
@@ -29,7 +28,6 @@ class ConversationListTableViewCell: UITableViewCell {
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.font = Appearance.font15
-        label.textColor = Appearance.labelLight
         label.textAlignment = .right
         return label
     }()
@@ -61,7 +59,7 @@ class ConversationListTableViewCell: UITableViewCell {
     
     private func setupLayout() {
         let horizontalSV = UIStackView(arrangedSubviews: [nameLabel, dateLabel])
-        nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         let verticalSV = UIStackView(arrangedSubviews: [horizontalSV, messageLabel])
         verticalSV.spacing = 1
         verticalSV.axis = .vertical
@@ -107,7 +105,11 @@ extension ConversationListTableViewCell: ConfigurableView {
         }
         
         if model.isOnline {
-            backgroundColor = Appearance.lightYellow
+            backgroundColor = Appearance.yellowSecondaryColor
         }
+        
+        dateLabel.textColor = Appearance.labelSecondary
+        messageLabel.textColor = Appearance.labelSecondary
+        nameLabel.textColor = Appearance.labelColor
     }
 }

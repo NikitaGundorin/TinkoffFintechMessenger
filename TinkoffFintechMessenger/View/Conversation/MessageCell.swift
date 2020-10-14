@@ -16,6 +16,7 @@ class MessageCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = Appearance.labelColor
         return label
     }()
     
@@ -66,6 +67,7 @@ class MessageCell: UITableViewCell {
                                               constant: -padding)
         ])
         containerMessageView.layer.cornerRadius = Appearance.baseCornerRadius
+        backgroundColor = nil
     }
 }
 

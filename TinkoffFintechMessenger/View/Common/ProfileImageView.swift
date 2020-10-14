@@ -23,13 +23,12 @@ class ProfileImageView: UIView {
     
     private lazy var initialsLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Appearance.darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.font = Appearance.mediumFont115
         label.adjustsFontSizeToFitWidth = true
         label.baselineAdjustment = .alignCenters
-        label.textAlignment  = .center
+        label.textAlignment = .center
         
         return label
     }()
@@ -56,6 +55,7 @@ class ProfileImageView: UIView {
         super.layoutSubviews()
         
         layer.cornerRadius = frame.width / 2
+        initialsLabel.textColor = Appearance.darkGray
     }
     
     // MARK: - Private methods

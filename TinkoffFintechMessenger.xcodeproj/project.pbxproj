@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		6DD805D5251151910070594D /* UIViewController+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD805D4251151910070594D /* UIViewController+State.swift */; };
+		7256E6B32527808300DA0608 /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7256E6B22527808300DA0608 /* ThemesViewController.swift */; };
+		7256E6B72527821200DA0608 /* ThemePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7256E6B62527821200DA0608 /* ThemePicker.swift */; };
+		7256E6BA2527821F00DA0608 /* ThemeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7256E6B92527821F00DA0608 /* ThemeModel.swift */; };
 		7276ABEE250E67510017245A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276ABED250E67510017245A /* AppDelegate.swift */; };
 		7276ABF2250E67510017245A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276ABF1250E67510017245A /* ProfileViewController.swift */; };
 		7276ABF5250E67510017245A /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7276ABF3250E67510017245A /* Profile.storyboard */; };
@@ -17,6 +20,8 @@
 		729E44E62521FA7F004CE520 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729E44E52521FA7F004CE520 /* ConversationViewController.swift */; };
 		729E44EA2521FD6B004CE520 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729E44E92521FD6B004CE520 /* MessageCell.swift */; };
 		729E44ED252201F2004CE520 /* MessageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729E44EC252201F2004CE520 /* MessageCellModel.swift */; };
+		72AF92BD2527B4B500335DF4 /* ThemesPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AF92BC2527B4B500335DF4 /* ThemesPickerDelegate.swift */; };
+		72AF92C8252934DB00335DF4 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AF92C7252934DB00335DF4 /* BaseNavigationController.swift */; };
 		72DAD5FF250F4489008C8762 /* UIApplication.State+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DAD5FE250F4489008C8762 /* UIApplication.State+description.swift */; };
 		72EAD6FA251D10E2003DC6E4 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EAD6F9251D10E2003DC6E4 /* ProfileImageView.swift */; };
 		72EAD6FF251D11B0003DC6E4 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EAD6FE251D11B0003DC6E4 /* Person.swift */; };
@@ -34,6 +39,9 @@
 
 /* Begin PBXFileReference section */
 		6DD805D4251151910070594D /* UIViewController+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+State.swift"; sourceTree = "<group>"; };
+		7256E6B22527808300DA0608 /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
+		7256E6B62527821200DA0608 /* ThemePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePicker.swift; sourceTree = "<group>"; };
+		7256E6B92527821F00DA0608 /* ThemeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeModel.swift; sourceTree = "<group>"; };
 		7276ABEA250E67510017245A /* Messenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7276ABED250E67510017245A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7276ABF1250E67510017245A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +53,8 @@
 		729E44E52521FA7F004CE520 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		729E44E92521FD6B004CE520 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		729E44EC252201F2004CE520 /* MessageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellModel.swift; sourceTree = "<group>"; };
+		72AF92BC2527B4B500335DF4 /* ThemesPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesPickerDelegate.swift; sourceTree = "<group>"; };
+		72AF92C7252934DB00335DF4 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		72DAD5FE250F4489008C8762 /* UIApplication.State+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication.State+description.swift"; sourceTree = "<group>"; };
 		72EAD6F9251D10E2003DC6E4 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		72EAD6FE251D11B0003DC6E4 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
@@ -85,6 +95,22 @@
 				7276ABF3250E67510017245A /* Profile.storyboard */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		7256E6B0252684B300DA0608 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				7256E6B22527808300DA0608 /* ThemesViewController.swift */,
+			);
+			path = Themes;
+			sourceTree = "<group>";
+		};
+		7256E6B1252684D000DA0608 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				7256E6B62527821200DA0608 /* ThemePicker.swift */,
+			);
+			path = Themes;
 			sourceTree = "<group>";
 		};
 		7276ABE1250E67510017245A = {
@@ -131,6 +157,7 @@
 		7276AC02250E74C10017245A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7256E6B1252684D000DA0608 /* Themes */,
 				729E44E42521FA51004CE520 /* Conversation */,
 				72EAD70E251DC3BA003DC6E4 /* ConversationList */,
 				72EAD6F8251D10A9003DC6E4 /* Common */,
@@ -143,6 +170,8 @@
 		7276AC03250E74C90017245A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				72AF92C6252934C200335DF4 /* Common */,
+				7256E6B0252684B300DA0608 /* Themes */,
 				729E44E32521FA4A004CE520 /* Conversation */,
 				72EAD702251D3920003DC6E4 /* ConversationList */,
 				6D8F569B2517CCE80042B6FC /* Profile */,
@@ -164,6 +193,14 @@
 				729E44E92521FD6B004CE520 /* MessageCell.swift */,
 			);
 			path = Conversation;
+			sourceTree = "<group>";
+		};
+		72AF92C6252934C200335DF4 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				72AF92C7252934DB00335DF4 /* BaseNavigationController.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		72DAD5FD250F445F008C8762 /* Extensions */ = {
@@ -192,6 +229,7 @@
 				72F69F3B251E6EF500FCC09B /* ConversationListSectionModel.swift */,
 				72FF17282521DC1A00B60547 /* ConversationCellModel.swift */,
 				729E44EC252201F2004CE520 /* MessageCellModel.swift */,
+				7256E6B92527821F00DA0608 /* ThemeModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -217,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				72EAD715251DD0A5003DC6E4 /* ConfigurableView.swift */,
+				72AF92BC2527B4B500335DF4 /* ThemesPickerDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -325,14 +364,19 @@
 				72EAD710251DC3D0003DC6E4 /* ConversationListTableViewCell.swift in Sources */,
 				7276AC05250E81DF0017245A /* Logger.swift in Sources */,
 				72F69F3C251E6EF500FCC09B /* ConversationListSectionModel.swift in Sources */,
+				72AF92BD2527B4B500335DF4 /* ThemesPickerDelegate.swift in Sources */,
 				72EAD6FF251D11B0003DC6E4 /* Person.swift in Sources */,
+				7256E6B32527808300DA0608 /* ThemesViewController.swift in Sources */,
 				729E44EA2521FD6B004CE520 /* MessageCell.swift in Sources */,
+				7256E6B72527821200DA0608 /* ThemePicker.swift in Sources */,
 				72F69F42251E82FF00FCC09B /* Date+Formatter.swift in Sources */,
 				72F69F4525210EB700FCC09B /* Appearance.swift in Sources */,
 				72FF172D2521DC6B00B60547 /* DataProvider.swift in Sources */,
 				7276ABEE250E67510017245A /* AppDelegate.swift in Sources */,
 				72EAD716251DD0A5003DC6E4 /* ConfigurableView.swift in Sources */,
 				72DAD5FF250F4489008C8762 /* UIApplication.State+description.swift in Sources */,
+				72AF92C8252934DB00335DF4 /* BaseNavigationController.swift in Sources */,
+				7256E6BA2527821F00DA0608 /* ThemeModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
