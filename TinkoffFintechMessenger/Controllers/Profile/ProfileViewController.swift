@@ -71,27 +71,6 @@ final class ProfileViewController: UIViewController {
     private var nameChanged = false
     private var descriptionChanged = false
     private var imageChanged = false
-    private lazy var saveCompletionHandler = { [weak self] (isSuccessful: Bool) in
-        DispatchQueue.main.async {
-            self?.activityIndicator.stopAnimating()
-        }
-        if isSuccessful {
-            if let profileDataUpdatedHandler = self?.profileDataUpdatedHandler {
-                profileDataUpdatedHandler()
-            }
-            
-            DispatchQueue.main.async {
-                if self?.profileImageView.profileImage == nil {
-                    self?.setProfileImage(image: nil)
-                }
-                self?.originalUserImage = self?.person?.profileImage
-                self?.showAlert(title: "Success", message: "Data saved successfully")
-            }
-        } else {
-            self?.showAlert(title: "Error", message: "Failed to save data")
-        }
-    }
-    
     
     // MARK: - UIViewController lifecycle methods
     
@@ -145,16 +124,12 @@ final class ProfileViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    @IBAction func gcdSaveButtonPressed(_ sender: Any) {
-        exitEditMode()
-        activityIndicator.startAnimating()
-        gcdDataManager.savePersonData(personModel, completion: saveCompletionHandler)
+    @IBAction private func gcdSaveButtonPressed(_ sender: Any) {
+        saveButtonPressed(dataManager: gcdDataManager)
     }
     
-    @IBAction func operationButtonPressed(_ sender: Any) {
-        exitEditMode()
-        activityIndicator.startAnimating()
-        operationDataManager.savePersonData(personModel, completion: saveCompletionHandler)
+    @IBAction private func operationButtonPressed(_ sender: Any) {
+        saveButtonPressed(dataManager: operationDataManager)
     }
     
     // MARK: - Private methods
@@ -166,7 +141,10 @@ final class ProfileViewController: UIViewController {
         
         dataManager.loadPersonData { [weak self] personViewModel in
             guard let person = personViewModel else {
-                self?.showAlert(title: "Error", message: "Failed to load data") { [weak self] _ in
+                self?.showAlert(title: "Error", message: "Failed to load data", additionalActions:
+                                    [.init(title: "Try again", style: .default) { [weak self] _ in
+                                        self?.loadData()
+                                    }]) { [weak self] _ in
                     self?.cancel()
                 }
                 return
@@ -229,6 +207,39 @@ final class ProfileViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    private func saveButtonPressed(dataManager: DataManager) {
+        exitEditMode()
+        activityIndicator.startAnimating()
+        dataManager.savePersonData(personModel) { [weak self] (isSuccessful: Bool) in
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+            }
+            if isSuccessful {
+                if let profileDataUpdatedHandler = self?.profileDataUpdatedHandler {
+                    profileDataUpdatedHandler()
+                }
+
+                DispatchQueue.main.async {
+                    if self?.profileImageView.profileImage == nil {
+                        self?.setProfileImage(image: nil)
+                    }
+                    self?.originalUserImage = self?.person?.profileImage
+                    self?.imageChanged = false
+                    self?.nameChanged = false
+                    self?.descriptionChanged = false
+                    self?.showAlert(title: "Success", message: "Data saved successfully")
+                }
+            } else {
+                self?.showAlert(title: "Error", message: "Failed to save data", additionalActions: [
+                                    .init(title: "Try again", style: .default) { [weak self] _ in
+                                        self?.saveButtonPressed(dataManager: dataManager)
+                                    }]) { [weak self] _ in
+                    self?.setSaveButtonsEnabled(true)
+                }
+            }
+        }
+    }
+    
     private func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
         if !UIImagePickerController.isSourceTypeAvailable(sourceType) {
             showAlert()
@@ -243,11 +254,13 @@ final class ProfileViewController: UIViewController {
     
     private func showAlert(title: String = "Error",
                                 message: String = "This action is not allowed",
-                                handler: ((UIAlertAction) -> Void)? = nil) {
+                                additionalActions: [UIAlertAction] = [],
+                                primaryHandler: ((UIAlertAction) -> Void)? = nil) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(.init(title: "OK", style: .cancel, handler: handler))
         DispatchQueue.main.async {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alertController.addAction(.init(title: "OK", style: .cancel, handler: primaryHandler))
+            additionalActions.forEach { alertController.addAction($0) }
             self.present(alertController, animated: true)
         }
     }
@@ -289,7 +302,7 @@ final class ProfileViewController: UIViewController {
                 userNameBottomConstraint.priority = lowPriority
             }
             
-            UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: Appearance.defaultAnimationDuration) {
                 self.view.layoutIfNeeded()
             }
         }
@@ -301,7 +314,7 @@ final class ProfileViewController: UIViewController {
         userDescriptionBottomConstraint.constant = 0
         userDescriptionBottomConstraint.priority = lowPriority
         
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: Appearance.defaultAnimationDuration) {
             self.view.layoutIfNeeded()
         }
     }
@@ -312,7 +325,7 @@ final class ProfileViewController: UIViewController {
     
     @objc private func toggleEditMode() {
         let backgroundColor = userNameTextView.isUserInteractionEnabled ? nil : Appearance.yellowSecondaryColor
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: Appearance.defaultAnimationDuration) {
             self.userNameTextView.backgroundColor = backgroundColor
             self.userDescriptionTextView.backgroundColor = backgroundColor
         }

@@ -39,6 +39,10 @@ class Appearance {
     
     static let baseCornerRadius: CGFloat = 14
     
+    // MARK: - Animations
+    
+    static let defaultAnimationDuration: Double = 0.3
+    
     // MARK: - Colors
     
     static let yellow = UIColor(named: "Yellow")
@@ -139,7 +143,7 @@ class Appearance {
         
         self?.currentThemeId = identifier
         
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: Appearance.defaultAnimationDuration) {
             self?.setupTheme()
         }
     }
@@ -177,7 +181,7 @@ extension Appearance: ThemesPickerDelegate {
         
         currentThemeId = identifier
         
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: Appearance.defaultAnimationDuration) {
             self.setupTheme()
         }
     }
