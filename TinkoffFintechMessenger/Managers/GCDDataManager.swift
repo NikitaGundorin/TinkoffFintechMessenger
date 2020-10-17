@@ -12,14 +12,14 @@ class GCDDataManager: DataManager {
 
     // MARK: - DataManager methods
     
-    func loadPersonData(completion: @escaping (PersonViewModel?) -> ()) {
+    func loadPersonData(completion: @escaping (PersonViewModel?) -> Void) {
         DispatchQueue.global(qos: .utility).async {
             
             guard let data = FileManager.read(fileName: Constants.personDataFileName),
                   let person = try? JSONDecoder().decode(Person.self, from: data)
             else { return completion(nil) }
   
-            var image: UIImage? = nil
+            var image: UIImage?
             if let profileImageUrl = person.imageUrl,
                 let imageData = FileManager.read(url: profileImageUrl) {
                 image = UIImage(data: imageData)
@@ -29,12 +29,12 @@ class GCDDataManager: DataManager {
         }
     }
     
-    func savePersonData(_ personViewModel: PersonViewModel, completion: ((Bool) -> ())? = nil) {
+    func savePersonData(_ personViewModel: PersonViewModel, completion: ((Bool) -> Void)? = nil) {
         DispatchQueue.global(qos: .utility).async {
             var imageSavedSuccessfully = false
             var dataSavedSuccessfully = false
             
-            var imageUrl: URL? = nil
+            var imageUrl: URL?
             if let imageData = personViewModel.profileImage?.pngData() {
                 (imageSavedSuccessfully, imageUrl) =
                     FileManager.write(data: imageData, fileName: Constants.personImageFileName)

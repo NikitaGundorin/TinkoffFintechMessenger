@@ -78,7 +78,7 @@ extension MessageCell: ConfigurableView {
     func configure(with model: MessageCellModel) {
         messageLabel.text = model.text
         
-        if (model.isIncoming) {
+        if model.isIncoming {
             containerMessageView.backgroundColor = Appearance.incomingMessageColor
             messageLabel.textAlignment = .left
             outgoingMessageConstraint.isActive = false

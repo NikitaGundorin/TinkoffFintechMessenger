@@ -71,7 +71,7 @@ class ConversationListTableViewCell: UITableViewCell {
             verticalSV.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
             verticalSV.topAnchor.constraint(equalTo: topAnchor, constant: padding),
             verticalSV.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
-            verticalSV.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -padding),
+            verticalSV.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -padding)
         ])
         
         let selectedBGView = UIView()

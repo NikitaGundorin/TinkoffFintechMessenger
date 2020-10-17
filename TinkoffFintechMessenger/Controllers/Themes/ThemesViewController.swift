@@ -15,7 +15,7 @@ class ThemesViewController: UIViewController {
     // Retain cycle возникнет, если мы будем также хранить жесткую ссылку на ThemesViewController в классе Appearance
     // в данной ситуации weak не обязателен
     var themesPickerDelegate: ThemesPickerDelegate?
-    var themeSelectedCallback: ((Int) -> ())?
+    var themeSelectedCallback: ((Int) -> Void)?
     
     // MARK: - UI
     

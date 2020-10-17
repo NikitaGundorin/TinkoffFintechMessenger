@@ -95,7 +95,7 @@ class Appearance {
               statusBarStyle: .lightContent,
               grayColor: darkGray,
               yellowColor: yellowDark,
-              uiUserInterfaceStyle: .dark),
+              uiUserInterfaceStyle: .dark)
     ]
     
     private var currentThemeId: Int {

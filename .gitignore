@@ -4,3 +4,6 @@ build/
 
 *.xccheckout
 *.xcscmblueprint
+*.DS_Store
+
+Pods/

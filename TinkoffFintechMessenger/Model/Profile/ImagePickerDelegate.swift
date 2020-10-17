@@ -12,12 +12,12 @@ class ImagePickerDelegate: NSObject, UINavigationControllerDelegate, UIImagePick
     
     // MARK: - Private properties
     
-    private var errorHandler: () -> ()
-    private var imagePickedHandler: (UIImage) -> ()
+    private var errorHandler: () -> Void
+    private var imagePickedHandler: (UIImage) -> Void
     
     // MARK: - Initializer
     
-    init(errorHandler: @escaping () -> (), imagePickedHandler: @escaping (UIImage) -> ()) {
+    init(errorHandler: @escaping () -> Void, imagePickedHandler: @escaping (UIImage) -> Void) {
         self.errorHandler = errorHandler
         self.imagePickedHandler = imagePickedHandler
     }
@@ -25,7 +25,7 @@ class ImagePickerDelegate: NSObject, UINavigationControllerDelegate, UIImagePick
     // MARK: - UINavigationControllerDelegate, UIImagePickerControllerDelegate
     
     func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         picker.dismiss(animated: true)
 
         guard let image = info[.editedImage] as? UIImage else {

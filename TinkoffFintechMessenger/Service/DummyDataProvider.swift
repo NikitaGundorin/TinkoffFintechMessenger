@@ -111,7 +111,11 @@ class DummyDataProvider: DataProvider {
                   isOnline: false,
                   hasUnreadMessages: false),
             .init(name: "Spike Curry",
-                  message: "Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id.",
+                  message: """
+                    Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.
+                    Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.
+                    Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id.
+                    """,
                   date: dateFormatter.date(from: "2020-05-01") ?? Date(),
                   isOnline: false,
                   hasUnreadMessages: false),
@@ -119,7 +123,7 @@ class DummyDataProvider: DataProvider {
                   message: "Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc",
                   date: dateFormatter.date(from: "2020-05-01") ?? Date(),
                   isOnline: false,
-                  hasUnreadMessages: false),
+                  hasUnreadMessages: false)
             ]
     }
     
@@ -161,7 +165,11 @@ class DummyDataProvider: DataProvider {
                   isIncoming: true),
             .init(text: "Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac",
                   isIncoming: true),
-            .init(text: "Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id.",
+            .init(text: """
+                    Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.
+                    Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.
+                    Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id.
+                    """,
                   isIncoming: false),
             .init(text: "Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc",
                   isIncoming: true),
@@ -170,7 +178,7 @@ class DummyDataProvider: DataProvider {
             .init(text: "Cras dapibus.",
                   isIncoming: false),
             .init(text: "Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.",
-                  isIncoming: true),
+                  isIncoming: true)
         ]
     }
 }

@@ -10,6 +10,6 @@ import Foundation
 
 protocol DataManager {
     
-    func loadPersonData(completion: @escaping (PersonViewModel?) -> ())
-    func savePersonData(_ person: PersonViewModel, completion: ((Bool) -> ())?)
+    func loadPersonData(completion: @escaping (PersonViewModel?) -> Void)
+    func savePersonData(_ person: PersonViewModel, completion: ((Bool) -> Void)?)
 }

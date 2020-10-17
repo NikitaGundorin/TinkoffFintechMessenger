@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,25 +22,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - App lifecycle methods
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         
         Logger.stateInfo(loggerSourceName,
                          from: "Not running",
                          to: application.applicationState.description,
                          methodName: #function)
         
-        
         let conversationListVC = ConversationsListViewController()
         let navigationController = BaseNavigationController(rootViewController: conversationListVC)
         
-        setUserData(vc: conversationListVC
-        )
+        setUserData(vc: conversationListVC)
         
         window = UIWindow()
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
         Appearance.shared.setupTheme()
+        
+        FirebaseApp.configure()
         
         return true
     }

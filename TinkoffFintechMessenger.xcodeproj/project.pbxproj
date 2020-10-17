@@ -3,11 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		57519E203F217CD03346D6B4 /* Pods_TinkoffFintechMessenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A375116B19233D65668473 /* Pods_TinkoffFintechMessenger.framework */; };
 		6DD805D5251151910070594D /* UIViewController+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD805D4251151910070594D /* UIViewController+State.swift */; };
+		7240BEEB253B28A200C00BB9 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7240BEEA253B28A200C00BB9 /* .swiftlint.yml */; };
 		7256E6B32527808300DA0608 /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7256E6B22527808300DA0608 /* ThemesViewController.swift */; };
 		7256E6B72527821200DA0608 /* ThemePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7256E6B62527821200DA0608 /* ThemePicker.swift */; };
 		7256E6BA2527821F00DA0608 /* ThemeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7256E6B92527821F00DA0608 /* ThemeModel.swift */; };
@@ -30,6 +32,7 @@
 		72A1757E2534DC9100D4D81D /* TextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A1757D2534DC9100D4D81D /* TextViewDelegate.swift */; };
 		72A175822534DDD200D4D81D /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A175812534DDD200D4D81D /* CameraManager.swift */; };
 		72A175852534E2AC00D4D81D /* ImagePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A175842534E2AC00D4D81D /* ImagePickerDelegate.swift */; };
+		72AD81B82538B5AB003CA1FC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 72AD81B72538B5AB003CA1FC /* GoogleService-Info.plist */; };
 		72AF92BD2527B4B500335DF4 /* ThemesPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AF92BC2527B4B500335DF4 /* ThemesPickerDelegate.swift */; };
 		72AF92C8252934DB00335DF4 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AF92C7252934DB00335DF4 /* BaseNavigationController.swift */; };
 		72DAD5FF250F4489008C8762 /* UIApplication.State+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DAD5FE250F4489008C8762 /* UIApplication.State+description.swift */; };
@@ -48,7 +51,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		23A375116B19233D65668473 /* Pods_TinkoffFintechMessenger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinkoffFintechMessenger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5786F2FF9963D4A506F1D523 /* Pods-TinkoffFintechMessenger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffFintechMessenger.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffFintechMessenger/Pods-TinkoffFintechMessenger.debug.xcconfig"; sourceTree = "<group>"; };
 		6DD805D4251151910070594D /* UIViewController+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+State.swift"; sourceTree = "<group>"; };
+		6F5C6EBCC32D1CACA43E7F81 /* Pods-TinkoffFintechMessenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffFintechMessenger.release.xcconfig"; path = "Target Support Files/Pods-TinkoffFintechMessenger/Pods-TinkoffFintechMessenger.release.xcconfig"; sourceTree = "<group>"; };
+		7240BEEA253B28A200C00BB9 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		7240BEEC253B28CA00C00BB9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7256E6B22527808300DA0608 /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		7256E6B62527821200DA0608 /* ThemePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePicker.swift; sourceTree = "<group>"; };
 		7256E6B92527821F00DA0608 /* ThemeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeModel.swift; sourceTree = "<group>"; };
@@ -73,6 +81,7 @@
 		72A1757D2534DC9100D4D81D /* TextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewDelegate.swift; sourceTree = "<group>"; };
 		72A175812534DDD200D4D81D /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		72A175842534E2AC00D4D81D /* ImagePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerDelegate.swift; sourceTree = "<group>"; };
+		72AD81B72538B5AB003CA1FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/firebase_challenge/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		72AF92BC2527B4B500335DF4 /* ThemesPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesPickerDelegate.swift; sourceTree = "<group>"; };
 		72AF92C7252934DB00335DF4 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		72DAD5FE250F4489008C8762 /* UIApplication.State+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication.State+description.swift"; sourceTree = "<group>"; };
@@ -95,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57519E203F217CD03346D6B4 /* Pods_TinkoffFintechMessenger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,7 +147,10 @@
 			isa = PBXGroup;
 			children = (
 				7276ABEC250E67510017245A /* TinkoffFintechMessenger */,
+				7240BEEA253B28A200C00BB9 /* .swiftlint.yml */,
 				7276ABEB250E67510017245A /* Products */,
+				9C3E90073EAF3239864F9EC3 /* Pods */,
+				A46A0D01D1F2CC60CB3C3D79 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -152,6 +165,7 @@
 		7276ABEC250E67510017245A /* TinkoffFintechMessenger */ = {
 			isa = PBXGroup;
 			children = (
+				72AD81B72538B5AB003CA1FC /* GoogleService-Info.plist */,
 				72A175802534DDC700D4D81D /* Managers */,
 				72F69F4825213C8C00FCC09B /* Service */,
 				72EAD6FD251D1161003DC6E4 /* Model */,
@@ -171,6 +185,7 @@
 				7276ABF6250E67520017245A /* Assets.xcassets */,
 				7293C6E22537624E0081BA1C /* Constants.swift */,
 				7276ABFB250E67520017245A /* Info.plist */,
+				7240BEEC253B28CA00C00BB9 /* GoogleService-Info.plist */,
 				7276AC04250E81DF0017245A /* Logger.swift */,
 			);
 			path = SupportingFiles;
@@ -355,6 +370,23 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		9C3E90073EAF3239864F9EC3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5786F2FF9963D4A506F1D523 /* Pods-TinkoffFintechMessenger.debug.xcconfig */,
+				6F5C6EBCC32D1CACA43E7F81 /* Pods-TinkoffFintechMessenger.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		A46A0D01D1F2CC60CB3C3D79 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				23A375116B19233D65668473 /* Pods_TinkoffFintechMessenger.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -362,17 +394,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7276ABFE250E67520017245A /* Build configuration list for PBXNativeTarget "TinkoffFintechMessenger" */;
 			buildPhases = (
+				62EE1EA9E617A3733754E069 /* [CP] Check Pods Manifest.lock */,
 				7276ABE6250E67510017245A /* Sources */,
 				7276ABE7250E67510017245A /* Frameworks */,
 				7276ABE8250E67510017245A /* Resources */,
+				6D61E67D8B94255DB6EC2268 /* [CP] Embed Pods Frameworks */,
+				7240BEE9253B27E800C00BB9 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = TinkoffFintechMessenger;
-			packageProductDependencies = (
-			);
 			productName = TinkoffFintechMessenger;
 			productReference = 7276ABEA250E67510017245A /* Messenger.app */;
 			productType = "com.apple.product-type.application";
@@ -401,8 +434,6 @@
 				Base,
 			);
 			mainGroup = 7276ABE1250E67510017245A;
-			packageReferences = (
-			);
 			productRefGroup = 7276ABEB250E67510017245A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -417,13 +448,74 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7240BEEB253B28A200C00BB9 /* .swiftlint.yml in Resources */,
 				7276ABFA250E67520017245A /* LaunchScreen.storyboard in Resources */,
+				72AD81B82538B5AB003CA1FC /* GoogleService-Info.plist in Resources */,
 				7276ABF7250E67520017245A /* Assets.xcassets in Resources */,
 				7276ABF5250E67510017245A /* Profile.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		62EE1EA9E617A3733754E069 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TinkoffFintechMessenger-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6D61E67D8B94255DB6EC2268 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TinkoffFintechMessenger/Pods-TinkoffFintechMessenger-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TinkoffFintechMessenger/Pods-TinkoffFintechMessenger-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinkoffFintechMessenger/Pods-TinkoffFintechMessenger-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7240BEE9253B27E800C00BB9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7276ABE6250E67510017245A /* Sources */ = {
@@ -608,6 +700,7 @@
 		};
 		7276ABFF250E67520017245A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5786F2FF9963D4A506F1D523 /* Pods-TinkoffFintechMessenger.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -618,7 +711,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = nikitagundorin.TinkoffFintechMessenger;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = Messenger;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -627,6 +720,7 @@
 		};
 		7276AC00250E67520017245A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F5C6EBCC32D1CACA43E7F81 /* Pods-TinkoffFintechMessenger.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -637,7 +731,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = nikitagundorin.TinkoffFintechMessenger;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = Messenger;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

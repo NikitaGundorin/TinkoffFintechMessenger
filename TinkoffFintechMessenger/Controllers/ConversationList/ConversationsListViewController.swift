@@ -123,7 +123,7 @@ final class ConversationsListViewController: UIViewController {
                                          items: items.filter { $0.isOnline }),
             ConversationListSectionModel(sectionName: "History",
                                          backgroundColor: nil,
-                                         items: items.filter { !$0.isOnline && $0.message != "" }),
+                                         items: items.filter { !$0.isOnline && $0.message != "" })
         ]
     }
 }
