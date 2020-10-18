@@ -13,12 +13,13 @@ final class ConversationViewController: UIViewController {
     // MARK: - Public properties
     
     var conversationName: String?
+    var channelId: String?
+    var dataProvider: DataProvider?
     
     // MARK: - Private properties
     
-    private let dataProvider: DataProvider = DummyDataProvider()
     private let messageCellId = "messageCellId"
-    private lazy var messages = dataProvider.getMessages()
+    private var messages: [MessageCellModel] = []
     
     // MARK: - UI
     
@@ -38,6 +39,13 @@ final class ConversationViewController: UIViewController {
         super.viewDidLoad()
         
         setupLayout()
+        loadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        dataProvider?.unsubscriveChannel()
     }
 
     // MARK: - Private methods
@@ -54,6 +62,21 @@ final class ConversationViewController: UIViewController {
         ])
         
         navigationItem.title = conversationName
+    }
+    
+    private func loadData() {
+        guard let channelId = channelId else { return }
+        dataProvider?.subscribeMessages(forChannelWithId: channelId) { [weak self] messages, error in
+            guard let messages = messages else {
+                if let error = error {
+                    print(error)
+                }
+                return
+            }
+            
+            self?.messages = messages
+            self?.tableView.reloadData()
+        }
     }
 }
 

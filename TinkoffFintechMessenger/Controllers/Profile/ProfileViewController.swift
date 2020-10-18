@@ -30,7 +30,6 @@ final class ProfileViewController: UIViewController {
     // MARK: - Private properties
     
     private lazy var activityIndicator = UIActivityIndicatorView()
-    private let dataProvider: DataProvider = DummyDataProvider()
     private let gcdDataManager: DataManager = GCDDataManager()
     private let operationDataManager: DataManager = OperationDataManager()
     private var person: PersonViewModel?

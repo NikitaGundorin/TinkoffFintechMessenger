@@ -9,6 +9,11 @@
 import Foundation
 
 struct MessageCellModel {
-    let text: String
-    let isIncoming: Bool
+    let content: String
+    let senderId: String
+    let senderName: String
+    var isIncoming: Bool {
+        senderId != userId
+    }
+    let userId: String
 }

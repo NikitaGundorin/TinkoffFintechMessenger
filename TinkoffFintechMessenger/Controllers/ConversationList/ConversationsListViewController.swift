@@ -12,11 +12,10 @@ final class ConversationsListViewController: UIViewController {
     
     // MARK: - Private properties
     
-    private let dataProvider: DataProvider = DummyDataProvider()
+    private let dataProvider: DataProvider = FirestoreDataProvider()
     private let rowHeight: CGFloat = 75
     private let baseCellId = "baseCellId"
-    private lazy var items = dataProvider.getConversations()
-    private lazy var sectionsModels: [ConversationListSectionModel] = []
+    private lazy var items: [Channel] = []
     private var person: PersonViewModel? {
         didSet {
             if let person = self.person {
@@ -27,10 +26,26 @@ final class ConversationsListViewController: UIViewController {
         }
     }
     
+    private lazy var createChannelAction = { [weak self] in
+        let alertController = UIAlertController(title: "New Channel",
+                                                message: "Enter a channel's name",
+                                                preferredStyle: .alert)
+        alertController.addTextField()
+        let submitAction = UIAlertAction(title: "Create", style: .default) { _ in
+            guard let name = alertController.textFields?.first?.text else { return }
+            
+            print(name)
+        }
+
+        alertController.addAction(submitAction)
+        
+        self?.present(alertController, animated: true)
+    }
+    
     // MARK: - UI
     
     private lazy var tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(ConversationListTableViewCell.self, forCellReuseIdentifier: baseCellId)
         tableView.delegate = self
         tableView.dataSource = self
@@ -52,7 +67,6 @@ final class ConversationsListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        updateData()
         tableView.reloadData()
     }
     
@@ -63,6 +77,18 @@ final class ConversationsListViewController: UIViewController {
         dataManager.loadPersonData { [weak self] person in
             self?.person = person
         }
+        
+        dataProvider.subscribeChannels { [weak self] channels, error in
+            guard let channels = channels else {
+                if let error = error {
+                    print(error)
+                }
+                return
+            }
+            
+            self?.items = channels
+            self?.tableView.reloadData()
+        }
     }
     
     // MARK: - Private methods
@@ -70,7 +96,7 @@ final class ConversationsListViewController: UIViewController {
     private func setupLayout() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        navigationItem.title = "Tinkoff Chat"
+        navigationItem.title = "Channels"
         
         profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                      action: #selector(presentProfileViewController)))
@@ -115,17 +141,6 @@ final class ConversationsListViewController: UIViewController {
         
         navigationController?.pushViewController(vc, animated: true)
     }
-    
-    private func updateData() {
-        sectionsModels = [
-            ConversationListSectionModel(sectionName: "Online",
-                                         backgroundColor: Appearance.yellowSecondaryColor,
-                                         items: items.filter { $0.isOnline }),
-            ConversationListSectionModel(sectionName: "History",
-                                         backgroundColor: nil,
-                                         items: items.filter { !$0.isOnline && $0.message != "" })
-        ]
-    }
 }
 
 // MARK: - UITableViewDataSource
@@ -133,11 +148,11 @@ final class ConversationsListViewController: UIViewController {
 extension ConversationsListViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionsModels.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sectionsModels[section].items.count
+        return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -145,7 +160,7 @@ extension ConversationsListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        cell.configure(with: sectionsModels[indexPath.section].items[indexPath.row])
+        cell.configure(with: items[indexPath.row])
         
         return cell
     }
@@ -157,7 +172,7 @@ extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = ConversationListTableViewHeader(frame: .zero)
-        header.configure(with: sectionsModels[section])
+        header.createChannelButtonAction = self.createChannelAction
         
         return header
     }
@@ -169,6 +184,8 @@ extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = ConversationViewController()
         vc.conversationName = items[indexPath.row].name
+        vc.channelId = items[indexPath.row].identifier
+        vc.dataProvider = dataProvider
         navigationController?.pushViewController(vc, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }

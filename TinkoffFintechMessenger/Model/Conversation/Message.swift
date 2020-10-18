@@ -7,10 +7,11 @@
 //
 
 import Foundation
-//import Firebase
+import Firebase
 
 struct Message {
     let content: String
-    //let created: Timestamp
+    let created: Date
+    let senderId: String
     let senderName: String
 }

@@ -54,4 +54,19 @@ class GCDDataManager: DataManager {
             }
         }
     }
+    
+    func getUserId(completion: @escaping ((String) -> Void)) {
+        DispatchQueue.global(qos: .utility).async {
+            let userIdKey = "UserId"
+            let userDefaults = UserDefaults.standard
+        
+            if let userId = userDefaults.string(forKey: userIdKey) {
+                completion(userId)
+            } else {
+                let userId = UUID().uuidString
+                userDefaults.set(userId, forKey: userIdKey)
+                completion(userId)
+            }
+        }
+    }
 }

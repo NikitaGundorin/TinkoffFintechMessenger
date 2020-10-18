@@ -10,18 +10,21 @@ import UIKit
 
 class ConversationListTableViewHeader: UIView {
     
+    // MARK: - Public properties
+    
+    var createChannelButtonAction: (() -> Void)?
+    
     // MARK: - UI
     
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = Appearance.boldFont24
-        label.textColor = Appearance.labelColor
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    private lazy var createChannelButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Create Channel", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(createChannelButtonTapped), for: .touchUpInside)
+        return button
     }()
     
-    private let horizontalPadding: CGFloat = 20
-    private let vertivalPadding: CGFloat = 10
+    private let padding: CGFloat = 5
     
     // MARK: - Initializers
     
@@ -38,31 +41,19 @@ class ConversationListTableViewHeader: UIView {
     // MARK: - Private methods
     
     private func setupLayout() {
-        addSubview(titleLabel)
+        addSubview(createChannelButton)
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor,
-                                                constant: horizontalPadding),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor,
-                                            constant: vertivalPadding),
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor,
-                                                 constant: -horizontalPadding),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor,
-                                               constant: -vertivalPadding)
+            createChannelButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            createChannelButton.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: padding),
+            createChannelButton.topAnchor.constraint(equalTo: topAnchor, constant: padding),
+            createChannelButton.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -padding),
+            createChannelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding)
         ])
-        backgroundColor = Appearance.backgroundColor
     }
-}
-
-// MARK: - ConfigurableView
-
-extension ConversationListTableViewHeader: ConfigurableView {
-
-    func configure(with model: ConversationListSectionModel) {
-        titleLabel.text = model.sectionName
-        if let bgColor = model.backgroundColor {
-            backgroundColor = bgColor
-        } else {
-            backgroundColor = Appearance.backgroundColor
+    
+    @objc private func createChannelButtonTapped() {
+        if let createChannelButtonAction = createChannelButtonAction {
+            createChannelButtonAction()
         }
     }
 }

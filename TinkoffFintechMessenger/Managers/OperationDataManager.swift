@@ -30,10 +30,15 @@ class OperationDataManager: DataManager {
         operationQueue.addOperation(operation)
     }
     
+    func getUserId(completion: @escaping ((String) -> Void)) {
+        let operation = GetUserIdOperation(completion: completion)
+        operationQueue.addOperation(operation)
+    }
+    
     // MARK: - Operation classes
     
     class LoadPersonDataOperation: Operation {
-        var completion: (PersonViewModel?) -> Void
+        private let completion: (PersonViewModel?) -> Void
         
         init(completion: @escaping (PersonViewModel?) -> Void) {
             self.completion = completion
@@ -59,8 +64,8 @@ class OperationDataManager: DataManager {
     
     class SavePersonDataOperation: Operation {
         
-        private var personViewModel: PersonViewModel
-        private var completion: ((Bool) -> Void)?
+        private let personViewModel: PersonViewModel
+        private let completion: ((Bool) -> Void)?
         
         init(personViewModel: PersonViewModel, completion: ((Bool) -> Void)? = nil) {
             self.personViewModel = personViewModel
@@ -88,6 +93,26 @@ class OperationDataManager: DataManager {
             
             if let completion = completion {
                 completion(imageSavedSuccessfully && dataSavedSuccessfully)
+            }
+        }
+    }
+    
+    class GetUserIdOperation: Operation {
+        private let completion: (String) -> Void
+        private let userIdKey = "UserId"
+        private let userDefaults = UserDefaults.standard
+        
+        init(completion: @escaping (String) -> Void) {
+            self.completion = completion
+        }
+        
+        override func main() {
+            if let userId = userDefaults.string(forKey: userIdKey) {
+                completion(userId)
+            } else {
+                let userId = UUID().uuidString
+                userDefaults.set(userId, forKey: userIdKey)
+                completion(userId)
             }
         }
     }
