@@ -24,12 +24,19 @@ class FirestoreNetworkManager: NetworkManager {
             }
             
             let data = snapshot.documents.compactMap { document -> Channel? in
-                guard let name = document["name"] as? String else { return nil }
+                let lastMessage = document["lastMessage"] as? String
+                let lastActivity = (document["lastActivity"] as? Timestamp)?.dateValue()
+                guard let name = document["name"] as? String,
+                    !name.isEmptyOrOnlyWhitespaces,
+                    (lastMessage != nil && lastActivity != nil)
+                    || (lastActivity == nil && lastMessage == nil)
+                    
+                else { return nil }
                 
                 return .init(identifier: document.documentID,
                              name: name,
-                             lastMessage: document["lastMessage"] as? String,
-                             lastActivity: (document["lastActivity"] as? Timestamp)?.dateValue())
+                             lastMessage: lastMessage,
+                             lastActivity: lastActivity)
             }.sorted { ($0.lastActivity ?? .distantPast) > ($1.lastActivity ?? .distantPast) }
             
             completion(data, nil)
@@ -50,12 +57,12 @@ class FirestoreNetworkManager: NetworkManager {
             
             let data = snapshot.documents.compactMap { document -> Message? in
                 guard let content = document["content"] as? String,
-                    !content.isEmpty,
+                    !content.isEmptyOrOnlyWhitespaces,
                     let created = (document["created"] as? Timestamp)?.dateValue(),
                     let senderId = document["senderId"] as? String,
-                    !senderId.isEmpty,
+                    !senderId.isEmptyOrOnlyWhitespaces,
                     let senderName = document["senderName"] as? String,
-                    !senderName.isEmpty
+                    !senderName.isEmptyOrOnlyWhitespaces
                 else { return nil }
                 
                 return .init(content: content, created: created, senderId: senderId, senderName: senderName)
@@ -67,5 +74,21 @@ class FirestoreNetworkManager: NetworkManager {
     
     func unsubscribeChannel() {
         messageListener?.remove()
+    }
+    
+    func createChannel(withName name: String, completion: @escaping (String) -> Void) {
+        var document: DocumentReference?
+        document = channelsReference.addDocument(data: ["name": name]) { _ in
+                    completion(document?.documentID ?? "")
+        }
+    }
+    
+    func sendMessage(widthContent content: String, senderId: String, senderName: String, completion: @escaping () -> Void) {
+        messagesReference?.addDocument(data: ["content": content,
+                                              "created": Timestamp(date: Date()),
+                                              "senderName": senderName,
+                                              "senderId": senderId]) { _ in
+                                                completion()
+        }
     }
 }

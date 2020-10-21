@@ -13,4 +13,9 @@ protocol NetworkManager {
     func subscribeMessages(forChannelWithId channelId: String,
                            completion: @escaping ([Message]?, Error?) -> Void)
     func unsubscribeChannel()
+    func createChannel(withName name: String, completion: @escaping (String) -> Void)
+    func sendMessage(widthContent content: String,
+                     senderId: String,
+                     senderName: String,
+                     completion: @escaping () -> Void)
 }

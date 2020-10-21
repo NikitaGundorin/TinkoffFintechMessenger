@@ -84,6 +84,7 @@ class ConversationListTableViewCell: UITableViewCell {
 extension ConversationListTableViewCell: ConfigurableView {
 
     func configure(with model: Channel) {
+        backgroundColor = Appearance.backgroundColor
         nameLabel.text = model.name
         
         if let data = model.lastActivity {

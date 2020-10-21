@@ -15,6 +15,7 @@ class FirestoreDataProvider: DataProvider {
     private let networkManager: NetworkManager = FirestoreNetworkManager()
     private let dataManager: DataManager = GCDDataManager()
     private var userId: String?
+    private var userName: String?
     
     // MARK: - DataProvider
     
@@ -32,6 +33,11 @@ class FirestoreDataProvider: DataProvider {
                     self?.userId = id
                     group.leave()
                 }
+                group.enter()
+                self?.dataManager.loadPersonData(completion: { person in
+                    self?.userName = person?.fullName
+                    group.leave()
+                })
                 group.wait()
             }
             
@@ -52,7 +58,23 @@ class FirestoreDataProvider: DataProvider {
         }
     }
     
-    func unsubscriveChannel() {
+    func unsubscribeChannel() {
         networkManager.unsubscribeChannel()
+    }
+    
+    func createChannel(withName name: String, completion: @escaping (String) -> Void) {
+        networkManager.createChannel(withName: name, completion: completion)
+    }
+    
+    func sendMessage(widthContent content: String, completion: @escaping () -> Void) {
+        guard let userId = userId,
+            let userName = userName else {
+            
+                return
+        }
+        networkManager.sendMessage(widthContent: content,
+                                   senderId: userId,
+                                   senderName: userName,
+                                   completion: completion)
     }
 }

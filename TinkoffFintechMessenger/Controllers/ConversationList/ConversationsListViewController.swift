@@ -25,19 +25,20 @@ final class ConversationsListViewController: UIViewController {
             }
         }
     }
-    
-    private lazy var createChannelAction = { [weak self] in
-        let alertController = UIAlertController(title: "New Channel",
+    private lazy var createChannel = { [weak self] in
+        let alertController = CreateChannelAlertController(title: "New Channel",
                                                 message: "Enter a channel's name",
                                                 preferredStyle: .alert)
         alertController.addTextField()
-        let submitAction = UIAlertAction(title: "Create", style: .default) { _ in
+        alertController.addAction(.init(title: "Cancel", style: .cancel))
+        
+        alertController.submitAction = UIAlertAction(title: "Create", style: .default) { _ in
             guard let name = alertController.textFields?.first?.text else { return }
-            
-            print(name)
-        }
 
-        alertController.addAction(submitAction)
+            self?.dataProvider.createChannel(withName: name, completion: { channelId in
+                self?.presentConversationController(conversationName: name, channelId: channelId)
+            })
+        }
         
         self?.present(alertController, animated: true)
     }
@@ -122,6 +123,14 @@ final class ConversationsListViewController: UIViewController {
         navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     
+    private func presentConversationController(conversationName: String, channelId: String) {
+        let vc = ConversationViewController()
+        vc.conversationName = conversationName
+        vc.channelId = channelId
+        vc.dataProvider = dataProvider
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @objc private func presentProfileViewController() {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
         if let vc = storyboard.instantiateInitialViewController() as? ProfileViewController {
@@ -172,7 +181,7 @@ extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = ConversationListTableViewHeader(frame: .zero)
-        header.createChannelButtonAction = self.createChannelAction
+        header.createChannelButtonAction = self.createChannel
         
         return header
     }
@@ -182,11 +191,8 @@ extension ConversationsListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = ConversationViewController()
-        vc.conversationName = items[indexPath.row].name
-        vc.channelId = items[indexPath.row].identifier
-        vc.dataProvider = dataProvider
-        navigationController?.pushViewController(vc, animated: true)
+        presentConversationController(conversationName: items[indexPath.row].name,
+                                      channelId: items[indexPath.row].identifier)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

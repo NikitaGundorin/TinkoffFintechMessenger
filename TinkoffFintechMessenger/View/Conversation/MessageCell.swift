@@ -25,6 +25,8 @@ class MessageCell: UITableViewCell {
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Appearance.labelColor
+        label.textAlignment = .left
+        label.font = Appearance.font18
         return label
     }()
     
@@ -38,6 +40,10 @@ class MessageCell: UITableViewCell {
         containerMessageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding)
     private lazy var outgoingMessageConstraint =
         containerMessageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding)
+    private lazy var messageLabelTopOutgoingConstraint = messageLabel.topAnchor.constraint(equalTo: containerMessageView.topAnchor,
+                                                                                           constant: padding)
+    private lazy var messageLabelTopIncomingConstraint = messageLabel.topAnchor.constraint(equalTo: senderNameLabel.bottomAnchor,
+                                                                                           constant: padding / 2)
     private let widthMultiplier: CGFloat = 0.75
     private let padding: CGFloat = 10
     
@@ -76,8 +82,6 @@ class MessageCell: UITableViewCell {
                                                       constant: -padding),
             messageLabel.leadingAnchor.constraint(equalTo: containerMessageView.leadingAnchor,
                                                   constant: padding),
-            messageLabel.topAnchor.constraint(equalTo: senderNameLabel.bottomAnchor,
-                                              constant: padding / 2),
             messageLabel.trailingAnchor.constraint(equalTo: containerMessageView.trailingAnchor,
                                               constant: -padding),
             messageLabel.bottomAnchor.constraint(equalTo: containerMessageView.bottomAnchor,
@@ -97,16 +101,19 @@ extension MessageCell: ConfigurableView {
         
         if model.isIncoming {
             containerMessageView.backgroundColor = Appearance.incomingMessageColor
-            messageLabel.textAlignment = .left
             senderNameLabel.text = model.senderName
             outgoingMessageConstraint.isActive = false
             incomingMessageConstraint.isActive = true
+            messageLabelTopOutgoingConstraint.isActive = false
+            messageLabelTopIncomingConstraint.isActive = true
+            
         } else {
             containerMessageView.backgroundColor = Appearance.outgoingMessageColor
-            messageLabel.textAlignment = .right
             senderNameLabel.text = nil
             incomingMessageConstraint.isActive = false
             outgoingMessageConstraint.isActive = true
+            messageLabelTopIncomingConstraint.isActive = false
+            messageLabelTopOutgoingConstraint.isActive = true
         }
     }
 }
