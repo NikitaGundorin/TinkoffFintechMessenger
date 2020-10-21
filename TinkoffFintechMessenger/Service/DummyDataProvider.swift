@@ -10,10 +10,6 @@ import Foundation
 
 class DummyDataProvider: DataProvider {
     
-    func getUser() -> Person {
-        .init(firstName: "Nikita", secondName: "Gundorin", profileImage: nil)
-    }
-    
     func getConversations() -> [ConversationCellModel] {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

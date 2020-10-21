@@ -9,7 +9,6 @@
 import Foundation
 
 protocol DataProvider {
-    func getUser() -> Person
     func getConversations() -> [ConversationCellModel]
     func getMessages() -> [MessageCellModel]
 }

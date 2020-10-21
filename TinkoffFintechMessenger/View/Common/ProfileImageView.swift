@@ -10,6 +10,12 @@ import UIKit
 
 class ProfileImageView: UIView {
     
+    // MARK: - Public properties
+    
+    var profileImage: UIImage? {
+        imageView.image
+    }
+    
     // MARK: - UI
     
     private lazy var imageView: UIImageView = {
@@ -33,7 +39,7 @@ class ProfileImageView: UIView {
         return label
     }()
     
-    private let labelSizeMultiplier: CGFloat = 0.7
+    private let labelSizeMultiplier: CGFloat = 0.6
     
     // MARK: - Initializers
     
@@ -82,7 +88,7 @@ class ProfileImageView: UIView {
 // MARK: - ConfigurableView
 
 extension ProfileImageView: ConfigurableView {
-    func configure(with model: Person) {
+    func configure(with model: PersonViewModel) {
         imageView.image = model.profileImage
         initialsLabel.isHidden = model.profileImage != nil
         initialsLabel.text = model.initials

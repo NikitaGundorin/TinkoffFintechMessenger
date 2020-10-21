@@ -39,6 +39,10 @@ class Appearance {
     
     static let baseCornerRadius: CGFloat = 14
     
+    // MARK: - Animations
+    
+    static let defaultAnimationDuration: Double = 0.3
+    
     // MARK: - Colors
     
     static let yellow = UIColor(named: "Yellow")
@@ -100,7 +104,9 @@ class Appearance {
         }
         set {
             currentTheme = themes.first(where: { $0.id == newValue })
-            UserDefaults.standard.setValue(newValue, forKey: "CurrentTheme")
+            DispatchQueue.global(qos: .utility).async {
+                UserDefaults.standard.setValue(newValue, forKey: "CurrentTheme")
+            }
         }
     }
     
@@ -137,7 +143,7 @@ class Appearance {
         
         self?.currentThemeId = identifier
         
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: Appearance.defaultAnimationDuration) {
             self?.setupTheme()
         }
     }
@@ -175,7 +181,7 @@ extension Appearance: ThemesPickerDelegate {
         
         currentThemeId = identifier
         
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: Appearance.defaultAnimationDuration) {
             self.setupTheme()
         }
     }
