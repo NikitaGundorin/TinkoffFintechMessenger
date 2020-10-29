@@ -20,12 +20,18 @@ public class Logger {
     public static func info(_ sourceName: String, _ message: String) {
         guard isEnabled else { return }
         
-        print("\(sourceName): \(message)")
+        print("[\(sourceName)]: \(message)")
     }
     
     public static func stateInfo(_ sourceName: String, from: String, to: String, methodName: String) {
         guard isEnabled else { return }
         
         print("\(sourceName) moved from \(from) to \(to): \(methodName)")
+    }
+    
+    public static func error(_ sourceName: String, _ message: String) {
+        guard isEnabled else { return }
+        
+        print("[ERROR] [\(sourceName)]: \(message)")
     }
 }

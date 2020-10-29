@@ -20,7 +20,19 @@ class FirestoreDataProvider: DataProvider {
     // MARK: - DataProvider
     
     func subscribeChannels(completion: @escaping ([Channel]?, Error?) -> Void) {
-        networkManager.subscribeChannels(completion: completion)
+        networkManager.subscribeChannels { channels, error in
+            guard let channels = channels else {
+                if let error = error {
+                    completion(nil, error)
+                }
+                return
+            }
+            
+            CoreDataManager.shared.performSave { context in
+                channels.forEach { _ = Channel_db(channel: $0, context: context) }
+            }
+            completion(channels, nil)
+        }
     }
     
     func subscribeMessages(forChannelWithId channelId: String,
@@ -53,6 +65,17 @@ class FirestoreDataProvider: DataProvider {
                                                                     senderId: $0.senderId,
                                                                     senderName: $0.senderName,
                                                                     userId: self?.userId ?? "") }
+                
+                CoreDataManager.shared.performSave { context in
+                    guard let channel = CoreDataManager.shared.fetchEntities(withName: "Channel_db",
+                                                                             inContext: context,
+                                                                             withPredicate: .init(format: "identifier == %@", channelId))?.first as? Channel_db
+                        else { return }
+                    
+                    let messagesToSave = messages.map { Message_db(message: $0, context: context) }
+                    channel.addToMessages(.init(array: messagesToSave))
+                }
+                
                 completion(messageModels, nil)
             }
         }
