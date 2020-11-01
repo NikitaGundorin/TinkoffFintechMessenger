@@ -44,7 +44,6 @@
 		72A1757E2534DC9100D4D81D /* TextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A1757D2534DC9100D4D81D /* TextViewDelegate.swift */; };
 		72A175822534DDD200D4D81D /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A175812534DDD200D4D81D /* CameraManager.swift */; };
 		72A175852534E2AC00D4D81D /* ImagePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A175842534E2AC00D4D81D /* ImagePickerDelegate.swift */; };
-		72AD81B82538B5AB003CA1FC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 72AD81B72538B5AB003CA1FC /* GoogleService-Info.plist */; };
 		72AF92BD2527B4B500335DF4 /* ThemesPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AF92BC2527B4B500335DF4 /* ThemesPickerDelegate.swift */; };
 		72AF92C8252934DB00335DF4 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AF92C7252934DB00335DF4 /* BaseNavigationController.swift */; };
 		72DAD5FF250F4489008C8762 /* UIApplication.State+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DAD5FE250F4489008C8762 /* UIApplication.State+description.swift */; };
@@ -56,6 +55,7 @@
 		72F69F42251E82FF00FCC09B /* Date+Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F69F41251E82FF00FCC09B /* Date+Formatter.swift */; };
 		72F69F4525210EB700FCC09B /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F69F4425210EB700FCC09B /* Appearance.swift */; };
 		72F79DD72545E2E500F4E6AC /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 72F79DD52545E2E500F4E6AC /* Chat.xcdatamodeld */; };
+		72FEC2F7254F62CA0006D8EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7240BEEC253B28CA00C00BB9 /* GoogleService-Info.plist */; };
 		72FF172D2521DC6B00B60547 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FF172C2521DC6B00B60547 /* DataProvider.swift */; };
 /* End PBXBuildFile section */
 
@@ -102,7 +102,6 @@
 		72A1757D2534DC9100D4D81D /* TextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewDelegate.swift; sourceTree = "<group>"; };
 		72A175812534DDD200D4D81D /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		72A175842534E2AC00D4D81D /* ImagePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerDelegate.swift; sourceTree = "<group>"; };
-		72AD81B72538B5AB003CA1FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/firebase_challenge/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		72AF92BC2527B4B500335DF4 /* ThemesPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesPickerDelegate.swift; sourceTree = "<group>"; };
 		72AF92C7252934DB00335DF4 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		72DAD5FE250F4489008C8762 /* UIApplication.State+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication.State+description.swift"; sourceTree = "<group>"; };
@@ -193,7 +192,6 @@
 			isa = PBXGroup;
 			children = (
 				72F79DD42545E2C400F4E6AC /* CoreData */,
-				72AD81B72538B5AB003CA1FC /* GoogleService-Info.plist */,
 				72A175802534DDC700D4D81D /* Managers */,
 				72F69F4825213C8C00FCC09B /* Service */,
 				72EAD6FD251D1161003DC6E4 /* Model */,
@@ -493,7 +491,7 @@
 			files = (
 				7240BEEB253B28A200C00BB9 /* .swiftlint.yml in Resources */,
 				7276ABFA250E67520017245A /* LaunchScreen.storyboard in Resources */,
-				72AD81B82538B5AB003CA1FC /* GoogleService-Info.plist in Resources */,
+				72FEC2F7254F62CA0006D8EA /* GoogleService-Info.plist in Resources */,
 				7276ABF7250E67520017245A /* Assets.xcassets in Resources */,
 				7276ABF5250E67510017245A /* Profile.storyboard in Resources */,
 			);
