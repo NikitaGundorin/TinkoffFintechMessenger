@@ -20,22 +20,27 @@ class OperationDataManager: DataManager {
     
     // MARK: - DataManager methods
     
-    func loadPersonData(completion: @escaping (PersonViewModel?) -> ()) {
+    func loadPersonData(completion: @escaping (PersonViewModel?) -> Void) {
         let operation = LoadPersonDataOperation(completion: completion)
         operationQueue.addOperation(operation)
     }
     
-    func savePersonData(_ person: PersonViewModel, completion: ((Bool) -> ())? = nil) {
+    func savePersonData(_ person: PersonViewModel, completion: ((Bool) -> Void)? = nil) {
         let operation = SavePersonDataOperation(personViewModel: person, completion: completion)
+        operationQueue.addOperation(operation)
+    }
+    
+    func getUserId(completion: @escaping ((String) -> Void)) {
+        let operation = GetUserIdOperation(completion: completion)
         operationQueue.addOperation(operation)
     }
     
     // MARK: - Operation classes
     
     class LoadPersonDataOperation: Operation {
-        var completion: (PersonViewModel?) -> ()
+        private let completion: (PersonViewModel?) -> Void
         
-        init(completion: @escaping (PersonViewModel?) -> ()) {
+        init(completion: @escaping (PersonViewModel?) -> Void) {
             self.completion = completion
         }
         
@@ -47,7 +52,7 @@ class OperationDataManager: DataManager {
             
             guard !isCancelled else { return completion(nil) }
             
-            var image: UIImage? = nil
+            var image: UIImage?
             if let profileImageUrl = person.imageUrl,
                let imageData = FileManager.read(url: profileImageUrl) {
                 image = UIImage(data: imageData)
@@ -59,10 +64,10 @@ class OperationDataManager: DataManager {
     
     class SavePersonDataOperation: Operation {
         
-        private var personViewModel: PersonViewModel
-        private var completion: ((Bool) -> ())?
+        private let personViewModel: PersonViewModel
+        private let completion: ((Bool) -> Void)?
         
-        init(personViewModel: PersonViewModel, completion: ((Bool) -> ())? = nil) {
+        init(personViewModel: PersonViewModel, completion: ((Bool) -> Void)? = nil) {
             self.personViewModel = personViewModel
             self.completion = completion
         }
@@ -71,7 +76,7 @@ class OperationDataManager: DataManager {
             var imageSavedSuccessfully = false
             var dataSavedSuccessfully = false
             
-            var imageUrl: URL? = nil
+            var imageUrl: URL?
             if let imageData = personViewModel.profileImage?.pngData() {
                 (imageSavedSuccessfully, imageUrl) =
                     FileManager.write(data: imageData, fileName: Constants.personImageFileName)
@@ -88,6 +93,26 @@ class OperationDataManager: DataManager {
             
             if let completion = completion {
                 completion(imageSavedSuccessfully && dataSavedSuccessfully)
+            }
+        }
+    }
+    
+    class GetUserIdOperation: Operation {
+        private let completion: (String) -> Void
+        private let userIdKey = "UserId"
+        private let userDefaults = UserDefaults.standard
+        
+        init(completion: @escaping (String) -> Void) {
+            self.completion = completion
+        }
+        
+        override func main() {
+            if let userId = userDefaults.string(forKey: userIdKey) {
+                completion(userId)
+            } else {
+                let userId = UUID().uuidString
+                userDefaults.set(userId, forKey: userIdKey)
+                completion(userId)
             }
         }
     }

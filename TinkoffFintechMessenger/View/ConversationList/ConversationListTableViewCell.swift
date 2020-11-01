@@ -51,7 +51,6 @@ class ConversationListTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        backgroundColor = nil
         messageLabel.font = Appearance.font13
     }
     
@@ -71,7 +70,7 @@ class ConversationListTableViewCell: UITableViewCell {
             verticalSV.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
             verticalSV.topAnchor.constraint(equalTo: topAnchor, constant: padding),
             verticalSV.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
-            verticalSV.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -padding),
+            verticalSV.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -padding)
         ])
         
         let selectedBGView = UIView()
@@ -84,29 +83,24 @@ class ConversationListTableViewCell: UITableViewCell {
 
 extension ConversationListTableViewCell: ConfigurableView {
 
-    func configure(with model: ConversationCellModel) {
+    func configure(with model: Channel) {
+        backgroundColor = Appearance.backgroundColor
         nameLabel.text = model.name
         
-        if model.date.isToday {
-            dateLabel.text = model.date.formatted(with: "HH:mm")
+        if let data = model.lastActivity {
+            if data.isToday {
+                dateLabel.text = data.formatted(with: "HH:mm")
+            } else {
+                dateLabel.text = data.formatted(with: "dd MMM")
+            }
+        }
+        
+        if let message = model.lastMessage {
+            messageLabel.text = message
         } else {
-            dateLabel.text = model.date.formatted(with: "dd MMM")
-        }
-        
-        if model.hasUnreadMessages {
-            messageLabel.font = Appearance.boldFont13
-        }
-        
-        if model.message.isEmpty {
             messageLabel.text = "No messages yet"
             messageLabel.font = Appearance.italicFont13
             dateLabel.text = nil
-        } else {
-            messageLabel.text = model.message
-        }
-        
-        if model.isOnline {
-            backgroundColor = Appearance.yellowSecondaryColor
         }
         
         dateLabel.textColor = Appearance.labelSecondary
