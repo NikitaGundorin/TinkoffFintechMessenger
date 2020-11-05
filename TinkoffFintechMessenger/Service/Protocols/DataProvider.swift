@@ -9,10 +9,13 @@
 import Foundation
 
 protocol DataProvider {
-    func subscribeChannels(completion: @escaping ([Channel]?, Error?) -> Void)
+    var userId: String? { get }
+    
+    func subscribeChannels(completion: @escaping (Error?) -> Void)
     func subscribeMessages(forChannelWithId channelId: String,
-                           completion: @escaping ([MessageCellModel]?, Error?) -> Void)
+                           completion: @escaping (Error?) -> Void)
     func unsubscribeChannel()
     func createChannel(withName name: String, completion: @escaping (String) -> Void)
+    func deleteChannel(withId identifier: String)
     func sendMessage(widthContent content: String, completion: @escaping () -> Void)
 }

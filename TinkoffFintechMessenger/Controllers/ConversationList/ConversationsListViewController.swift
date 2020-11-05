@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 final class ConversationsListViewController: UIViewController {
     
@@ -15,7 +16,9 @@ final class ConversationsListViewController: UIViewController {
     private let dataProvider: DataProvider = FirestoreDataProvider()
     private let rowHeight: CGFloat = 75
     private let baseCellId = "baseCellId"
-    private lazy var items: [Channel] = []
+    private var channels: [Channel_db]? {
+        fetchedResultsController.fetchedObjects
+    }
     private var person: PersonViewModel? {
         didSet {
             if let person = self.person {
@@ -42,6 +45,20 @@ final class ConversationsListViewController: UIViewController {
         
         self?.present(alertController, animated: true)
     }
+    private lazy var fetchedResultsController: NSFetchedResultsController<Channel_db> = {
+        let fetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
+        fetchRequest.sortDescriptors = [.init(key: "lastActivity", ascending: false),
+                                        .init(key: "name", ascending: true)]
+        fetchRequest.resultType = .managedObjectResultType
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                             managedObjectContext: CoreDataManager.shared.mainContext,
+                                             sectionNameKeyPath: nil,
+                                             cacheName: nil)
+        
+        frc.delegate = self
+        return frc
+    }()
+    private let loggerSourceName = "ConversationsListViewController"
     
     // MARK: - UI
     
@@ -72,6 +89,12 @@ final class ConversationsListViewController: UIViewController {
     }
     
     func loadData() {
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            Logger.error(loggerSourceName, error.localizedDescription)
+        }
+        
         let dataManager = GCDDataManager()
         //let dataManager = OperationDataManager()
         
@@ -79,15 +102,11 @@ final class ConversationsListViewController: UIViewController {
             self?.person = person
         }
         
-        dataProvider.subscribeChannels { [weak self] channels, error in
-            guard let channels = channels else {
-                if let error = error {
-                    print(error)
-                }
-                return
+        dataProvider.subscribeChannels { [weak self] error in
+            if let error = error {
+                return AlertHelper().presentErrorAlert(vc: self, message: error.localizedDescription)
             }
             
-            self?.items = channels
             self?.tableView.reloadData()
         }
     }
@@ -156,22 +175,25 @@ final class ConversationsListViewController: UIViewController {
 
 extension ConversationsListViewController: UITableViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return channels?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: baseCellId) as? ConversationListTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: baseCellId) as? ConversationListTableViewCell,
+            let channel = Channel(channel: fetchedResultsController.object(at: indexPath)) else {
             return UITableViewCell()
         }
         
-        cell.configure(with: items[indexPath.row])
+        cell.configure(with: channel)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete, let identifier = channels?[indexPath.row].identifier {
+            dataProvider.deleteChannel(withId: identifier)
+        }
     }
 }
 
@@ -191,8 +213,58 @@ extension ConversationsListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presentConversationController(conversationName: items[indexPath.row].name,
-                                      channelId: items[indexPath.row].identifier)
+        guard let channel = Channel(channel: fetchedResultsController.object(at: indexPath)) else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        presentConversationController(conversationName: channel.name,
+                                      channelId: channel.identifier)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+
+extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        Logger.info(loggerSourceName, #function)
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        Logger.info(loggerSourceName, #function)
+        tableView.endUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            Logger.info(loggerSourceName, "\(#function) - type: insert")
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
+        case .move:
+            Logger.info(loggerSourceName, "\(#function) - type: move")
+            if let indexPath = indexPath, let newIndexPath = newIndexPath {
+                tableView.deleteRows(at: [indexPath], with: .top)
+                tableView.insertRows(at: [newIndexPath], with: .top)
+            }
+        case .update:
+            Logger.info(loggerSourceName, "\(#function) - type: update")
+            if let indexPath = indexPath {
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        case .delete:
+            Logger.info(loggerSourceName, "\(#function) - type: delete")
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .left)
+            }
+        @unknown default:
+            Logger.info(loggerSourceName, "Unknown case statement")
+        }
     }
 }

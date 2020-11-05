@@ -6,14 +6,18 @@
 //  Copyright © 2020 Nikita Gundorin. All rights reserved.
 //
 
-import Foundation
+import Firebase
 
 protocol NetworkManager {
-    func subscribeChannels(completion: @escaping ([Channel]?, Error?) -> Void)
+    func getChannels(completion: @escaping ([Channel]?, Error?) -> Void)
+    func subscribeChannels(completion: @escaping ([DocumentChange]?, Error?) -> Void)
+    func getMessages(forChannelWithId channelId: String,
+                     completion: @escaping ([Message]?, Error?) -> Void)
     func subscribeMessages(forChannelWithId channelId: String,
-                           completion: @escaping ([Message]?, Error?) -> Void)
+                           completion: @escaping ([DocumentChange]?, Error?) -> Void)
     func unsubscribeChannel()
     func createChannel(withName name: String, completion: @escaping (String) -> Void)
+    func deleteChannel(withId identifier: String, completion: @escaping (Bool) -> Void)
     func sendMessage(widthContent content: String,
                      senderId: String,
                      senderName: String,

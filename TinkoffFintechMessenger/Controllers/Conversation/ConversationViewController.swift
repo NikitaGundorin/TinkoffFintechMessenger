@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 final class ConversationViewController: UIViewController {
     
@@ -15,11 +16,27 @@ final class ConversationViewController: UIViewController {
     var conversationName: String?
     var channelId: String?
     var dataProvider: DataProvider?
+    lazy var userId: String = dataProvider?.userId ?? ""
     
     // MARK: - Private properties
     
     private let messageCellId = "messageCellId"
-    private var messages: [MessageCellModel] = []
+    private var messages: [Message_db]? {
+        fetchedResultsController.fetchedObjects
+    }
+    private lazy var fetchedResultsController: NSFetchedResultsController<Message_db> = {
+        let fetchRequest: NSFetchRequest<Message_db> = Message_db.fetchRequest()
+        fetchRequest.sortDescriptors = [.init(key: "created", ascending: true)]
+        fetchRequest.predicate = .init(format: "channel.identifier == %@", channelId ?? "")
+        fetchRequest.resultType = .managedObjectResultType
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                             managedObjectContext: CoreDataManager.shared.mainContext,
+                                             sectionNameKeyPath: nil,
+                                             cacheName: nil)
+        frc.delegate = self
+        return frc
+    }()
+    private let loggerSourceName = "ConversationViewController"
     
     // MARK: - UI
     
@@ -95,22 +112,24 @@ final class ConversationViewController: UIViewController {
     
     private func loadData() {
         guard let channelId = channelId else { return }
-        dataProvider?.subscribeMessages(forChannelWithId: channelId) { [weak self] messages, error in
-            guard let messages = messages else {
-                if let error = error {
-                    print(error)
-                }
-                return
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            Logger.error(loggerSourceName, error.localizedDescription)
+        }
+        dataProvider?.subscribeMessages(forChannelWithId: channelId) { [weak self] error in
+            if let error = error {
+                return AlertHelper().presentErrorAlert(vc: self, message: error.localizedDescription)
             }
             
-            self?.messages = messages
             self?.tableView.reloadData()
             self?.scrollToBottom()
         }
     }
     
     private func scrollToBottom() {
-        guard messages.count > 0 else { return }
+        guard let messages = messages,
+            messages.count > 0 else { return }
         let row = messages.count - 1
         let indexPath = IndexPath(row: row, section: 0)
         tableView.scrollToRow(at: indexPath,
@@ -149,16 +168,63 @@ final class ConversationViewController: UIViewController {
 extension ConversationViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
+        return messages?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: messageCellId) as? MessageCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: messageCellId) as? MessageCell,
+            let message = MessageCellModel(message: fetchedResultsController.object(at: indexPath), userId: userId) else {
             return UITableViewCell()
         }
         
-        cell.configure(with: messages[indexPath.row])
+        cell.configure(with: message)
         
         return cell
+    }
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+
+extension ConversationViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        Logger.info(loggerSourceName, #function)
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        Logger.info(loggerSourceName, #function)
+        tableView.endUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            Logger.info(loggerSourceName, "\(#function) - type: insert")
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
+        case .move:
+            Logger.info(loggerSourceName, "\(#function) - type: move")
+            if let indexPath = indexPath, let newIndexPath = newIndexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
+        case .update:
+            Logger.info(loggerSourceName, "\(#function) - type: update")
+            if let indexPath = indexPath {
+                self.tableView.reloadRows(at: [indexPath], with: .none)
+            }
+        case .delete:
+            Logger.info(loggerSourceName, "\(#function) - type: delete")
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+        @unknown default:
+            Logger.info(loggerSourceName, "Unknown case statement")
+        }
     }
 }

@@ -44,6 +44,7 @@
 		72A1757E2534DC9100D4D81D /* TextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A1757D2534DC9100D4D81D /* TextViewDelegate.swift */; };
 		72A175822534DDD200D4D81D /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A175812534DDD200D4D81D /* CameraManager.swift */; };
 		72A175852534E2AC00D4D81D /* ImagePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A175842534E2AC00D4D81D /* ImagePickerDelegate.swift */; };
+		72A9B451255329ED00F5FCA8 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A9B450255329ED00F5FCA8 /* AlertHelper.swift */; };
 		72AF92BD2527B4B500335DF4 /* ThemesPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AF92BC2527B4B500335DF4 /* ThemesPickerDelegate.swift */; };
 		72AF92C8252934DB00335DF4 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AF92C7252934DB00335DF4 /* BaseNavigationController.swift */; };
 		72DAD5FF250F4489008C8762 /* UIApplication.State+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DAD5FE250F4489008C8762 /* UIApplication.State+description.swift */; };
@@ -102,6 +103,7 @@
 		72A1757D2534DC9100D4D81D /* TextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewDelegate.swift; sourceTree = "<group>"; };
 		72A175812534DDD200D4D81D /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		72A175842534E2AC00D4D81D /* ImagePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerDelegate.swift; sourceTree = "<group>"; };
+		72A9B450255329ED00F5FCA8 /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
 		72AF92BC2527B4B500335DF4 /* ThemesPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesPickerDelegate.swift; sourceTree = "<group>"; };
 		72AF92C7252934DB00335DF4 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		72DAD5FE250F4489008C8762 /* UIApplication.State+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication.State+description.swift"; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				7276AC03250E74C90017245A /* Controllers */,
 				7276AC02250E74C10017245A /* View */,
 				72DAD5FD250F445F008C8762 /* Extensions */,
+				72A9B44F255329D800F5FCA8 /* Helpers */,
 				7276AC01250E74AB0017245A /* SupportingFiles */,
 			);
 			path = TinkoffFintechMessenger;
@@ -278,6 +281,14 @@
 				7240BEFC253B48F500C00BB9 /* FirestoreNetworkManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		72A9B44F255329D800F5FCA8 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				72A9B450255329ED00F5FCA8 /* AlertHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		72AF92C6252934C200335DF4 /* Common */ = {
@@ -596,6 +607,7 @@
 				7240BF03253CB70C00C00BB9 /* CreateChannelAlertController.swift in Sources */,
 				7256E6B32527808300DA0608 /* ThemesViewController.swift in Sources */,
 				729E44EA2521FD6B004CE520 /* MessageCell.swift in Sources */,
+				72A9B451255329ED00F5FCA8 /* AlertHelper.swift in Sources */,
 				7256E6B72527821200DA0608 /* ThemePicker.swift in Sources */,
 				72F69F42251E82FF00FCC09B /* Date+Formatter.swift in Sources */,
 				72F69F4525210EB700FCC09B /* Appearance.swift in Sources */,
@@ -761,7 +773,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChatNig;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = Messenger;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -781,7 +793,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChatNig;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = Messenger;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
