@@ -181,7 +181,7 @@ class Appearance {
 
 // MARK: - ThemesPickerDelegate
 
-extension Appearance: ThemesPickerDelegate {
+extension Appearance: IThemePickerDelegate {
     
     func themeSelected(width identifier: Int) {
         guard themes.first(where: { $0.id == identifier && !$0.isSelected }) != nil else { return }

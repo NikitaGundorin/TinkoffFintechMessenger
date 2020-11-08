@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Private properties
     
     private let loggerSourceName = "Application"
+    private let rootAssembly = RootAssembly()
     
     // MARK: - App lifecycle methods
     
@@ -32,10 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         CoreDataManager.shared.enableObservers()
         
-        let conversationListVC = ConversationsListViewController()
-        let navigationController = BaseNavigationController(rootViewController: conversationListVC)
-        
-        setUserData(vc: conversationListVC)
+        let conversationListVC = rootAssembly.presentationAssembly.conversationsListViewController()
+        let navigationController =
+            rootAssembly.presentationAssembly.baseNavigationViewController(rootViewController: conversationListVC)
         
         window = UIWindow()
         window?.rootViewController = navigationController
@@ -84,20 +84,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                          from: application.applicationState.description,
                          to: "Not running",
                          methodName: #function)
-    }
-    
-    // MARK: - Private methods
-    
-    private func setUserData(vc: ConversationsListViewController) {
-        let dataManager = GCDDataManager()
-        //let dataManager = OperationDataManager()
-        
-        GCDDataManager().loadPersonData { personViewModel in
-            if personViewModel == nil {
-                dataManager.savePersonData(.init(fullName: "Nikita Gundorin",
-                                                 description: "iOS developer\nSaint-Petersburg",
-                                                 profileImage: nil)) { _ in vc.loadData() }
-            }
-        }
     }
 }
