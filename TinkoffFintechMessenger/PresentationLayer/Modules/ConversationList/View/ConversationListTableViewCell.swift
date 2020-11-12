@@ -9,7 +9,7 @@
 import UIKit
 
 class ConversationListTableViewCell: UITableViewCell {
-
+    
     // MARK: - UI
     
     private lazy var nameLabel: UILabel = {
@@ -81,9 +81,9 @@ class ConversationListTableViewCell: UITableViewCell {
 
 // MARK: - ConfigurableView
 
-extension ConversationListTableViewCell: ConfigurableView {
-
-    func configure(with model: Channel) {
+extension ConversationListTableViewCell: IConfigurableView {
+    
+    func configure(with model: ConversationCellModel) {
         backgroundColor = Appearance.backgroundColor
         nameLabel.text = model.name
         

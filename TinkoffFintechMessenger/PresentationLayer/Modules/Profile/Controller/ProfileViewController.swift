@@ -32,8 +32,8 @@ final class ProfileViewController: UIViewController {
     // MARK: - Private properties
     
     private lazy var activityIndicator = UIActivityIndicatorView()
-    private var user: UserViewModel?
-    private var userModel: UserViewModel {
+    private var user: UserModel?
+    private var userModel: UserModel {
         .init(fullName: userNameTextView.text,
               description: userDescriptionTextView.text,
               profileImage: user?.profileImage)
@@ -42,11 +42,11 @@ final class ProfileViewController: UIViewController {
     private lazy var imagePickerDelegate =
         ImagePickerDelegate(errorHandler: { [weak self] in
             AlertHelper().presentErrorAlert(vc: self)
-        }, imagePickedHandler: { [weak self] image in
-            var imageChanged = !(self?.originalUserImage?.isEqual(to: image) ?? false)
-            self?.imageChanged = imageChanged
-            self?.setSaveButtonsEnabled(imageChanged || self?.nameChanged ?? true || self?.descriptionChanged ?? true)
-            self?.setProfileImage(image: image)
+            }, imagePickedHandler: { [weak self] image in
+                var imageChanged = !(self?.originalUserImage?.isEqual(to: image) ?? false)
+                self?.imageChanged = imageChanged
+                self?.setSaveButtonsEnabled(imageChanged || self?.nameChanged ?? true || self?.descriptionChanged ?? true)
+                self?.setProfileImage(image: image)
         })
     private lazy var imagePickerController: UIImagePickerController = {
         let vc = UIImagePickerController()
@@ -84,7 +84,7 @@ final class ProfileViewController: UIViewController {
         
         setupLayout()
     }
-
+    
     // MARK: - IBActions
     
     @IBAction private func profileImageEditButtonPressed(_ sender: Any) {
@@ -138,9 +138,9 @@ final class ProfileViewController: UIViewController {
                                            title: "Error",
                                            message: "Failed to load data",
                                            additionalActions: [.init(title: "Try again", style: .default) { [weak self] _ in
-                                        self?.loadData()
-                                    }]) { [weak self] _ in
-                    self?.cancel()
+                                            self?.loadData()
+                                            }]) { [weak self] _ in
+                                                self?.cancel()
                 }
                 return
             }
@@ -164,14 +164,14 @@ final class ProfileViewController: UIViewController {
         operationSaveButton.layer.cornerRadius = Appearance.baseCornerRadius
         operationSaveButton.backgroundColor = Appearance.grayColor
         navigationItem.leftBarButtonItem = .init(barButtonSystemItem: .cancel,
-                                                  target: self,
-                                                  action: #selector(cancel))
+                                                 target: self,
+                                                 action: #selector(cancel))
         navigationItem.title = "My Profile"
         navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .edit,
                                                   target: self,
                                                   action: #selector(toggleEditMode))
         view.backgroundColor = Appearance.backgroundColor
-
+        
         userNameTextView.layer.cornerRadius = Appearance.baseCornerRadius
         userDescriptionTextView.layer.cornerRadius = Appearance.baseCornerRadius
         
@@ -213,7 +213,7 @@ final class ProfileViewController: UIViewController {
                 if let profileDataUpdatedHandler = self?.profileDataUpdatedHandler {
                     profileDataUpdatedHandler()
                 }
-
+                
                 DispatchQueue.main.async {
                     if self?.profileImageView.profileImage == nil {
                         self?.setProfileImage(image: nil)
@@ -252,7 +252,8 @@ final class ProfileViewController: UIViewController {
     
     private func setProfileImage(image: UIImage?) {
         user?.profileImage = image
-        profileImageView.configure(with: userModel)
+        profileImageView.configure(with: .init(initials: userModel.initials,
+                                               image: userModel.profileImage))
     }
     
     private func exitEditMode() {
@@ -272,7 +273,8 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+        if let keyboardSize =
+            (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
             keyboardSize.height > 0 {
             if userNameTextView.isFirstResponder {
                 userNameBottomConstraint.constant = keyboardSize.height
@@ -291,7 +293,7 @@ final class ProfileViewController: UIViewController {
             }
         }
     }
-
+    
     @objc private func keyboardWillHide(notification: NSNotification) {
         userNameBottomConstraint.constant = 0
         userNameBottomConstraint.priority = lowPriority
@@ -308,7 +310,8 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func toggleEditMode() {
-        let backgroundColor = userNameTextView.isUserInteractionEnabled ? nil : Appearance.yellowSecondaryColor
+        let backgroundColor = userNameTextView.isUserInteractionEnabled ? nil
+            : Appearance.yellowSecondaryColor
         UIView.animate(withDuration: Appearance.defaultAnimationDuration) {
             self.userNameTextView.backgroundColor = backgroundColor
             self.userDescriptionTextView.backgroundColor = backgroundColor

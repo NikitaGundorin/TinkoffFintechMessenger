@@ -21,11 +21,6 @@ struct Channel {
         self.lastActivity = lastActivity
     }
     
-    init?(channel: Channel_db?) {
-        guard let identifier = channel?.identifier, let name = channel?.name else { return nil }
-        self.init(identifier: identifier, name: name, lastMessage: channel?.lastMessage, lastActivity: channel?.lastActivity)
-    }
-    
     init?(document: QueryDocumentSnapshot) {
         let lastMessage = document["lastMessage"] as? String
         let lastActivity = (document["lastActivity"] as? Timestamp)?.dateValue()

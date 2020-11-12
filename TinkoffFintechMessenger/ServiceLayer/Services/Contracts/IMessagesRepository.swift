@@ -18,6 +18,6 @@ protocol IMessagesRepository {
     
     func performFetch(completion: (Error?) -> Void)
     
-    func object(at indexPath: IndexPath) -> MessageViewModel?
-    func fetchedObjects() -> [MessageViewModel]?
+    func object(at indexPath: IndexPath) -> MessageModel?
+    func fetchedObjects() -> [MessageModel]?
 }

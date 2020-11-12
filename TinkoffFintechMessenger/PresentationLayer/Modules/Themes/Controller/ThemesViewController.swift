@@ -20,12 +20,7 @@ class ThemesViewController: UIViewController {
         var pickers: [ThemePickerView] = []
         themes?.forEach {
             let picker = ThemePickerView()
-            picker.configure(with: .init(name: $0.name,
-                                         isSelected: $0.id == themeService?.currentTheme?.id,
-                                         id: $0.id,
-                                         incomingMessageColor: $0.incomingMessageColor,
-                                         outgoingMessageColor: $0.outgoingMessageColor,
-                                         backgroundColor: $0.backgroundColor))
+            picker.configure(with: .init(theme: $0, selectedThemeId: themeService?.currentTheme?.id))
             picker.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                action: #selector(themePickerPressed(sender:))))
             pickers.append(picker)
@@ -63,7 +58,8 @@ class ThemesViewController: UIViewController {
         view.addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: navigationController?.navigationBar.frame.height ?? 0),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor,
+                                               constant: navigationController?.navigationBar.frame.height ?? 0),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalPadding),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalPadding),
             stackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: heightMultiplier)
@@ -83,12 +79,8 @@ class ThemesViewController: UIViewController {
         }
         
         themes?.forEach {
-            themePickers[$0.id].configure(with: .init(name: $0.name,
-                                                      isSelected: $0.id == themeService?.currentTheme?.id,
-                                                      id: $0.id,
-                                                      incomingMessageColor: $0.incomingMessageColor,
-                                                      outgoingMessageColor: $0.outgoingMessageColor,
-                                                      backgroundColor: $0.backgroundColor))
+            themePickers[$0.id].configure(with: .init(theme: $0,
+                                                      selectedThemeId: themeService?.currentTheme?.id))
         }
     }
 }

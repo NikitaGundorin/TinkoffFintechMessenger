@@ -9,6 +9,9 @@
 import Foundation
 
 class DataManager: IDataManager {
+    
+    // MARK: - IDataManager
+    
     func loadUserData(completion: @escaping (User?) -> Void) {
         guard let data = FileManager.read(fileName: Constants.userDataFileName),
             let user = try? JSONDecoder().decode(User.self, from: data)

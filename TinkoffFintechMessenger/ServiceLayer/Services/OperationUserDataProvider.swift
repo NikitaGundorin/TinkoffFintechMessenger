@@ -27,12 +27,12 @@ class OperationUserDataProvider: IUserDataProvider {
     
     // MARK: - IUserDataProvider
     
-    func loadUserData(completion: @escaping (UserViewModel?) -> Void) {
+    func loadUserData(completion: @escaping (UserModel?) -> Void) {
         let operation = LoadUserDataOperation(dataManager: dataManager, completion: completion)
         operationQueue.addOperation(operation)
     }
     
-    func saveUserData(_ userViewModel: UserViewModel, completion: ((Bool) -> Void)? = nil) {
+    func saveUserData(_ userViewModel: UserModel, completion: ((Bool) -> Void)? = nil) {
         let operation = SaveUserDataOperation(dataManager: dataManager,
                                               userViewModel: userViewModel,
                                               completion: completion)
@@ -48,9 +48,9 @@ class OperationUserDataProvider: IUserDataProvider {
     
     class LoadUserDataOperation: Operation {
         private let dataManager: IDataManager
-        private let completion: (UserViewModel?) -> Void
+        private let completion: (UserModel?) -> Void
         
-        init(dataManager: IDataManager, completion: @escaping (UserViewModel?) -> Void) {
+        init(dataManager: IDataManager, completion: @escaping (UserModel?) -> Void) {
             self.dataManager = dataManager
             self.completion = completion
         }
@@ -83,11 +83,11 @@ class OperationUserDataProvider: IUserDataProvider {
     
     class SaveUserDataOperation: Operation {
         private let dataManager: IDataManager
-        private let userViewModel: UserViewModel
+        private let userViewModel: UserModel
         private let completion: ((Bool) -> Void)?
         
         init(dataManager: IDataManager,
-             userViewModel: UserViewModel,
+             userViewModel: UserModel,
              completion: ((Bool) -> Void)? = nil) {
             self.dataManager = dataManager
             self.userViewModel = userViewModel

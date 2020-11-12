@@ -22,8 +22,8 @@ class CreateChannelAlertController: UIAlertController {
     override func addTextField(configurationHandler: ((UITextField) -> Void)? = nil) {
         super.addTextField { [weak self] textField in
             textField.addTarget(self,
-            action: #selector(self?.createChannelTextFieldDidChange(_:)),
-            for: .editingChanged)
+                                action: #selector(self?.createChannelTextFieldDidChange(_:)),
+                                for: .editingChanged)
         }
     }
     

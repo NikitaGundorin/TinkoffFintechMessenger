@@ -1,5 +1,5 @@
 //
-//  MessageViewModel.swift
+//  MessageModel.swift
 //  TinkoffFintechMessenger
 //
 //  Created by Nikita Gundorin on 28.09.2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MessageViewModel {
+struct MessageModel {
     let content: String
     let senderId: String
     let senderName: String

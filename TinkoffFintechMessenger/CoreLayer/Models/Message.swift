@@ -31,7 +31,7 @@ struct Message {
             !senderId.isEmptyOrOnlyWhitespaces,
             let senderName = document["senderName"] as? String,
             !senderName.isEmptyOrOnlyWhitespaces
-        else { return nil }
+            else { return nil }
         
         self.init(identifier: document.documentID,
                   content: content,

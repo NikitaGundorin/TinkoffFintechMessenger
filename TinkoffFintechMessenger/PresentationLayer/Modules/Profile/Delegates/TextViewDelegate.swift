@@ -42,7 +42,7 @@ class TextViewDelegate: NSObject {
             return nil
         }
     }
-
+    
     // MARK: - Initializer
     
     init(textViewType: TextViewType? = nil, textChangedHandler: @escaping () -> Void) {
@@ -54,12 +54,12 @@ class TextViewDelegate: NSObject {
 // MARK: - UITextViewDelegate
 
 extension TextViewDelegate: UITextViewDelegate {
-
+    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         guard let textViewType = self.textViewType,
-              let limitCharNumber = self.limitCharNumber else {
-            return true
+            let limitCharNumber = self.limitCharNumber else {
+                return true
         }
         let currentText = textView.text ?? ""
         

@@ -83,9 +83,9 @@ class MessageCell: UITableViewCell {
             messageLabel.leadingAnchor.constraint(equalTo: containerMessageView.leadingAnchor,
                                                   constant: padding),
             messageLabel.trailingAnchor.constraint(equalTo: containerMessageView.trailingAnchor,
-                                              constant: -padding),
+                                                   constant: -padding),
             messageLabel.bottomAnchor.constraint(equalTo: containerMessageView.bottomAnchor,
-                                              constant: -padding)
+                                                 constant: -padding)
         ])
         containerMessageView.layer.cornerRadius = Appearance.baseCornerRadius
         backgroundColor = nil
@@ -94,8 +94,8 @@ class MessageCell: UITableViewCell {
 
 // MARK: - ConfigurableView
 
-extension MessageCell: ConfigurableView {
-
+extension MessageCell: IConfigurableView {
+    
     func configure(with model: MessageCellModel) {
         messageLabel.text = model.content
         

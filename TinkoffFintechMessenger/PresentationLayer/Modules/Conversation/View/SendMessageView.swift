@@ -10,10 +10,6 @@ import UIKit
 
 class SendMessageView: UIView {
     
-    // MARK: - Public properties
-    
-    var sendMessageAction: ((String) -> Void)?
-    
     // MARK: - UI
     
     private lazy var textView: UITextView = {
@@ -44,6 +40,8 @@ class SendMessageView: UIView {
     private let defaultHeight: CGFloat = 33
     private let maxHeight: CGFloat = 200
     private lazy var textViewHeightConstraint = textView.heightAnchor.constraint(equalToConstant: defaultHeight)
+    
+    private var sendMessageAction: ((String) -> Void)?
     
     // MARK: - Initializers
     
@@ -97,6 +95,14 @@ class SendMessageView: UIView {
             textViewHeightConstraint.constant = defaultHeight
             sendButton.isEnabled = false
         }
+    }
+}
+
+// MARK: - IConfigurableView
+
+extension SendMessageView: IConfigurableView {
+    func configure(with model: SendMessageModel) {
+        sendMessageAction = model.sendMessageAction
     }
 }
 

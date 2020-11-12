@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct UserViewModel {
+struct UserModel {
     var fullName: String
     var firstName: String? {
         fullName.components(separatedBy: .whitespacesAndNewlines).first

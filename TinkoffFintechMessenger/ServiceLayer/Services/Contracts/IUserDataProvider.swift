@@ -9,7 +9,7 @@
 import Foundation
 
 protocol IUserDataProvider {
-    func loadUserData(completion: @escaping (UserViewModel?) -> Void)
-    func saveUserData(_ userViewModel: UserViewModel, completion: ((Bool) -> Void)?)
+    func loadUserData(completion: @escaping (UserModel?) -> Void)
+    func saveUserData(_ userViewModel: UserModel, completion: ((Bool) -> Void)?)
     func getUserId(completion: @escaping ((String) -> Void))
 }

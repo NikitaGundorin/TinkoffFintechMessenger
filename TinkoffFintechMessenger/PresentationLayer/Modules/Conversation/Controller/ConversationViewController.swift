@@ -18,6 +18,7 @@ final class ConversationViewController: UIViewController {
     var repository: IMessagesRepository? {
         didSet {
             configureRepository()
+            tableViewDataSource.repository = repository
         }
     }
     var logger: ILoggerService?
@@ -25,9 +26,11 @@ final class ConversationViewController: UIViewController {
     // MARK: - Private properties
     
     private let messageCellId = "messageCellId"
-    private var messages: [MessageViewModel]? {
+    private var messages: [MessageModel]? {
         repository?.fetchedObjects()
     }
+    
+    private lazy var tableViewDataSource = ConversationTableViewDataSource(cellId: messageCellId)
     
     // MARK: - UI
     
@@ -36,7 +39,7 @@ final class ConversationViewController: UIViewController {
         tableView.register(MessageCell.self, forCellReuseIdentifier: messageCellId)
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
-        tableView.dataSource = self
+        tableView.dataSource = tableViewDataSource
         
         return tableView
     }()
@@ -51,8 +54,8 @@ final class ConversationViewController: UIViewController {
         return view
     }()
     
-    private lazy var sendMessageViewBottomConstraint = sendMessageView.bottomAnchor.constraint(
-        equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+    private lazy var sendMessageViewBottomConstraint =
+        sendMessageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
     
     // MARK: - Lifecycle methods
     
@@ -166,7 +169,8 @@ final class ConversationViewController: UIViewController {
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+        if let keyboardSize =
+            (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
             keyboardSize.height > 0 {
             
             sendMessageViewBottomConstraint.constant = -keyboardSize.height + view.safeAreaInsets.bottom
@@ -178,7 +182,6 @@ final class ConversationViewController: UIViewController {
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {
-        
         sendMessageViewBottomConstraint.constant = 0
         
         UIView.animate(withDuration: Appearance.defaultAnimationDuration) {
@@ -188,27 +191,5 @@ final class ConversationViewController: UIViewController {
     
     @objc private func dismissKeyboard() {
         view.endEditing(false)
-    }
-}
-
-// MARK: - UITableViewDataSource
-
-extension ConversationViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: messageCellId) as? MessageCell,
-            let message = repository?.object(at: indexPath) else {
-                return UITableViewCell()
-        }
-        
-        cell.configure(with: .init(content: message.content,
-                                   isIncoming: message.isIncoming,
-                                   senderName: message.senderName))
-        
-        return cell
     }
 }

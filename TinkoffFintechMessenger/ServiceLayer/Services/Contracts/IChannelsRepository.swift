@@ -18,6 +18,6 @@ protocol IChannelsRepository {
     
     func performFetch(completion: (Error?) -> Void)
     
-    func object(at indexPath: IndexPath) -> ChannelViewModel?
-    func fetchedObjects() -> [ChannelViewModel]?
+    func object(at indexPath: IndexPath) -> ChannelModel?
+    func fetchedObjects() -> [ChannelModel]?
 }

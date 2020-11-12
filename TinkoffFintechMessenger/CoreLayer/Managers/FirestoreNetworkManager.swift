@@ -9,10 +9,15 @@
 import Firebase
 
 class FirestoreNetworkManager: INetworkManager {
+    
+    // MARK: - Private properties
+    
     private lazy var db = Firestore.firestore()
     private lazy var channelsReference = db.collection("channels")
     private var messagesReference: CollectionReference?
     private var messageListener: ListenerRegistration?
+    
+    // MARK: - INetworkManager
     
     func getChannels(completion: @escaping ([Channel]?, Error?) -> Void) {
         channelsReference.getDocuments { snapshot, error in
@@ -22,9 +27,9 @@ class FirestoreNetworkManager: INetworkManager {
                 }
                 return
             }
-
+            
             let data = snapshot.documents.compactMap { Channel(document: $0) }
-
+            
             completion(data, nil)
         }
     }
@@ -82,7 +87,7 @@ class FirestoreNetworkManager: INetworkManager {
     func createChannel(withName name: String, completion: @escaping (String) -> Void) {
         var document: DocumentReference?
         document = channelsReference.addDocument(data: ["name": name]) { _ in
-                    completion(document?.documentID ?? "")
+            completion(document?.documentID ?? "")
         }
     }
     

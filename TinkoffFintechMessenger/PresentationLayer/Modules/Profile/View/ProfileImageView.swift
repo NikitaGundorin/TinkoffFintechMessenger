@@ -87,10 +87,10 @@ class ProfileImageView: UIView {
 
 // MARK: - ConfigurableView
 
-extension ProfileImageView: ConfigurableView {
-    func configure(with model: UserViewModel) {
-        imageView.image = model.profileImage
-        initialsLabel.isHidden = model.profileImage != nil
+extension ProfileImageView: IConfigurableView {
+    func configure(with model: ProfileImageModel) {
+        imageView.image = model.image
+        initialsLabel.isHidden = model.image != nil
         initialsLabel.text = model.initials
     }
 }

@@ -20,7 +20,7 @@ class GCDUserDataProvider: IUserDataProvider {
     
     // MARK: - IUserDataProvider
     
-    func loadUserData(completion: @escaping (UserViewModel?) -> Void) {
+    func loadUserData(completion: @escaping (UserModel?) -> Void) {
         DispatchQueue.global(qos: .utility).async { [weak self] in
             self?.dataManager.loadUserData { user in
                 guard let user = user else {
@@ -41,7 +41,7 @@ class GCDUserDataProvider: IUserDataProvider {
         }
     }
     
-    func saveUserData(_ userViewModel: UserViewModel, completion: ((Bool) -> Void)? = nil) {
+    func saveUserData(_ userViewModel: UserModel, completion: ((Bool) -> Void)? = nil) {
         DispatchQueue.global(qos: .utility).async { [weak self] in
             self?.dataManager.saveUserImage(imageData: userViewModel.profileImage?.pngData()) { url in
                 let user = User(fullName: userViewModel.fullName,

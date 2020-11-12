@@ -28,13 +28,13 @@ class MessagesRepository: Repository<Message_db>, IMessagesRepository {
     
     // MARK: - IMessagesRepository
     
-    func object(at indexPath: IndexPath) -> MessageViewModel? {
+    func object(at indexPath: IndexPath) -> MessageModel? {
         let message = super.object(at: indexPath)
-        return MessageViewModel(message: message, userId: userId)
+        return MessageModel(message: message, userId: userId)
     }
     
-    func fetchedObjects() -> [MessageViewModel]? {
+    func fetchedObjects() -> [MessageModel]? {
         guard let messages = super.fetchedObjects() else { return nil }
-        return messages.compactMap { MessageViewModel(message: $0, userId: userId) }
+        return messages.compactMap { MessageModel(message: $0, userId: userId) }
     }
 }

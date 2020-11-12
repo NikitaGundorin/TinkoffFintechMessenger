@@ -15,4 +15,13 @@ struct ThemeModel {
     let incomingMessageColor: UIColor?
     let outgoingMessageColor: UIColor?
     let backgroundColor: UIColor?
+    
+    init(theme: Theme, selectedThemeId: Int?) {
+        self.name = theme.name
+        self.isSelected = theme.id == selectedThemeId
+        self.id = theme.id
+        self.incomingMessageColor = theme.incomingMessageColor
+        self.outgoingMessageColor = theme.outgoingMessageColor
+        self.backgroundColor = theme.backgroundColor
+    }
 }

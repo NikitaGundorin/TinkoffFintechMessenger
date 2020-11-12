@@ -1,5 +1,5 @@
 //
-//  ChannelViewModel.swift
+//  ChannelModel.swift
 //  TinkoffFintechMessenger
 //
 //  Created by Nikita Gundorin on 11.11.2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ChannelViewModel {
+struct ChannelModel {
     let identifier: String
     let name: String
     let lastActivity: Date?
