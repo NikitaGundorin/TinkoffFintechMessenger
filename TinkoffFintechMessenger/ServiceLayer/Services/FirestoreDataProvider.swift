@@ -10,10 +10,11 @@ import Firebase
 
 class FirestoreDataProvider: IConversationsDataProvider {
     
-    var networkManager: INetworkManager?
-    var userDataProvider: IUserDataProvider?
-    
     // MARK: - Private properties
+    
+    private let networkManager: INetworkManager
+    private let userDataProvider: IUserDataProvider
+    private let coreDataManager: ICoreDataManager
     
     private var userName: String?
     
@@ -21,17 +22,25 @@ class FirestoreDataProvider: IConversationsDataProvider {
     
     var userId: String?
     
+    init(networkManager: INetworkManager,
+         userDataProvider: IUserDataProvider,
+         coreDataManager: ICoreDataManager) {
+        self.networkManager = networkManager
+        self.userDataProvider = userDataProvider
+        self.coreDataManager = coreDataManager
+    }
+    
     // MARK: - DataProvider
     
     func subscribeChannels(completion: @escaping (Error?) -> Void) {
-        networkManager?.getChannels { [weak self] (channels, error) in
+        networkManager.getChannels { [weak self] (channels, error) in
             if let error = error {
                 return completion(error)
             }
             
             self?.actualize(channels: channels)
             
-            self?.networkManager?.subscribeChannels { changes, error in
+            self?.networkManager.subscribeChannels { changes, error in
                 guard let changes = changes else {
                     if let error = error {
                         return completion(error)
@@ -52,25 +61,25 @@ class FirestoreDataProvider: IConversationsDataProvider {
             if self?.userId == nil {
                 let group = DispatchGroup()
                 group.enter()
-                self?.userDataProvider?.getUserId { id in
+                self?.userDataProvider.getUserId { id in
                     self?.userId = id
                     group.leave()
                 }
                 group.enter()
-                self?.userDataProvider?.loadUserData(completion: { user in
+                self?.userDataProvider.loadUserData(completion: { user in
                     self?.userName = user?.fullName
                     group.leave()
                 })
                 group.wait()
             }
             
-            self?.networkManager?.getMessages(forChannelWithId: channelId) { (messages, error) in
+            self?.networkManager.getMessages(forChannelWithId: channelId) { (messages, error) in
                 if let error = error {
                     return completion(error)
                 }
                 self?.actualize(messages: messages, channelId: channelId)
                 
-                self?.networkManager?.subscribeMessages(forChannelWithId: channelId) { changes, error in
+                self?.networkManager.subscribeMessages(forChannelWithId: channelId) { changes, error in
                     guard let changes = changes else {
                         if let error = error {
                             return completion(error)
@@ -87,19 +96,19 @@ class FirestoreDataProvider: IConversationsDataProvider {
     }
     
     func unsubscribeChannel() {
-        networkManager?.unsubscribeChannel()
+        networkManager.unsubscribeChannel()
     }
     
     func createChannel(withName name: String, completion: @escaping (String) -> Void) {
-        networkManager?.createChannel(withName: name, completion: completion)
+        networkManager.createChannel(withName: name, completion: completion)
     }
     
     func deleteChannel(withId identifier: String) {
-        networkManager?.deleteChannel(withId: identifier) { isSuccess in
-            CoreDataManager.shared.performSave { context in
-                guard isSuccess, let channel = CoreDataManager.shared.fetchEntities(withName: "Channel_db",
-                                                                                    inContext: context,
-                                                                                    withPredicate: .init(format: "identifier == %@", identifier))?.first as? Channel_db
+        networkManager.deleteChannel(withId: identifier) { [weak self] isSuccess in
+            self?.coreDataManager.performSave { context in
+                guard isSuccess, let channel = self?.coreDataManager.fetchEntities(withName: "Channel_db",
+                                                                                   inContext: context,
+                                                                                   withPredicate: .init(format: "identifier == %@", identifier))?.first as? Channel_db
                     else { return }
                 
                 context.delete(channel)
@@ -110,10 +119,9 @@ class FirestoreDataProvider: IConversationsDataProvider {
     func sendMessage(widthContent content: String, completion: @escaping () -> Void) {
         guard let userId = userId,
             let userName = userName else {
-                
                 return
         }
-        networkManager?.sendMessage(widthContent: content,
+        networkManager.sendMessage(widthContent: content,
                                    senderId: userId,
                                    senderName: userName,
                                    completion: completion)
@@ -123,39 +131,39 @@ class FirestoreDataProvider: IConversationsDataProvider {
     
     private func actualize(channels: [Channel]?) {
         if let actualIds = channels?.compactMap({ $0.identifier }), !actualIds.isEmpty {
-            CoreDataManager.shared.performSave { context in
-                CoreDataManager.shared.deleteRange(entityName: "Channel_db",
-                                                   inContext: context,
-                                                   predicate: .init(format: "NOT identifier IN %@", actualIds))
+            coreDataManager.performSave { [weak self] context in
+                self?.coreDataManager.deleteRange(entityName: "Channel_db",
+                                                  inContext: context,
+                                                  predicate: .init(format: "NOT identifier IN %@", actualIds))
             }
         }
     }
     
     private func actualize(messages: [Message]?, channelId: String) {
         if let actualIds = messages?.compactMap({ $0.identifier }), !actualIds.isEmpty {
-            CoreDataManager.shared.performSave { context in
-                CoreDataManager.shared.deleteRange(entityName: "Message_db",
-                                                   inContext: context,
-                                                   predicate: .init(format: "channel.identifier == %@ AND NOT identifier IN %@", channelId, actualIds))
+            coreDataManager.performSave { [weak self] context in
+                self?.coreDataManager.deleteRange(entityName: "Message_db",
+                                                  inContext: context,
+                                                  predicate: .init(format: "channel.identifier == %@ AND NOT identifier IN %@", channelId, actualIds))
             }
         }
     }
     
     private func handleChannelsChanges(_ changes: [DocumentChange]) {
-        CoreDataManager.shared.performSave { [weak self] context in
+        coreDataManager.performSave { [weak self] context in
             let addedIds = changes.filter { $0.type != .removed }.compactMap { $0.document.documentID }
             let deletedIds = changes.filter { $0.type == .removed }.compactMap { $0.document.documentID }
             if !deletedIds.isEmpty {
-                CoreDataManager.shared.deleteRange(entityName: "Channel_db",
-                                                   inContext: context,
-                                                   predicate: .init(format: "identifier IN %@",
-                                                                    deletedIds))
+                self?.coreDataManager.deleteRange(entityName: "Channel_db",
+                                                  inContext: context,
+                                                  predicate: .init(format: "identifier IN %@",
+                                                                   deletedIds))
             }
             
-            let existingChannels = CoreDataManager.shared.fetchEntities(withName: "Channel_db",
-                                                                        inContext: context,
-                                                                        withPredicate: .init(format: "identifier IN %@",
-                                                                                             addedIds)) as? [Channel_db]
+            let existingChannels = self?.coreDataManager.fetchEntities(withName: "Channel_db",
+                                                                       inContext: context,
+                                                                       withPredicate: .init(format: "identifier IN %@",
+                                                                                            addedIds)) as? [Channel_db]
             
             changes.filter { $0.type != .removed }.forEach { change in
                 if let channel = Channel(document: change.document) {
@@ -164,11 +172,11 @@ class FirestoreDataProvider: IConversationsDataProvider {
                         let dictionary = self?.getUpdatedProperties(ofChannel: channel,
                                                                     existingChannel: existingChannel) {
                         if !dictionary.isEmpty {
-                            CoreDataManager.shared.update(entityWithName: "Channel_db",
-                                                          keyedValues: dictionary,
-                                                          inContext: context,
-                                                          predicate: .init(format: "identifier == %@",
-                                                                           channel.identifier))
+                            self?.coreDataManager.update(entityWithName: "Channel_db",
+                                                         keyedValues: dictionary,
+                                                         inContext: context,
+                                                         predicate: .init(format: "identifier == %@",
+                                                                          channel.identifier))
                         }
                     } else {
                         _ = Channel_db(channel: channel, context: context)
@@ -179,24 +187,24 @@ class FirestoreDataProvider: IConversationsDataProvider {
     }
     
     private func handleMessagesChanges(_ changes: [DocumentChange], channelId: String) {
-        CoreDataManager.shared.performSave { [weak self] context in
-            guard let channel = CoreDataManager.shared.fetchEntities(withName: "Channel_db",
-                                                                     inContext: context,
-                                                                     withPredicate: .init(format: "identifier == %@", channelId))?.first as? Channel_db
+        coreDataManager.performSave { [weak self] context in
+            guard let channel = self?.coreDataManager.fetchEntities(withName: "Channel_db",
+                                                                    inContext: context,
+                                                                    withPredicate: .init(format: "identifier == %@", channelId))?.first as? Channel_db
                 else { return }
             
             let addedIds = changes.filter { $0.type != .removed }.compactMap { $0.document.documentID }
             let deletedIds = changes.filter { $0.type == .removed }.compactMap { $0.document.documentID }
             
             if !deletedIds.isEmpty {
-                CoreDataManager.shared.deleteRange(entityName: "Message_db",
-                                                   inContext: context,
-                                                   predicate: .init(format: "identifier IN %@", deletedIds))
+                self?.coreDataManager.deleteRange(entityName: "Message_db",
+                                                  inContext: context,
+                                                  predicate: .init(format: "identifier IN %@", deletedIds))
             }
             
-            let existingMessages = CoreDataManager.shared.fetchEntities(withName: "Message_db",
-                                                                        inContext: context,
-                                                                        withPredicate: .init(format: "identifier IN %@", addedIds)) as? [Message_db]
+            let existingMessages = self?.coreDataManager.fetchEntities(withName: "Message_db",
+                                                                       inContext: context,
+                                                                       withPredicate: .init(format: "identifier IN %@", addedIds)) as? [Message_db]
             var messagesToSave: [Message_db] = []
             changes.filter { $0.type != .removed }.forEach { change in
                 if let message = Message(document: change.document) {
@@ -205,11 +213,11 @@ class FirestoreDataProvider: IConversationsDataProvider {
                         let dictionary = self?.getUpdatedProperties(ofMessage: message,
                                                                     existingMessage: existingMessage) {
                         if !dictionary.isEmpty {
-                            CoreDataManager.shared.update(entityWithName: "Message_db",
-                                                          keyedValues: dictionary,
-                                                          inContext: context,
-                                                          predicate: .init(format: "identifier == %@",
-                                                                           message.identifier))
+                            self?.coreDataManager.update(entityWithName: "Message_db",
+                                                         keyedValues: dictionary,
+                                                         inContext: context,
+                                                         predicate: .init(format: "identifier == %@",
+                                                                          message.identifier))
                         }
                     } else {
                         messagesToSave.append(Message_db(message: message, context: context))

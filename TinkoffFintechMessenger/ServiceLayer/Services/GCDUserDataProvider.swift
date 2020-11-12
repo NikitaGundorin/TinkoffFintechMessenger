@@ -18,7 +18,7 @@ class GCDUserDataProvider: IUserDataProvider {
         self.dataManager = dataManager
     }
     
-    // MARK: - IUserDataProvider methods
+    // MARK: - IUserDataProvider
     
     func loadUserData(completion: @escaping (UserViewModel?) -> Void) {
         DispatchQueue.global(qos: .utility).async { [weak self] in
@@ -45,8 +45,8 @@ class GCDUserDataProvider: IUserDataProvider {
         DispatchQueue.global(qos: .utility).async { [weak self] in
             self?.dataManager.saveUserImage(imageData: userViewModel.profileImage?.pngData()) { url in
                 let user = User(fullName: userViewModel.fullName,
-                                    description: userViewModel.description,
-                                    imageUrl: url)
+                                description: userViewModel.description,
+                                imageUrl: url)
                 self?.dataManager.saveUserData(user) { dataSavedSuccessfully in
                     let imageSavedSuccessfully = url != nil || userViewModel.profileImage == nil
                     

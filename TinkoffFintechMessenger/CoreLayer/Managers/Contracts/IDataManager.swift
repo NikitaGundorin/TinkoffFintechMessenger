@@ -9,7 +9,6 @@
 import Foundation
 
 protocol IDataManager {
-    
     func loadUserData(completion: @escaping (User?) -> Void)
     func loadUserImage(imageUrl: URL?, completion: (Data?) -> Void)
     func saveUserData(_ user: User, completion: (Bool) -> Void)

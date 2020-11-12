@@ -10,10 +10,9 @@ import UIKit
 
 class OperationUserDataProvider: IUserDataProvider {
     
-    let dataManager: IDataManager
-    
     // MARK: - Private properties
     
+    private let dataManager: IDataManager
     private lazy var operationQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.qualityOfService = .utility
@@ -26,7 +25,7 @@ class OperationUserDataProvider: IUserDataProvider {
         self.dataManager = dataManager
     }
     
-    // MARK: - DataManager methods
+    // MARK: - IUserDataProvider
     
     func loadUserData(completion: @escaping (UserViewModel?) -> Void) {
         let operation = LoadUserDataOperation(dataManager: dataManager, completion: completion)
@@ -35,8 +34,8 @@ class OperationUserDataProvider: IUserDataProvider {
     
     func saveUserData(_ userViewModel: UserViewModel, completion: ((Bool) -> Void)? = nil) {
         let operation = SaveUserDataOperation(dataManager: dataManager,
-                                                userViewModel: userViewModel,
-                                                completion: completion)
+                                              userViewModel: userViewModel,
+                                              completion: completion)
         operationQueue.addOperation(operation)
     }
     
@@ -100,8 +99,8 @@ class OperationUserDataProvider: IUserDataProvider {
             dataManager.saveUserImage(imageData: userViewModel.profileImage?.pngData()) { url in
                 guard !isCancelled else { return }
                 let user = User(fullName: userViewModel.fullName,
-                                  description: userViewModel.description,
-                                  imageUrl: url)
+                                description: userViewModel.description,
+                                imageUrl: url)
                 dataManager.saveUserData(user) { dataSavedSuccessfully in
                     guard !isCancelled else { return }
                     let imageSavedSuccessfully = url != nil || userViewModel.profileImage == nil

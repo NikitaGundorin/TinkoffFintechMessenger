@@ -16,18 +16,25 @@ final class ConversationsListViewController: UIViewController {
     var presentationAssembly: IPresentationAssembly?
     var dataProvider: IConversationsDataProvider?
     var userDataProvider: IUserDataProvider?
+    var repository: IChannelsRepository? {
+        didSet {
+            configureRepository()
+        }
+    }
+    var logger: ILoggerService?
     
     // MARK: - Private properties
-
+    
     private let baseCellId = "baseCellId"
-    private var channels: [Channel_db]? {
-        fetchedResultsController.fetchedObjects
+    private var channels: [ChannelViewModel]? {
+        repository?.fetchedObjects()
     }
     private var user: UserViewModel? {
         didSet {
             if let user = self.user {
                 DispatchQueue.main.async { [weak self] in
-                    self?.profileImageView.configure(with: user)
+                    self?.profileImageView.configure(with: .init(initials: user.initials,
+                                                                 image: user.profileImage))
                 }
             }
         }
@@ -35,14 +42,14 @@ final class ConversationsListViewController: UIViewController {
     private var userId: String?
     private lazy var createChannel = { [weak self] in
         guard let alertController = self?.presentationAssembly?.createChannelAlertController(title: "New Channel",
-                                                                                       message: "Enter a channel's name")
+                                                                                             message: "Enter a channel's name")
             else { return }
         alertController.addTextField()
         alertController.addAction(.init(title: "Cancel", style: .cancel))
         
         alertController.submitAction = UIAlertAction(title: "Create", style: .default) { _ in
             guard let name = alertController.textFields?.first?.text else { return }
-
+            
             self?.dataProvider?.createChannel(withName: name, completion: { channelId in
                 self?.presentConversationController(conversationName: name, channelId: channelId)
             })
@@ -50,21 +57,6 @@ final class ConversationsListViewController: UIViewController {
         
         self?.present(alertController, animated: true)
     }
-    
-    private lazy var fetchedResultsController: NSFetchedResultsController<Channel_db> = {
-        let fetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
-        fetchRequest.sortDescriptors = [.init(key: "lastActivity", ascending: false),
-                                        .init(key: "name", ascending: true)]
-        fetchRequest.resultType = .managedObjectResultType
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                             managedObjectContext: CoreDataManager.shared.mainContext,
-                                             sectionNameKeyPath: nil,
-                                             cacheName: nil)
-        
-        frc.delegate = self
-        return frc
-    }()
-    private let loggerSourceName = "ConversationsListViewController"
     
     // MARK: - UI
     
@@ -129,11 +121,15 @@ final class ConversationsListViewController: UIViewController {
     
     private func loadData() {
         loadUserData()
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            Logger.error(loggerSourceName, error.localizedDescription)
-        }
+        repository?.performFetch(completion: { [weak self] (error) in
+            if let error = error {
+                self?.logger?.error(error.localizedDescription)
+                DispatchQueue.main.async {
+                    AlertHelper().presentErrorAlert(vc: self,
+                                                    message: "Failed to load channels")
+                }
+            }
+        })
         
         dataProvider?.subscribeChannels { [weak self] error in
             if let error = error {
@@ -159,11 +155,42 @@ final class ConversationsListViewController: UIViewController {
         }
     }
     
+    private func configureRepository() {
+        repository?.configure(
+            willChangeContentCallback: { [weak self] in
+                self?.tableView.beginUpdates()
+            },
+            didChangeContentCallback: { [weak self] in
+                self?.tableView.endUpdates()
+            },
+            dataInsertedCallback: { [weak self] newIndexPath in
+                if let newIndexPath = newIndexPath {
+                    self?.tableView.insertRows(at: [newIndexPath], with: .automatic)
+                }
+            },
+            dataMovedCallback: { [weak self] indexPath, newIndexPath in
+                if let indexPath = indexPath, let newIndexPath = newIndexPath {
+                    self?.tableView.deleteRows(at: [indexPath], with: .top)
+                    self?.tableView.insertRows(at: [newIndexPath], with: .top)
+                }
+            },
+            dataUpdatedCallback: { [weak self] indexPath in
+                if let indexPath = indexPath {
+                    self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+            },
+            dataDeletedCallback: { [weak self] indexPath in
+                if let indexPath = indexPath {
+                    self?.tableView.deleteRows(at: [indexPath], with: .left)
+                }
+        })
+    }
+    
     private func presentConversationController(conversationName: String, channelId: String) {
         if let userId = userId,
-            let vc = presentationAssembly?.conversationViewController(conversationName: conversationName,
-                                                                  channelId: channelId,
-                                                                  userId: userId) {
+            let vc = presentationAssembly?.conversationViewController(conversationModel: .init(name: conversationName,
+                                                                                               identifier: channelId),
+                                                                      userId: userId) {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -193,11 +220,13 @@ extension ConversationsListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: baseCellId) as? ConversationListTableViewCell,
-            let channel = Channel(channel: fetchedResultsController.object(at: indexPath)) else {
-            return UITableViewCell()
+            let channel = repository?.object(at: indexPath) else {
+                return UITableViewCell()
         }
         
-        cell.configure(with: channel)
+        cell.configure(with: .init(name: channel.name,
+                                   lastActivity: channel.lastActivity,
+                                   lastMessage: channel.lastMessage))
         
         return cell
     }
@@ -225,58 +254,12 @@ extension ConversationsListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let channel = Channel(channel: fetchedResultsController.object(at: indexPath)) else {
+        guard let channel = repository?.object(at: indexPath) else {
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
         presentConversationController(conversationName: channel.name,
                                       channelId: channel.identifier)
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-}
-
-// MARK: - NSFetchedResultsControllerDelegate
-
-extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        Logger.info(loggerSourceName, #function)
-        tableView.beginUpdates()
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        Logger.info(loggerSourceName, #function)
-        tableView.endUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-        switch type {
-        case .insert:
-            Logger.info(loggerSourceName, "\(#function) - type: insert")
-            if let newIndexPath = newIndexPath {
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
-            }
-        case .move:
-            Logger.info(loggerSourceName, "\(#function) - type: move")
-            if let indexPath = indexPath, let newIndexPath = newIndexPath {
-                tableView.deleteRows(at: [indexPath], with: .top)
-                tableView.insertRows(at: [newIndexPath], with: .top)
-            }
-        case .update:
-            Logger.info(loggerSourceName, "\(#function) - type: update")
-            if let indexPath = indexPath {
-                self.tableView.reloadRows(at: [indexPath], with: .automatic)
-            }
-        case .delete:
-            Logger.info(loggerSourceName, "\(#function) - type: delete")
-            if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .left)
-            }
-        @unknown default:
-            Logger.info(loggerSourceName, "Unknown case statement")
-        }
     }
 }

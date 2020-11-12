@@ -9,22 +9,22 @@
 import Foundation
 import CoreData
 
-class CoreDataManager {
+class CoreDataManager: ICoreDataManager {
     
     // MARK: - Singleton
     
     static let shared = CoreDataManager()
     
-    private init() {}
+    private init() {
+        enableObservers()
+    }
     
     // MARK: - Public properties
     
-    lazy var didUpdateDatabase: (() -> Void)? = { [weak self] in
-        self?.printDatabaseStatistic()
-    }
+    var logger: ILogger?
     
     // MARK: - Private properties
-
+    
     private lazy var storeUrl: URL = {
         guard let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last else {
             fatalError("documents path not found")
@@ -32,7 +32,6 @@ class CoreDataManager {
         return documentsUrl.appendingPathComponent("Chat.sqlite")
     }()
     
-    private let loggerSourceName = "Core Data"
     private let dataModelName = "Chat"
     private let dataModelExtension = "momd"
     
@@ -129,7 +128,7 @@ class CoreDataManager {
             let result = try context.fetch(fetchRequest)
             return result
         } catch {
-            Logger.error(loggerSourceName, error.localizedDescription)
+            logger?.error(error.localizedDescription)
         }
         return nil
     }
@@ -159,7 +158,7 @@ class CoreDataManager {
     
     // MARK: - Observers
     
-    func enableObservers() {
+    private func enableObservers() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self,
                                        selector: #selector(managedObjectContextDidChange(notification:)),
@@ -170,35 +169,35 @@ class CoreDataManager {
     @objc private func managedObjectContextDidChange(notification: NSNotification) {
         guard let userInfo = notification.userInfo else { return }
         
-        didUpdateDatabase?()
+        printDatabaseStatistic()
         
         if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>,
             inserts.count > 0 {
-            Logger.info(loggerSourceName, "Inserted objects: \(inserts.count)")
+            logger?.info("Inserted objects: \(inserts.count)")
         }
         
         if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>,
             updates.count > 0 {
-            Logger.info(loggerSourceName, "Updated objects: \(updates.count)")
+            logger?.info("Updated objects: \(updates.count)")
         }
         
         if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>,
             deletes.count > 0 {
-            Logger.info(loggerSourceName, "Deleted objects: \(deletes.count)")
+            logger?.info("Deleted objects: \(deletes.count)")
         }
     }
     
-    func printDatabaseStatistic() {
+    private func printDatabaseStatistic() {
         mainContext.perform { [weak self] in
             do {
                 if let channelsCount = try self?.mainContext.count(for: Channel_db.fetchRequest()) {
-                    Logger.info(self?.loggerSourceName ?? "", "Number of channels: \(channelsCount)")
+                    self?.logger?.info("Number of channels: \(channelsCount)")
                 }
                 if let messagesCount = try self?.mainContext.count(for: Message_db.fetchRequest()) {
-                    Logger.info(self?.loggerSourceName ?? "", "Number of messages: \(messagesCount)")
+                    self?.logger?.info("Number of messages: \(messagesCount)")
                 }
             } catch {
-                Logger.error(self?.loggerSourceName ?? "", error.localizedDescription)
+                self?.logger?.info(error.localizedDescription)
             }
         }
     }

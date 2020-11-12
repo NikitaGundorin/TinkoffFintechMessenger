@@ -11,7 +11,7 @@ import UIKit
 protocol IPresentationAssembly {
     func baseNavigationViewController(rootViewController: UIViewController) -> BaseNavigationController
     func conversationsListViewController() -> ConversationsListViewController
-    func conversationViewController(conversationName: String, channelId: String, userId: String) -> ConversationViewController
+    func conversationViewController(conversationModel: ConversationModel, userId: String) -> ConversationViewController
     func profileViewController(profileDataUpdatedHandler: @escaping () -> Void) -> ProfileViewController
     func themesViewController() -> ThemesViewController
     func createChannelAlertController(title: String?, message: String?) -> CreateChannelAlertController

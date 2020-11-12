@@ -9,7 +9,10 @@
 import UIKit
 
 class PresentationAssembly: IPresentationAssembly {
-    var serviceAssembly: IServicesAssembly
+    
+    // MARK: - Private properties
+    
+    private let serviceAssembly: IServicesAssembly
     
     // MARK: - Initializer
     
@@ -17,7 +20,7 @@ class PresentationAssembly: IPresentationAssembly {
         self.serviceAssembly = serviceAssembly
     }
     
-    // MARK: - Public methods
+    // MARK: - IPresentationAssembly
     
     func baseNavigationViewController(rootViewController: UIViewController) -> BaseNavigationController {
         return BaseNavigationController(rootViewController: rootViewController)
@@ -28,17 +31,19 @@ class PresentationAssembly: IPresentationAssembly {
         conversationsListViewController.presentationAssembly = self
         conversationsListViewController.dataProvider = serviceAssembly.conversationsDataProvider()
         conversationsListViewController.userDataProvider = serviceAssembly.gcdUserDataProvider()
-        
+        conversationsListViewController.repository = serviceAssembly.channelsRepository()
+        conversationsListViewController.logger = serviceAssembly.loggerService(sourceName: "ConversationsListViewController")
         return conversationsListViewController
     }
     
-    func conversationViewController(conversationName: String, channelId: String, userId: String) -> ConversationViewController {
-        let vc = ConversationViewController()
-        vc.dataProvider = serviceAssembly.conversationsDataProvider()
-        vc.conversationName = conversationName
-        vc.channelId = channelId
-        vc.userId = userId
-        return vc
+    func conversationViewController(conversationModel: ConversationModel, userId: String) -> ConversationViewController {
+        let conversationViewController = ConversationViewController()
+        conversationViewController.dataProvider = serviceAssembly.conversationsDataProvider()
+        conversationViewController.model = conversationModel
+        conversationViewController.repository = serviceAssembly.messagesRepository(channelId: conversationModel.identifier,
+                                                                                   userId: userId)
+        conversationViewController.logger = serviceAssembly.loggerService(sourceName: "ConversationViewController")
+        return conversationViewController
     }
     
     func profileViewController(profileDataUpdatedHandler: @escaping () -> Void) -> ProfileViewController {
@@ -47,7 +52,7 @@ class PresentationAssembly: IPresentationAssembly {
             profileViewController.profileDataUpdatedHandler = profileDataUpdatedHandler
             profileViewController.gcdDataProvider = serviceAssembly.gcdUserDataProvider()
             profileViewController.operationDataProvider = serviceAssembly.operationUserDataProvider()
-
+            
             return profileViewController
         }
         
@@ -56,7 +61,7 @@ class PresentationAssembly: IPresentationAssembly {
     
     func themesViewController() -> ThemesViewController {
         let themesViewController = ThemesViewController()
-        themesViewController.themePickerDelegate = Appearance.shared
+        themesViewController.themeService = serviceAssembly.themeService()
         return themesViewController
     }
     

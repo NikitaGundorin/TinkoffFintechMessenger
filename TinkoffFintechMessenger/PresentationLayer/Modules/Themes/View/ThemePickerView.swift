@@ -97,7 +97,7 @@ class ThemePickerView: UIView {
 
 // MARK: - ConfigurableView
 
-extension ThemePickerView: ConfigurableView {
+extension ThemePickerView: IConfigurableView {
     
     func configure(with model: ThemeModel) {
         titleLabel.text = model.name

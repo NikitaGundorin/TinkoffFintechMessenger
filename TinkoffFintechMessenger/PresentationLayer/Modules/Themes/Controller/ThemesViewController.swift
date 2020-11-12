@@ -12,16 +12,20 @@ class ThemesViewController: UIViewController {
     
     // MARK: - Public properties
     
-    weak var themePickerDelegate: IThemePickerDelegate?
-    var themeSelectedCallback: ((Int) -> Void)?
+    var themeService: IThemeService?
     
     // MARK: - UI
     
     private lazy var themePickers: [ThemePickerView] = {
         var pickers: [ThemePickerView] = []
-        themes.forEach {
+        themes?.forEach {
             let picker = ThemePickerView()
-            picker.configure(with: $0)
+            picker.configure(with: .init(name: $0.name,
+                                         isSelected: $0.id == themeService?.currentTheme?.id,
+                                         id: $0.id,
+                                         incomingMessageColor: $0.incomingMessageColor,
+                                         outgoingMessageColor: $0.outgoingMessageColor,
+                                         backgroundColor: $0.backgroundColor))
             picker.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                action: #selector(themePickerPressed(sender:))))
             pickers.append(picker)
@@ -34,7 +38,9 @@ class ThemesViewController: UIViewController {
     
     // MARK: - Private properties
     
-    private var themes = Appearance.shared.themes
+    private var themes: [Theme]? {
+        themeService?.themes
+    }
     
     // MARK: - Lifecycle methods
     
@@ -66,16 +72,23 @@ class ThemesViewController: UIViewController {
     
     @objc private func themePickerPressed(sender: UITapGestureRecognizer) {
         guard let themePicker = sender.view as? ThemePickerView,
-              let id = themePicker.themeId else { return }
+            let id = themePicker.themeId else { return }
         
-        if let delegate = themePickerDelegate {
-            delegate.themeSelected(width: id)
-        } else if let themeSelectedCallback = themeSelectedCallback {
-            themeSelectedCallback(id)
+        guard themes?.first(where: { $0.id == id && $0.id != themeService?.currentTheme?.id }) != nil else { return }
+        
+        themeService?.setCurrentTheme(id: id)
+        
+        UIView.animate(withDuration: Appearance.defaultAnimationDuration) { [weak self] in
+            self?.themeService?.setupTheme()
         }
         
-        themes.forEach {
-            themePickers[$0.id].configure(with: $0)
+        themes?.forEach {
+            themePickers[$0.id].configure(with: .init(name: $0.name,
+                                                      isSelected: $0.id == themeService?.currentTheme?.id,
+                                                      id: $0.id,
+                                                      incomingMessageColor: $0.incomingMessageColor,
+                                                      outgoingMessageColor: $0.outgoingMessageColor,
+                                                      backgroundColor: $0.backgroundColor))
         }
     }
 }

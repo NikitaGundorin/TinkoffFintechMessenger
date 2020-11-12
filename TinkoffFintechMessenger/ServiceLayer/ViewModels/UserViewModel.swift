@@ -23,7 +23,7 @@ struct UserViewModel {
     var initials: String {
         let firstLetter = firstName?.prefix(1).capitalized ?? ""
         let secondLetter = secondName?.prefix(1).capitalized ?? ""
-    
+        
         return "\(firstLetter)\(secondLetter)"
     }
 }

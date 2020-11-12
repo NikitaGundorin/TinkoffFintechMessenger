@@ -1,5 +1,5 @@
 //
-//  ConfigurableView.swift
+//  IConfigurableView.swift
 //  TinkoffFintechMessenger
 //
 //  Created by Nikita Gundorin on 25.09.2020.
@@ -8,8 +8,7 @@
 
 import Foundation
 
-protocol ConfigurableView {
-    
+protocol IConfigurableView {
     associatedtype ConfigurationModel
     
     func configure(with model: ConfigurationModel)

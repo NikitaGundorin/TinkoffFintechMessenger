@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Appearance {
+class Appearance: IThemeService {
     
     // MARK: - Singleton
     
@@ -64,9 +64,9 @@ class Appearance {
     
     static let settingsIcon = UIImage(named: "Settings")
     
-    // MARK: - Theme
+    // MARK: - IThemeService
     
-    var themes: [ThemeModel] = [
+    private(set) var themes: [Theme] = [
         .init(id: 0,
               name: "Classic",
               incomingMessageColor: incomingMessageLightColor,
@@ -115,7 +115,7 @@ class Appearance {
     }
     
     func setupTheme() {
-        let theme = themes.first(where: { $0.isSelected }) ?? themes[0]
+        let theme = themes.first(where: { currentTheme?.id == $0.id }) ?? themes[0]
         UINavigationBar.appearance().tintColor = theme.labelColor
         UINavigationBar.appearance().barTintColor = theme.backgroundColor
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: theme.labelColor ?? .black]
@@ -139,17 +139,8 @@ class Appearance {
         }
     }
     
-    // weak здесь не обязателен, так как класс Appearance - singleton с приватным инициализатором,
-    // во время жизни приложения будет существовать в единственном экземпляре
-    // и данный блок не создаст утечек памяти
-    lazy var themeSelectedCallback = { [weak self] (identifier: Int) in
-        guard self?.themes.first(where: { $0.id == identifier && !$0.isSelected }) != nil else { return }
-        
-        self?.currentThemeId = identifier
-        
-        UIView.animate(withDuration: Appearance.defaultAnimationDuration) {
-            self?.setupTheme()
-        }
+    func setCurrentTheme(id: Int) {
+        currentThemeId = id
     }
     
     // MARK: - Current theme
@@ -177,19 +168,7 @@ class Appearance {
     static var sendButtonColor: UIColor? {
         shared.currentTheme?.sendButtonColor
     }
-}
-
-// MARK: - ThemesPickerDelegate
-
-extension Appearance: IThemePickerDelegate {
-    
-    func themeSelected(width identifier: Int) {
-        guard themes.first(where: { $0.id == identifier && !$0.isSelected }) != nil else { return }
-        
-        currentThemeId = identifier
-        
-        UIView.animate(withDuration: Appearance.defaultAnimationDuration) {
-            self.setupTheme()
-        }
+    static var statusBarStyle: UIStatusBarStyle {
+        shared.currentTheme?.statusBarStyle ?? .default
     }
 }

@@ -6,11 +6,13 @@
 //  Copyright © 2020 Nikita Gundorin. All rights reserved.
 //
 
-import Foundation
+import CoreData
 
 class ServicesAssembly: IServicesAssembly {
     
-    var coreAssembly: ICoreAssembly
+    // MARK: - Private properties
+    
+    private let coreAssembly: ICoreAssembly
     
     // MARK: - Initializer
     
@@ -18,10 +20,12 @@ class ServicesAssembly: IServicesAssembly {
         self.coreAssembly = coreAssembly
     }
     
+    // MARK: - IServicesAssembly
+    
     func conversationsDataProvider() -> IConversationsDataProvider {
-        let dataProvider = FirestoreDataProvider()
-        dataProvider.networkManager = coreAssembly.networkManager()
-        dataProvider.userDataProvider = gcdUserDataProvider()
+        let dataProvider = FirestoreDataProvider(networkManager: coreAssembly.networkManager(),
+                                                 userDataProvider: gcdUserDataProvider(),
+                                                 coreDataManager: coreAssembly.coreDataManager())
         return dataProvider
     }
     
@@ -31,5 +35,34 @@ class ServicesAssembly: IServicesAssembly {
     
     func operationUserDataProvider() -> IUserDataProvider {
         return OperationUserDataProvider(dataManager: coreAssembly.dataManager())
+    }
+    
+    func themeService() -> IThemeService {
+        return Appearance.shared
+    }
+    
+    func channelsRepository() -> IChannelsRepository {
+        let fetchRequest: NSFetchRequest<Channel_db> = Channel_db.fetchRequest()
+        fetchRequest.sortDescriptors = [.init(key: "lastActivity", ascending: false),
+                                        .init(key: "name", ascending: true)]
+        fetchRequest.resultType = .managedObjectResultType
+        return ChannelsRepository(coreDataManager: coreAssembly.coreDataManager(),
+                                  fetchRequest: fetchRequest,
+                                  logger: coreAssembly.logger(sourceName: "ChannelsRepository"))
+    }
+    
+    func messagesRepository(channelId: String, userId: String) -> IMessagesRepository {
+        let fetchRequest: NSFetchRequest<Message_db> = Message_db.fetchRequest()
+        fetchRequest.sortDescriptors = [.init(key: "created", ascending: true)]
+        fetchRequest.predicate = .init(format: "channel.identifier == %@", channelId)
+        fetchRequest.resultType = .managedObjectResultType
+        return MessagesRepository(coreDataManager: coreAssembly.coreDataManager(),
+                                  fetchRequest: fetchRequest,
+                                  userId: userId,
+                                  logger: coreAssembly.logger(sourceName: "ChannelsRepository"))
+    }
+    
+    func loggerService(sourceName: String) -> ILoggerService {
+        return LoggerService(logger: coreAssembly.logger(sourceName: sourceName))
     }
 }

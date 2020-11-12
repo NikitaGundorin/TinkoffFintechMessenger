@@ -8,28 +8,35 @@
 
 import Foundation
 
-public class Logger {
+public class Logger: ILogger {
     
     // MARK: - Private properties
     
-    private static var isEnabled: Bool =
-        Bundle.main.object(forInfoDictionaryKey: "LoggerEnabled") as? Bool ?? false
+    private let isEnabled = Bundle.main.object(forInfoDictionaryKey: "LoggerEnabled") as? Bool ?? false
+    
+    private var sourceName: String
+    
+    // MARK: - Initializer
+    
+    init(sourceName: String) {
+        self.sourceName = sourceName
+    }
     
     // MARK: - Public methods
     
-    public static func info(_ sourceName: String, _ message: String) {
+    func info(_ message: String) {
         guard isEnabled else { return }
         
         print("[\(sourceName)]: \(message)")
     }
     
-    public static func stateInfo(_ sourceName: String, from: String, to: String, methodName: String) {
+    func stateInfo(from: String, to: String, methodName: String) {
         guard isEnabled else { return }
         
         print("\(sourceName) moved from \(from) to \(to): \(methodName)")
     }
     
-    public static func error(_ sourceName: String, _ message: String) {
+    func error(_ message: String) {
         guard isEnabled else { return }
         
         print("[ERROR] [\(sourceName)]: \(message)")

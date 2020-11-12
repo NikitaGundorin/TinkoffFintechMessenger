@@ -18,20 +18,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Private properties
     
-    private let loggerSourceName = "Application"
     private let rootAssembly = RootAssembly()
+    private lazy var logger: ILogger = rootAssembly.coreAssembly.logger(sourceName: "AppDelegate")
     
     // MARK: - App lifecycle methods
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         
-        Logger.stateInfo(loggerSourceName,
-                         from: "Not running",
+        logger.stateInfo(from: "Not running",
                          to: application.applicationState.description,
                          methodName: #function)
         
         FirebaseApp.configure()
-        CoreDataManager.shared.enableObservers()
         
         let conversationListVC = rootAssembly.presentationAssembly.conversationsListViewController()
         let navigationController =
@@ -41,47 +39,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
-        Appearance.shared.setupTheme()
+        rootAssembly.serviceAssembly.themeService().setupTheme()
         
         return true
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-
-        Logger.stateInfo(loggerSourceName,
-                         from: UIApplication.State.inactive.description,
+        
+        logger.stateInfo(from: UIApplication.State.inactive.description,
                          to: application.applicationState.description,
                          methodName: #function)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
         
-        Logger.stateInfo(loggerSourceName,
-                         from: application.applicationState.description,
+        logger.stateInfo(from: application.applicationState.description,
                          to: UIApplication.State.inactive.description,
                          methodName: #function)
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         
-        Logger.stateInfo(loggerSourceName,
-                         from: UIApplication.State.inactive.description,
+        logger.stateInfo(from: UIApplication.State.inactive.description,
                          to: application.applicationState.description,
                          methodName: #function)
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         
-        Logger.stateInfo(loggerSourceName,
-                         from: application.applicationState.description,
+        logger.stateInfo(from: application.applicationState.description,
                          to: UIApplication.State.inactive.description,
                          methodName: #function)
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
         
-        Logger.stateInfo(loggerSourceName,
-                         from: application.applicationState.description,
+        logger.stateInfo(from: application.applicationState.description,
                          to: "Not running",
                          methodName: #function)
     }

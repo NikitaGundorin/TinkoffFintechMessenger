@@ -13,6 +13,6 @@ class BaseNavigationController: UINavigationController {
     // MARK: - UI
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        Appearance.shared.currentTheme?.statusBarStyle ?? .default
+        Appearance.statusBarStyle
     }
 }

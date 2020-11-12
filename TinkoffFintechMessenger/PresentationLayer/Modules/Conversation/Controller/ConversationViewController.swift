@@ -13,29 +13,21 @@ final class ConversationViewController: UIViewController {
     
     // MARK: - Public properties
     
-    var conversationName: String?
-    var channelId: String?
+    var model: ConversationModel?
     var dataProvider: IConversationsDataProvider?
-    var userId: String?
+    var repository: IMessagesRepository? {
+        didSet {
+            configureRepository()
+        }
+    }
+    var logger: ILoggerService?
     
     // MARK: - Private properties
+    
     private let messageCellId = "messageCellId"
-    private var messages: [Message_db]? {
-        fetchedResultsController.fetchedObjects
+    private var messages: [MessageViewModel]? {
+        repository?.fetchedObjects()
     }
-    private lazy var fetchedResultsController: NSFetchedResultsController<Message_db> = {
-        let fetchRequest: NSFetchRequest<Message_db> = Message_db.fetchRequest()
-        fetchRequest.sortDescriptors = [.init(key: "created", ascending: true)]
-        fetchRequest.predicate = .init(format: "channel.identifier == %@", channelId ?? "")
-        fetchRequest.resultType = .managedObjectResultType
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                             managedObjectContext: CoreDataManager.shared.mainContext,
-                                             sectionNameKeyPath: nil,
-                                             cacheName: nil)
-        frc.delegate = self
-        return frc
-    }()
-    private let loggerSourceName = "ConversationViewController"
     
     // MARK: - UI
     
@@ -51,13 +43,14 @@ final class ConversationViewController: UIViewController {
     
     private lazy var sendMessageView: SendMessageView = {
         let view = SendMessageView()
-        view.sendMessageAction = { [weak self] content in
+        view.configure(with: .init(sendMessageAction: { [weak self] content in
             self?.dataProvider?.sendMessage(widthContent: content) {
                 self?.scrollToBottom()
             }
-        }
+        }))
         return view
     }()
+    
     private lazy var sendMessageViewBottomConstraint = sendMessageView.bottomAnchor.constraint(
         equalTo: view.safeAreaLayoutGuide.bottomAnchor)
     
@@ -75,7 +68,7 @@ final class ConversationViewController: UIViewController {
         
         dataProvider?.unsubscribeChannel()
     }
-
+    
     // MARK: - Private methods
     
     private func setupLayout() {
@@ -98,7 +91,7 @@ final class ConversationViewController: UIViewController {
             sendMessageViewBottomConstraint
         ])
         
-        navigationItem.title = conversationName
+        navigationItem.title = model?.name
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
@@ -110,12 +103,17 @@ final class ConversationViewController: UIViewController {
     }
     
     private func loadData() {
-        guard let channelId = channelId else { return }
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            Logger.error(loggerSourceName, error.localizedDescription)
-        }
+        guard let channelId = model?.identifier
+            else { return }
+        repository?.performFetch(completion: { [weak self] error in
+            if let error = error {
+                self?.logger?.error(error.localizedDescription)
+                DispatchQueue.main.async {
+                    AlertHelper().presentErrorAlert(vc: self,
+                                                    message: "Failed to load messages")
+                }
+            }
+        })
         dataProvider?.subscribeMessages(forChannelWithId: channelId) { [weak self] error in
             if let error = error {
                 return AlertHelper().presentErrorAlert(vc: self, message: error.localizedDescription)
@@ -132,8 +130,39 @@ final class ConversationViewController: UIViewController {
         let row = messages.count - 1
         let indexPath = IndexPath(row: row, section: 0)
         tableView.scrollToRow(at: indexPath,
-                                    at: .bottom,
-                                    animated: true)
+                              at: .bottom,
+                              animated: true)
+    }
+    
+    private func configureRepository() {
+        repository?.configure(
+            willChangeContentCallback: { [weak self] in
+                self?.tableView.beginUpdates()
+            },
+            didChangeContentCallback: { [weak self] in
+                self?.tableView.endUpdates()
+            },
+            dataInsertedCallback: { [weak self] newIndexPath in
+                if let newIndexPath = newIndexPath {
+                    self?.tableView.insertRows(at: [newIndexPath], with: .automatic)
+                }
+            },
+            dataMovedCallback: { [weak self] indexPath, newIndexPath in
+                if let indexPath = indexPath, let newIndexPath = newIndexPath {
+                    self?.tableView.deleteRows(at: [indexPath], with: .top)
+                    self?.tableView.insertRows(at: [newIndexPath], with: .top)
+                }
+            },
+            dataUpdatedCallback: { [weak self] indexPath in
+                if let indexPath = indexPath {
+                    self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+            },
+            dataDeletedCallback: { [weak self] indexPath in
+                if let indexPath = indexPath {
+                    self?.tableView.deleteRows(at: [indexPath], with: .left)
+                }
+        })
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -147,9 +176,9 @@ final class ConversationViewController: UIViewController {
             }
         }
     }
-
+    
     @objc private func keyboardWillHide(notification: NSNotification) {
-
+        
         sendMessageViewBottomConstraint.constant = 0
         
         UIView.animate(withDuration: Appearance.defaultAnimationDuration) {
@@ -172,59 +201,14 @@ extension ConversationViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: messageCellId) as? MessageCell,
-            let userId = userId,
-            let message = MessageCellModel(message: fetchedResultsController.object(at: indexPath), userId: userId) else {
-            return UITableViewCell()
+            let message = repository?.object(at: indexPath) else {
+                return UITableViewCell()
         }
         
-        cell.configure(with: message)
+        cell.configure(with: .init(content: message.content,
+                                   isIncoming: message.isIncoming,
+                                   senderName: message.senderName))
         
         return cell
-    }
-}
-
-// MARK: - NSFetchedResultsControllerDelegate
-
-extension ConversationViewController: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        Logger.info(loggerSourceName, #function)
-        tableView.beginUpdates()
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        Logger.info(loggerSourceName, #function)
-        tableView.endUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-        switch type {
-        case .insert:
-            Logger.info(loggerSourceName, "\(#function) - type: insert")
-            if let newIndexPath = newIndexPath {
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
-            }
-        case .move:
-            Logger.info(loggerSourceName, "\(#function) - type: move")
-            if let indexPath = indexPath, let newIndexPath = newIndexPath {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
-            }
-        case .update:
-            Logger.info(loggerSourceName, "\(#function) - type: update")
-            if let indexPath = indexPath {
-                self.tableView.reloadRows(at: [indexPath], with: .none)
-            }
-        case .delete:
-            Logger.info(loggerSourceName, "\(#function) - type: delete")
-            if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-            }
-        @unknown default:
-            Logger.info(loggerSourceName, "Unknown case statement")
-        }
     }
 }

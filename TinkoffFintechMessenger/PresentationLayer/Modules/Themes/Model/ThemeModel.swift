@@ -1,27 +1,18 @@
 //
-//  ThemeButtonModel.swift
+//  ThemeModel.swift
 //  TinkoffFintechMessenger
 //
-//  Created by Nikita Gundorin on 02.10.2020.
+//  Created by Nikita Gundorin on 12.11.2020.
 //  Copyright © 2020 Nikita Gundorin. All rights reserved.
 //
 
 import UIKit
 
 struct ThemeModel {
+    let name: String?
+    let isSelected: Bool
     let id: Int
-    let name: String
     let incomingMessageColor: UIColor?
     let outgoingMessageColor: UIColor?
-    let labelColor: UIColor?
     let backgroundColor: UIColor?
-    let statusBarStyle: UIStatusBarStyle
-    let grayColor: UIColor?
-    let yellowColor: UIColor?
-    let uiUserInterfaceStyle: UIUserInterfaceStyle
-    let sendButtonColor: UIColor?
-    
-    var isSelected: Bool {
-        Appearance.shared.currentTheme?.id == id
-    }
 }
