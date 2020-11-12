@@ -65,7 +65,11 @@ class FirestoreNetworkManager: NetworkManager {
                     !senderName.isEmptyOrOnlyWhitespaces
                 else { return nil }
                 
-                return .init(content: content, created: created, senderId: senderId, senderName: senderName)
+                return .init(identifier: document.documentID,
+                             content: content,
+                             created: created,
+                             senderId: senderId,
+                             senderName: senderName)
             }.sorted { $0.created < $1.created }
             
             completion(data, nil)

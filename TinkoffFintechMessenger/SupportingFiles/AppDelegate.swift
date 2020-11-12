@@ -29,6 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                          to: application.applicationState.description,
                          methodName: #function)
         
+        FirebaseApp.configure()
+        CoreDataManager.shared.enableObservers()
+        
         let conversationListVC = ConversationsListViewController()
         let navigationController = BaseNavigationController(rootViewController: conversationListVC)
         
@@ -39,8 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         Appearance.shared.setupTheme()
-        
-        FirebaseApp.configure()
         
         return true
     }
