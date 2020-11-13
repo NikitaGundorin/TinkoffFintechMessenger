@@ -6,7 +6,6 @@
 //  Copyright © 2020 Nikita Gundorin. All rights reserved.
 //
 
-import Foundation
 import CoreData
 
 extension Channel_db {

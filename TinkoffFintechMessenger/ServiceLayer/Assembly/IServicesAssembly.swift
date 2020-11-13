@@ -6,7 +6,7 @@
 //  Copyright © 2020 Nikita Gundorin. All rights reserved.
 //
 
-import CoreData
+import Foundation
 
 protocol IServicesAssembly {
     func conversationsDataProvider() -> IConversationsDataProvider
