@@ -62,6 +62,7 @@ class Repository<T: NSFetchRequestResult>: NSObject, NSFetchedResultsControllerD
     func performFetch(completion: (Error?) -> Void) {
         do {
             try fetchedResultsController.performFetch()
+            completion(nil)
         } catch {
             completion(error)
         }

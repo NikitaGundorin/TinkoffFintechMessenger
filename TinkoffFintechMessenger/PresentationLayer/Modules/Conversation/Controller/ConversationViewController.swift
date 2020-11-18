@@ -114,15 +114,16 @@ final class ConversationViewController: UIViewController {
                     AlertHelper().presentErrorAlert(vc: self,
                                                     message: "Failed to load messages")
                 }
+            } else {
+                DispatchQueue.main.async {
+                    self?.scrollToBottom()
+                }
             }
         })
         dataProvider?.subscribeMessages(forChannelWithId: channelId) { [weak self] error in
             if let error = error {
                 return AlertHelper().presentErrorAlert(vc: self, message: error.localizedDescription)
             }
-            
-            self?.tableView.reloadData()
-            self?.scrollToBottom()
         }
     }
     
@@ -143,6 +144,7 @@ final class ConversationViewController: UIViewController {
             },
             didChangeContentCallback: { [weak self] in
                 self?.tableView.endUpdates()
+                self?.scrollToBottom()
             },
             dataInsertedCallback: { [weak self] newIndexPath in
                 if let newIndexPath = newIndexPath {

@@ -125,8 +125,6 @@ final class ConversationsListViewController: UIViewController {
             if let error = error {
                 return AlertHelper().presentErrorAlert(vc: self, message: error.localizedDescription)
             }
-            
-            self?.tableView.reloadData()
         }
     }
     
