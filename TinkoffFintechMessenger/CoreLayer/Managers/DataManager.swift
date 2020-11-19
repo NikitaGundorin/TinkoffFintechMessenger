@@ -22,9 +22,9 @@ class DataManager: IDataManager {
         completion(user)
     }
     
-    func loadUserImage(imageUrl: URL?, completion: (Data?) -> Void) {
-        if let imageUrl = imageUrl,
-            let imageData = FileManager.read(url: imageUrl) {
+    func loadUserImage(imageFileName: String?, completion: (Data?) -> Void) {
+        if let imageFileName = imageFileName,
+            let imageData = FileManager.read(fileName: imageFileName) {
             completion(imageData)
         } else {
             completion(nil)
@@ -33,18 +33,18 @@ class DataManager: IDataManager {
     
     func saveUserData(_ user: User, completion: (Bool) -> Void) {
         if let data = try? JSONEncoder().encode(user),
-            FileManager.write(data: data, fileName: Constants.userDataFileName).isSuccessful {
+            FileManager.write(data: data, fileName: Constants.userDataFileName) {
             completion(true)
         } else {
             completion(false)
         }
     }
     
-    func saveUserImage(imageData: Data?, completion: (URL?) -> Void) {
-        guard let imageData = imageData else { return completion(nil)}
-        let (_, imageUrl) = FileManager.write(data: imageData,
-                                              fileName: Constants.userImageFileName)
-        completion(imageUrl)
+    func saveUserImage(imageData: Data?, completion: (String?) -> Void) {
+        guard let imageData = imageData,
+            FileManager.write(data: imageData,
+                              fileName: Constants.userImageFileName) else { return completion(nil) }
+        completion(Constants.userImageFileName)
     }
     
     func getUserId(completion: (String) -> Void) {
@@ -77,6 +77,6 @@ class DataManager: IDataManager {
     private func getDefaultUserData() -> User {
         return .init(fullName: "Nikita Gundorin",
                      description: "iOS developer\nSaint-Petersburg",
-                     imageUrl: nil)
+                     imageFileName: nil)
     }
 }

@@ -27,7 +27,7 @@ class GCDUserDataProvider: IUserDataProvider {
                     return completion(nil)
                 }
                 
-                self?.dataManager.loadUserImage(imageUrl: user.imageUrl) { data in
+                self?.dataManager.loadUserImage(imageFileName: user.imageFileName) { data in
                     var image: UIImage?
                     if let data = data {
                         image = UIImage(data: data)
@@ -43,12 +43,12 @@ class GCDUserDataProvider: IUserDataProvider {
     
     func saveUserData(_ userViewModel: UserModel, completion: ((Bool) -> Void)? = nil) {
         DispatchQueue.global(qos: .utility).async { [weak self] in
-            self?.dataManager.saveUserImage(imageData: userViewModel.profileImage?.pngData()) { url in
+            self?.dataManager.saveUserImage(imageData: userViewModel.profileImage?.pngData()) { fileName in
                 let user = User(fullName: userViewModel.fullName,
                                 description: userViewModel.description,
-                                imageUrl: url)
+                                imageFileName: fileName)
                 self?.dataManager.saveUserData(user) { dataSavedSuccessfully in
-                    let imageSavedSuccessfully = url != nil || userViewModel.profileImage == nil
+                    let imageSavedSuccessfully = fileName != nil || userViewModel.profileImage == nil
                     
                     completion?(dataSavedSuccessfully && imageSavedSuccessfully)
                 }

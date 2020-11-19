@@ -63,7 +63,6 @@ final class ConversationsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadUserData()
         loadData()
         setupLayout()
     }

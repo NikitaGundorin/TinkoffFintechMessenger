@@ -13,15 +13,15 @@ extension FileManager {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     }
     
-    static func write(data: Data, fileName: String) -> (isSuccessful: Bool, url: URL?) {
+    static func write(data: Data, fileName: String) -> (Bool) {
         guard let url = documentsDirectoryUrl?.appendingPathComponent(fileName)
-            else { return (false, nil) }
+            else { return false }
         
         do {
             try data.write(to: url)
-            return (true, url)
+            return true
         } catch {
-            return (false, nil)
+            return false
         }
     }
     
@@ -30,10 +30,6 @@ extension FileManager {
             return nil
         }
         
-        return try? Data(contentsOf: url)
-    }
-    
-    static func read(url: URL) -> Data? {
         return try? Data(contentsOf: url)
     }
 }

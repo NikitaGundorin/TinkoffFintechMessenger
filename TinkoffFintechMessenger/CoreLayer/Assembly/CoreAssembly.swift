@@ -12,7 +12,7 @@ class CoreAssembly: ICoreAssembly {
     
     // MARK: - ICoreAssembly
     
-    func networkManager() -> INetworkManager {
+    func conversationNetworkManager() -> IConversationNetworkManager {
         return FirestoreNetworkManager()
     }
     
@@ -27,5 +27,9 @@ class CoreAssembly: ICoreAssembly {
     
     func logger(sourceName: String) -> ILogger {
         Logger(sourceName: sourceName)
+    }
+    
+    func networkManager() -> INetworkManager {
+        return NetworkManager()
     }
 }

@@ -10,7 +10,8 @@ import Foundation
 
 protocol ICoreAssembly {
     func dataManager() -> IDataManager
-    func networkManager() -> INetworkManager
+    func conversationNetworkManager() -> IConversationNetworkManager
     func coreDataManager() -> ICoreDataManager
     func logger(sourceName: String) -> ILogger
+    func networkManager() -> INetworkManager
 }

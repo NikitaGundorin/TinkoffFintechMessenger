@@ -15,6 +15,7 @@ class NetworkImageCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let view = UIImageView(image: placeholderImage)
         view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

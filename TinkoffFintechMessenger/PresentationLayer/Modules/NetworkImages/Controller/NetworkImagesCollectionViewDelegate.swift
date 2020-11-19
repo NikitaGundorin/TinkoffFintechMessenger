@@ -10,7 +10,19 @@ import UIKit
 
 class NetworkImagesCollectionViewDelegate: NSObject, UICollectionViewDelegate {
     
+    // MARK: - Private properties
+    
+    private let cellDidSelectBlock: (Int) -> Void
+    
+    // MARK: - Initializer
+    
+    init(cellDidSelectBlock: @escaping (Int) -> Void) {
+        self.cellDidSelectBlock = cellDidSelectBlock
+    }
+    
+    // MARK: - UICollectionViewDelegate
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("SELECTED")
+        cellDidSelectBlock(indexPath.item)
     }
 }

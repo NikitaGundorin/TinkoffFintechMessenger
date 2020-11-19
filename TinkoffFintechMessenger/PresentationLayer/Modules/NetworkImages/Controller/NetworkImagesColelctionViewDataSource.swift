@@ -12,22 +12,51 @@ class NetworkImagesColelctionViewDataSource: NSObject, UICollectionViewDataSourc
     
     // MARK: - Private properties
     
+    private let imagesService: IImagesService?
     private let cellId: String
+    private var imageCellModels: [NetworkImageCellModel] = []
+    private let loadImageBlock: (NetworkImageCellModel, Int) -> Void
     
     // MARK: - Initializer
     
-    init(cellId: String) {
+    init(cellId: String,
+         imagesService: IImagesService?,
+         loadImageBlock: @escaping (NetworkImageCellModel, Int) -> Void) {
         self.cellId = cellId
+        self.imagesService = imagesService
+        self.loadImageBlock = loadImageBlock
         super.init()
     }
     
+    // MARK: - Public methods
+    
+    func setImageCellModels(models: [NetworkImageCellModel]) {
+        imageCellModels = models
+    }
+    
+    func updateImageCellModel(model: NetworkImageCellModel, number: Int) {
+        imageCellModels[number] = model
+    }
+    
+    func getFullUrl(number: Int) -> URL? {
+        return imageCellModels[number].fullUrl
+    }
+    
+    // MARK: - UICollectionViewDataSource
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        120
+        imageCellModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? NetworkImageCell else { return UICollectionViewCell() }
-        cell.configure(with: .init(image: nil))
+        let model = imageCellModels[indexPath.item]
+        cell.configure(with: model)
+        if model.previewUrl != nil {
+            loadImageBlock(model, indexPath.item)
+            imageCellModels[indexPath.item].previewUrl = nil
+        }
+        
         return cell
     }
 }

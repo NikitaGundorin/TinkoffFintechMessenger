@@ -2,24 +2,14 @@
 //  INetworkManager.swift
 //  TinkoffFintechMessenger
 //
-//  Created by Nikita Gundorin on 17.10.2020.
+//  Created by Nikita Gundorin on 19.11.2020.
 //  Copyright © 2020 Nikita Gundorin. All rights reserved.
 //
 
-import Firebase
+import Foundation
 
 protocol INetworkManager {
-    func getChannels(completion: @escaping ([Channel]?, Error?) -> Void)
-    func subscribeChannels(completion: @escaping ([DocumentChange]?, Error?) -> Void)
-    func getMessages(forChannelWithId channelId: String,
-                     completion: @escaping ([Message]?, Error?) -> Void)
-    func subscribeMessages(forChannelWithId channelId: String,
-                           completion: @escaping ([DocumentChange]?, Error?) -> Void)
-    func unsubscribeChannel()
-    func createChannel(withName name: String, completion: @escaping (String) -> Void)
-    func deleteChannel(withId identifier: String, completion: @escaping (Bool) -> Void)
-    func sendMessage(widthContent content: String,
-                     senderId: String,
-                     senderName: String,
-                     completion: @escaping () -> Void)
+    func makeRequest<Request>(_ request: Request,
+                              session: URLSession,
+                              completion: @escaping (Result<Request.Parser.Model, NetworkError>) -> Void) where Request: IRequest
 }

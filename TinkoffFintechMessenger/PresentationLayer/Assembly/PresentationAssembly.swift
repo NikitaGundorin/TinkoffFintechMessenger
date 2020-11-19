@@ -70,8 +70,10 @@ class PresentationAssembly: IPresentationAssembly {
         return CreateChannelAlertController(title: title, message: message, preferredStyle: .alert)
     }
     
-    func networkImagesViewController() -> NetworkImagesViewController {
+    func networkImagesViewController(imageSelectedBlock: @escaping (UIImage) -> Void) -> NetworkImagesViewController {
         let networkImagesViewController = NetworkImagesViewController()
+        networkImagesViewController.imagesService = serviceAssembly.imagesService()
+        networkImagesViewController.imageSelectedBlock = imageSelectedBlock
         return networkImagesViewController
     }
 }

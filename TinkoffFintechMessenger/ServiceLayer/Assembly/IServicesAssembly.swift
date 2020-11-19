@@ -16,4 +16,5 @@ protocol IServicesAssembly {
     func channelsRepository() -> IChannelsRepository
     func messagesRepository(channelId: String, userId: String) -> IMessagesRepository
     func loggerService(sourceName: String) -> ILoggerService
+    func imagesService() -> IImagesService
 }

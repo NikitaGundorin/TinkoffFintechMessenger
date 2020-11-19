@@ -65,7 +65,7 @@ class OperationUserDataProvider: IUserDataProvider {
                         return
                 }
                 
-                self?.dataManager.loadUserImage(imageUrl: user.imageUrl) { data in
+                self?.dataManager.loadUserImage(imageFileName: user.imageFileName) { data in
                     guard self?.isCancelled != true else { return }
                     
                     var image: UIImage?
@@ -96,14 +96,14 @@ class OperationUserDataProvider: IUserDataProvider {
         
         override func main() {
             guard !isCancelled else { return }
-            dataManager.saveUserImage(imageData: userViewModel.profileImage?.pngData()) { url in
+            dataManager.saveUserImage(imageData: userViewModel.profileImage?.pngData()) { fileName in
                 guard !isCancelled else { return }
                 let user = User(fullName: userViewModel.fullName,
                                 description: userViewModel.description,
-                                imageUrl: url)
+                                imageFileName: fileName)
                 dataManager.saveUserData(user) { dataSavedSuccessfully in
                     guard !isCancelled else { return }
-                    let imageSavedSuccessfully = url != nil || userViewModel.profileImage == nil
+                    let imageSavedSuccessfully = fileName != nil || userViewModel.profileImage == nil
                     
                     completion?(dataSavedSuccessfully && imageSavedSuccessfully)
                 }

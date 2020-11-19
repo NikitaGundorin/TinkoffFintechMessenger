@@ -44,10 +44,7 @@ final class ProfileViewController: UIViewController {
         ImagePickerDelegate(errorHandler: { [weak self] in
             AlertHelper().presentErrorAlert(vc: self)
             }, imagePickedHandler: { [weak self] image in
-                var imageChanged = !(self?.originalUserImage?.isEqual(to: image) ?? false)
-                self?.imageChanged = imageChanged
-                self?.setSaveButtonsEnabled(imageChanged || self?.nameChanged ?? true || self?.descriptionChanged ?? true)
-                self?.setProfileImage(image: image)
+                self?.selectedProfileImage(image)
         })
     private lazy var imagePickerController: UIImagePickerController = {
         let vc = UIImagePickerController()
@@ -255,6 +252,12 @@ final class ProfileViewController: UIViewController {
         }
     }
     
+    private func selectedProfileImage(_ image: UIImage) {
+        imageChanged = !(originalUserImage?.isEqual(to: image) ?? false)
+        setSaveButtonsEnabled(imageChanged || nameChanged || descriptionChanged)
+        setProfileImage(image: image)
+    }
+    
     private func setProfileImage(image: UIImage?) {
         user?.profileImage = image
         profileImageView.configure(with: .init(initials: userModel.initials,
@@ -274,7 +277,9 @@ final class ProfileViewController: UIViewController {
     }
     
     private func presentNetworkImagesViewController() {
-        if let vc = presentationAssembly?.networkImagesViewController(),
+        if let vc = presentationAssembly?.networkImagesViewController(imageSelectedBlock: { [weak self] image in
+            self?.selectedProfileImage(image)
+        }),
             let nvc = presentationAssembly?.baseNavigationViewController(rootViewController: vc) {
             present(nvc, animated: true)
         }
