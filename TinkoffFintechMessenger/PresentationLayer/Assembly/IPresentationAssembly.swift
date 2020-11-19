@@ -15,4 +15,5 @@ protocol IPresentationAssembly {
     func profileViewController(profileDataUpdatedHandler: @escaping () -> Void) -> ProfileViewController
     func themesViewController() -> ThemesViewController
     func createChannelAlertController(title: String?, message: String?) -> CreateChannelAlertController
+    func networkImagesViewController() -> NetworkImagesViewController
 }

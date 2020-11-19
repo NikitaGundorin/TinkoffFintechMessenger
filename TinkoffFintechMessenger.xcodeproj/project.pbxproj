@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		57519E203F217CD03346D6B4 /* Pods_TinkoffFintechMessenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A375116B19233D65668473 /* Pods_TinkoffFintechMessenger.framework */; };
 		6DD805D5251151910070594D /* UIViewController+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD805D4251151910070594D /* UIViewController+State.swift */; };
+		722119EC2565630000EBE32B /* NetworkImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722119EB2565630000EBE32B /* NetworkImagesViewController.swift */; };
+		722119EE2565639B00EBE32B /* NetworkImagesColelctionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722119ED2565639B00EBE32B /* NetworkImagesColelctionViewDataSource.swift */; };
+		722119F02565644B00EBE32B /* NetworkImagesCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722119EF2565644B00EBE32B /* NetworkImagesCollectionViewDelegate.swift */; };
+		722119F22565655200EBE32B /* NetworkImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722119F12565655200EBE32B /* NetworkImageCell.swift */; };
+		722119F42565C34A00EBE32B /* NetworkImageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722119F32565C34A00EBE32B /* NetworkImageCellModel.swift */; };
 		722EB0592549D42500C37106 /* Channel_db+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722EB0582549D42500C37106 /* Channel_db+Init.swift */; };
 		722EB05B2549D66300C37106 /* Message_db+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722EB05A2549D66300C37106 /* Message_db+Init.swift */; };
 		723E18A82557165900085D21 /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E18A72557165900085D21 /* RootAssembly.swift */; };
@@ -93,6 +98,11 @@
 		5786F2FF9963D4A506F1D523 /* Pods-TinkoffFintechMessenger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffFintechMessenger.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffFintechMessenger/Pods-TinkoffFintechMessenger.debug.xcconfig"; sourceTree = "<group>"; };
 		6DD805D4251151910070594D /* UIViewController+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+State.swift"; sourceTree = "<group>"; };
 		6F5C6EBCC32D1CACA43E7F81 /* Pods-TinkoffFintechMessenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffFintechMessenger.release.xcconfig"; path = "Target Support Files/Pods-TinkoffFintechMessenger/Pods-TinkoffFintechMessenger.release.xcconfig"; sourceTree = "<group>"; };
+		722119EB2565630000EBE32B /* NetworkImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkImagesViewController.swift; sourceTree = "<group>"; };
+		722119ED2565639B00EBE32B /* NetworkImagesColelctionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkImagesColelctionViewDataSource.swift; sourceTree = "<group>"; };
+		722119EF2565644B00EBE32B /* NetworkImagesCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkImagesCollectionViewDelegate.swift; sourceTree = "<group>"; };
+		722119F12565655200EBE32B /* NetworkImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkImageCell.swift; sourceTree = "<group>"; };
+		722119F32565C34A00EBE32B /* NetworkImageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkImageCellModel.swift; sourceTree = "<group>"; };
 		722EB0582549D42500C37106 /* Channel_db+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Channel_db+Init.swift"; sourceTree = "<group>"; };
 		722EB05A2549D66300C37106 /* Message_db+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message_db+Init.swift"; sourceTree = "<group>"; };
 		723E18A72557165900085D21 /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
@@ -186,6 +196,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		722119E72565627600EBE32B /* NetworkImages */ = {
+			isa = PBXGroup;
+			children = (
+				722119E82565629700EBE32B /* Model */,
+				722119E92565629D00EBE32B /* View */,
+				722119EA256562A100EBE32B /* Controller */,
+			);
+			path = NetworkImages;
+			sourceTree = "<group>";
+		};
+		722119E82565629700EBE32B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				722119F32565C34A00EBE32B /* NetworkImageCellModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		722119E92565629D00EBE32B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				722119F12565655200EBE32B /* NetworkImageCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		722119EA256562A100EBE32B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				722119EB2565630000EBE32B /* NetworkImagesViewController.swift */,
+				722119ED2565639B00EBE32B /* NetworkImagesColelctionViewDataSource.swift */,
+				722119EF2565644B00EBE32B /* NetworkImagesCollectionViewDelegate.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		722EB0572549D3ED00C37106 /* ObjectsExtensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,6 +279,7 @@
 				723E18A12557082700085D21 /* ConversationList */,
 				723E189D2557079400085D21 /* Profile */,
 				7256E6B0252684B300DA0608 /* Themes */,
+				722119E72565627600EBE32B /* NetworkImages */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -780,6 +827,7 @@
 				72EFC8DA255C8DEB004D128A /* IMessagesRepository.swift in Sources */,
 				72EFC8D8255C888C004D128A /* ChannelsRepository.swift in Sources */,
 				72EFC8F1255DB547004D128A /* ProfileImageModel.swift in Sources */,
+				722119F42565C34A00EBE32B /* NetworkImageCellModel.swift in Sources */,
 				722EB0592549D42500C37106 /* Channel_db+Init.swift in Sources */,
 				7240BEFD253B48F500C00BB9 /* FirestoreNetworkManager.swift in Sources */,
 				72EAD710251DC3D0003DC6E4 /* ConversationListTableViewCell.swift in Sources */,
@@ -800,6 +848,7 @@
 				723E18B42557173E00085D21 /* CoreAssembly.swift in Sources */,
 				722EB05B2549D66300C37106 /* Message_db+Init.swift in Sources */,
 				7240BF03253CB70C00C00BB9 /* CreateChannelAlertController.swift in Sources */,
+				722119F02565644B00EBE32B /* NetworkImagesCollectionViewDelegate.swift in Sources */,
 				72EFC8FB255DC3A5004D128A /* ConversationsListTableViewDataSource.swift in Sources */,
 				7256E6B32527808300DA0608 /* ThemesViewController.swift in Sources */,
 				723E18B22557170800085D21 /* ServicesAssembly.swift in Sources */,
@@ -814,11 +863,14 @@
 				7276ABEE250E67510017245A /* AppDelegate.swift in Sources */,
 				72EAD716251DD0A5003DC6E4 /* IConfigurableView.swift in Sources */,
 				72EFC8ED255DB321004D128A /* ConversationModel.swift in Sources */,
+				722119F22565655200EBE32B /* NetworkImageCell.swift in Sources */,
 				7293C6E92537A38A0081BA1C /* UIImage+Comparer.swift in Sources */,
 				72DAD5FF250F4489008C8762 /* UIApplication.State+description.swift in Sources */,
+				722119EC2565630000EBE32B /* NetworkImagesViewController.swift in Sources */,
 				72AF92C8252934DB00335DF4 /* BaseNavigationController.swift in Sources */,
 				7256E6BA2527821F00DA0608 /* Theme.swift in Sources */,
 				7240BEF7253B469A00C00BB9 /* FirestoreDataProvider.swift in Sources */,
+				722119EE2565639B00EBE32B /* NetworkImagesColelctionViewDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

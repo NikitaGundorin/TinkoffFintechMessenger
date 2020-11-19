@@ -14,6 +14,7 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Public properties
     
+    var presentationAssembly: IPresentationAssembly?
     var profileDataUpdatedHandler: (() -> Void)?
     var gcdDataProvider: IUserDataProvider?
     var operationDataProvider: IUserDataProvider?
@@ -100,7 +101,11 @@ final class ProfileViewController: UIViewController {
                 } else {
                     AlertHelper().presentErrorAlert(vc: self)
                 }
-            }]
+            },
+            UIAlertAction(title: "Load from network", style: .default, handler: { [weak self] _ in
+                self?.presentNetworkImagesViewController()
+            })
+        ]
         
         if user?.profileImage != nil {
             actions.append(UIAlertAction(title: "Remove Photo", style: .destructive) { [weak self] _ in
@@ -266,6 +271,13 @@ final class ProfileViewController: UIViewController {
     private func setSaveButtonsEnabled(_ isEnabled: Bool) {
         gcdSaveButton.isEnabled = isEnabled
         operationSaveButton.isEnabled = isEnabled
+    }
+    
+    private func presentNetworkImagesViewController() {
+        if let vc = presentationAssembly?.networkImagesViewController(),
+            let nvc = presentationAssembly?.baseNavigationViewController(rootViewController: vc) {
+            present(nvc, animated: true)
+        }
     }
     
     @objc private func dismissKeyboard() {
