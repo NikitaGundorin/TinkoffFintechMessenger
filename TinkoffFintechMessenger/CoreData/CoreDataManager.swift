@@ -102,6 +102,7 @@ class CoreDataManager {
         
         let block = {
             do {
+                try context.obtainPermanentIDs(for: Array(context.insertedObjects))
                 try context.save()
                 if let parent = context.parent { self.performSave(in: parent) }
             } catch {
@@ -116,7 +117,7 @@ class CoreDataManager {
         }
     }
     
-    // MARK: - Fetch Requset
+    // MARK: - CRUD
     
     func fetchEntities(withName name: String,
                        inContext context: NSManagedObjectContext,
@@ -125,11 +126,35 @@ class CoreDataManager {
         fetchRequest.predicate = predicate
         
         do {
-            return try context.fetch(fetchRequest)
+            let result = try context.fetch(fetchRequest)
+            return result
         } catch {
             Logger.error(loggerSourceName, error.localizedDescription)
         }
         return nil
+    }
+    
+    func update(entityWithName name: String,
+                keyedValues: [String: Any],
+                inContext context: NSManagedObjectContext,
+                predicate: NSPredicate) {
+        let request = NSFetchRequest<NSManagedObject>(entityName: name)
+        request.predicate = predicate
+        if let objectToUpdate = try? context.fetch(request).first {
+            objectToUpdate.setValuesForKeys(keyedValues)
+        }
+    }
+    
+    func deleteRange(entityName name: String,
+                     inContext context: NSManagedObjectContext,
+                     predicate: NSPredicate) {
+        let request = NSFetchRequest<NSManagedObject>(entityName: name)
+        request.predicate = predicate
+        if let objectsToDelete = try? context.fetch(request), objectsToDelete.count > 0 {
+            objectsToDelete.forEach {
+                context.delete($0)
+            }
+        }
     }
     
     // MARK: - Observers

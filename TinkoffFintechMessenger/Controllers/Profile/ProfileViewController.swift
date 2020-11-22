@@ -41,7 +41,7 @@ final class ProfileViewController: UIViewController {
     private var originalUserImage: UIImage?
     private lazy var imagePickerDelegate =
         ImagePickerDelegate(errorHandler: { [weak self] in
-            self?.showAlert()
+            AlertHelper().presentErrorAlert(vc: self)
         }, imagePickedHandler: { [weak self] image in
             var imageChanged = !(self?.originalUserImage?.isEqual(to: image) ?? false)
             self?.imageChanged = imageChanged
@@ -98,7 +98,7 @@ final class ProfileViewController: UIViewController {
                 if CameraManager.checkCameraPermission() {
                     self?.presentImagePicker(sourceType: .camera)
                 } else {
-                    self?.showAlert()
+                    AlertHelper().presentErrorAlert(vc: self)
                 }
             }]
         
@@ -134,8 +134,10 @@ final class ProfileViewController: UIViewController {
         
         dataManager.loadPersonData { [weak self] personViewModel in
             guard let person = personViewModel else {
-                self?.showAlert(title: "Error", message: "Failed to load data", additionalActions:
-                                    [.init(title: "Try again", style: .default) { [weak self] _ in
+                AlertHelper().presentAlert(vc: self,
+                                           title: "Error",
+                                           message: "Failed to load data",
+                                           additionalActions: [.init(title: "Try again", style: .default) { [weak self] _ in
                                         self?.loadData()
                                     }]) { [weak self] _ in
                     self?.cancel()
@@ -220,14 +222,17 @@ final class ProfileViewController: UIViewController {
                     self?.imageChanged = false
                     self?.nameChanged = false
                     self?.descriptionChanged = false
-                    self?.showAlert(title: "Success", message: "Data saved successfully")
+                    AlertHelper().presentAlert(vc: self, title: "Success", message: "Data saved successfully")
                 }
             } else {
-                self?.showAlert(title: "Error", message: "Failed to save data", additionalActions: [
-                                    .init(title: "Try again", style: .default) { [weak self] _ in
-                                        self?.saveButtonPressed(dataManager: dataManager)
-                                    }]) { [weak self] _ in
-                    self?.setSaveButtonsEnabled(true)
+                AlertHelper().presentAlert(vc: self,
+                                           title: "Error",
+                                           message: "Failed to save data",
+                                           additionalActions: [
+                                            .init(title: "Try again", style: .default) { [weak self] _ in
+                                                self?.saveButtonPressed(dataManager: dataManager)
+                                            }]) { [weak self] _ in
+                                                self?.setSaveButtonsEnabled(true)
                 }
             }
         }
@@ -235,26 +240,13 @@ final class ProfileViewController: UIViewController {
     
     private func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
         if !UIImagePickerController.isSourceTypeAvailable(sourceType) {
-            showAlert()
+            AlertHelper().presentErrorAlert(vc: self)
             return
         }
         
         imagePickerController.sourceType = sourceType
         DispatchQueue.main.async {
             self.present(self.imagePickerController, animated: true)
-        }
-    }
-    
-    private func showAlert(title: String = "Error",
-                           message: String = "This action is not allowed",
-                           additionalActions: [UIAlertAction] = [],
-                           primaryHandler: ((UIAlertAction) -> Void)? = nil) {
-        
-        DispatchQueue.main.async {
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alertController.addAction(.init(title: "OK", style: .cancel, handler: primaryHandler))
-            additionalActions.forEach { alertController.addAction($0) }
-            self.present(alertController, animated: true)
         }
     }
     

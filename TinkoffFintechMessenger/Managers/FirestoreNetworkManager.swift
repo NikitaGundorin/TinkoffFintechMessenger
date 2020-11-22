@@ -14,7 +14,22 @@ class FirestoreNetworkManager: NetworkManager {
     private var messagesReference: CollectionReference?
     private var messageListener: ListenerRegistration?
     
-    func subscribeChannels(completion: @escaping ([Channel]?, Error?) -> Void) {
+    func getChannels(completion: @escaping ([Channel]?, Error?) -> Void) {
+        channelsReference.getDocuments { snapshot, error in
+            guard let snapshot = snapshot else {
+                if let error = error {
+                    completion(nil, error)
+                }
+                return
+            }
+
+            let data = snapshot.documents.compactMap { Channel(document: $0) }
+
+            completion(data, nil)
+        }
+    }
+    
+    func subscribeChannels(completion: @escaping ([DocumentChange]?, Error?) -> Void) {
         channelsReference.addSnapshotListener { snapshot, error in
             guard let snapshot = snapshot else {
                 if let error = error {
@@ -23,28 +38,29 @@ class FirestoreNetworkManager: NetworkManager {
                 return
             }
             
-            let data = snapshot.documents.compactMap { document -> Channel? in
-                let lastMessage = document["lastMessage"] as? String
-                let lastActivity = (document["lastActivity"] as? Timestamp)?.dateValue()
-                guard let name = document["name"] as? String,
-                    !name.isEmptyOrOnlyWhitespaces,
-                    (lastMessage != nil && lastActivity != nil)
-                    || (lastActivity == nil && lastMessage == nil)
-                    
-                else { return nil }
-                
-                return .init(identifier: document.documentID,
-                             name: name,
-                             lastMessage: lastMessage,
-                             lastActivity: lastActivity)
-            }.sorted { ($0.lastActivity ?? .distantPast) > ($1.lastActivity ?? .distantPast) }
+            completion(snapshot.documentChanges, nil)
+        }
+    }
+    
+    func getMessages(forChannelWithId channelId: String,
+                     completion: @escaping ([Message]?, Error?) -> Void) {
+        
+        channelsReference.document(channelId).collection("messages").getDocuments { snapshot, error in
+            guard let snapshot = snapshot else {
+                if let error = error {
+                    completion(nil, error)
+                }
+                return
+            }
+            
+            let data = snapshot.documents.compactMap { Message(document: $0) }
             
             completion(data, nil)
         }
     }
     
     func subscribeMessages(forChannelWithId channelId: String,
-                           completion: @escaping ([Message]?, Error?) -> Void) {
+                           completion: @escaping ([DocumentChange]?, Error?) -> Void) {
         messagesReference = db.collection("channels").document(channelId).collection("messages")
         
         messageListener = messagesReference?.addSnapshotListener { snapshot, error in
@@ -55,24 +71,7 @@ class FirestoreNetworkManager: NetworkManager {
                 return
             }
             
-            let data = snapshot.documents.compactMap { document -> Message? in
-                guard let content = document["content"] as? String,
-                    !content.isEmptyOrOnlyWhitespaces,
-                    let created = (document["created"] as? Timestamp)?.dateValue(),
-                    let senderId = document["senderId"] as? String,
-                    !senderId.isEmptyOrOnlyWhitespaces,
-                    let senderName = document["senderName"] as? String,
-                    !senderName.isEmptyOrOnlyWhitespaces
-                else { return nil }
-                
-                return .init(identifier: document.documentID,
-                             content: content,
-                             created: created,
-                             senderId: senderId,
-                             senderName: senderName)
-            }.sorted { $0.created < $1.created }
-            
-            completion(data, nil)
+            completion(snapshot.documentChanges, nil)
         }
     }
     
@@ -84,6 +83,12 @@ class FirestoreNetworkManager: NetworkManager {
         var document: DocumentReference?
         document = channelsReference.addDocument(data: ["name": name]) { _ in
                     completion(document?.documentID ?? "")
+        }
+    }
+    
+    func deleteChannel(withId identifier: String, completion: @escaping (Bool) -> Void) {
+        channelsReference.document(identifier).delete { error in
+            completion(error == nil)
         }
     }
     
