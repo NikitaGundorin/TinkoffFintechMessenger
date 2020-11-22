@@ -1,6 +1,7 @@
 excluded:
   - Pods
   - .git
+  - DerivedData
 
 disabled_rules:
   - trailing_whitespace
@@ -8,7 +9,6 @@ disabled_rules:
   - weak_delegate
   - todo
   - cyclomatic_complexity
-  - function_body_length
   - generic_type_name
   - identifier_name
 

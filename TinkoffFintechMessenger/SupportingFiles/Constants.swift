@@ -9,6 +9,6 @@
 import Foundation
 
 class Constants {
-    static let personDataFileName = "personData.json"
-    static let personImageFileName = "personImage.png"
+    static let userDataFileName = "userData.json"
+    static let userImageFileName = "userImage.png"
 }
