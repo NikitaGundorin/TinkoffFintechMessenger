@@ -69,6 +69,8 @@ final class ProfileViewController: UIViewController {
     private var descriptionChanged = false
     private var imageChanged = false
     
+    private lazy var editAnimator: IViewAnimator = ShakeViewAnimator(view: profileImageEditButton.titleLabel)
+    
     // MARK: - UIViewController lifecycle methods
     
     override func viewDidLoad() {
@@ -265,6 +267,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func exitEditMode() {
+        editAnimator.stop()
         if userNameTextView.isUserInteractionEnabled {
             toggleEditMode()
         }
@@ -327,6 +330,7 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func toggleEditMode() {
+        userNameTextView.isUserInteractionEnabled ? editAnimator.stop() : editAnimator.start()
         let backgroundColor = userNameTextView.isUserInteractionEnabled ? nil
             : Appearance.yellowSecondaryColor
         UIView.animate(withDuration: Appearance.defaultAnimationDuration) {
