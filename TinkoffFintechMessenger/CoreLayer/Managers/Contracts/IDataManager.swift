@@ -10,8 +10,8 @@ import Foundation
 
 protocol IDataManager {
     func loadUserData(completion: @escaping (User?) -> Void)
-    func loadUserImage(imageUrl: URL?, completion: (Data?) -> Void)
+    func loadUserImage(imageFileName: String?, completion: (Data?) -> Void)
     func saveUserData(_ user: User, completion: (Bool) -> Void)
-    func saveUserImage(imageData: Data?, completion: (URL?) -> Void)
+    func saveUserImage(imageData: Data?, completion: (String?) -> Void)
     func getUserId(completion: (String) -> Void)
 }

@@ -8,7 +8,7 @@
 
 import Firebase
 
-class FirestoreNetworkManager: INetworkManager {
+class FirestoreNetworkManager: IConversationNetworkManager {
     
     // MARK: - Private properties
     

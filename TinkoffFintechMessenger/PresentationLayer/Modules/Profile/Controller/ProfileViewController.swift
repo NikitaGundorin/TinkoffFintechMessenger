@@ -14,6 +14,7 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Public properties
     
+    var presentationAssembly: IPresentationAssembly?
     var profileDataUpdatedHandler: (() -> Void)?
     var gcdDataProvider: IUserDataProvider?
     var operationDataProvider: IUserDataProvider?
@@ -43,10 +44,7 @@ final class ProfileViewController: UIViewController {
         ImagePickerDelegate(errorHandler: { [weak self] in
             AlertHelper().presentErrorAlert(vc: self)
             }, imagePickedHandler: { [weak self] image in
-                var imageChanged = !(self?.originalUserImage?.isEqual(to: image) ?? false)
-                self?.imageChanged = imageChanged
-                self?.setSaveButtonsEnabled(imageChanged || self?.nameChanged ?? true || self?.descriptionChanged ?? true)
-                self?.setProfileImage(image: image)
+                self?.selectedProfileImage(image)
         })
     private lazy var imagePickerController: UIImagePickerController = {
         let vc = UIImagePickerController()
@@ -100,7 +98,11 @@ final class ProfileViewController: UIViewController {
                 } else {
                     AlertHelper().presentErrorAlert(vc: self)
                 }
-            }]
+            },
+            UIAlertAction(title: "Load from network", style: .default, handler: { [weak self] _ in
+                self?.presentNetworkImagesViewController()
+            })
+        ]
         
         if user?.profileImage != nil {
             actions.append(UIAlertAction(title: "Remove Photo", style: .destructive) { [weak self] _ in
@@ -250,6 +252,12 @@ final class ProfileViewController: UIViewController {
         }
     }
     
+    private func selectedProfileImage(_ image: UIImage) {
+        imageChanged = !(originalUserImage?.isEqual(to: image) ?? false)
+        setSaveButtonsEnabled(imageChanged || nameChanged || descriptionChanged)
+        setProfileImage(image: image)
+    }
+    
     private func setProfileImage(image: UIImage?) {
         user?.profileImage = image
         profileImageView.configure(with: .init(initials: userModel.initials,
@@ -266,6 +274,15 @@ final class ProfileViewController: UIViewController {
     private func setSaveButtonsEnabled(_ isEnabled: Bool) {
         gcdSaveButton.isEnabled = isEnabled
         operationSaveButton.isEnabled = isEnabled
+    }
+    
+    private func presentNetworkImagesViewController() {
+        if let vc = presentationAssembly?.networkImagesViewController(imageSelectedBlock: { [weak self] image in
+            self?.selectedProfileImage(image)
+        }),
+            let nvc = presentationAssembly?.baseNavigationViewController(rootViewController: vc) {
+            present(nvc, animated: true)
+        }
     }
     
     @objc private func dismissKeyboard() {

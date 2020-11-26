@@ -12,7 +12,7 @@ class FirestoreDataProvider: IConversationsDataProvider {
     
     // MARK: - Private properties
     
-    private let networkManager: INetworkManager
+    private let networkManager: IConversationNetworkManager
     private let userDataProvider: IUserDataProvider
     private let coreDataManager: ICoreDataManager
     
@@ -22,7 +22,7 @@ class FirestoreDataProvider: IConversationsDataProvider {
     
     var userId: String?
     
-    init(networkManager: INetworkManager,
+    init(networkManager: IConversationNetworkManager,
          userDataProvider: IUserDataProvider,
          coreDataManager: ICoreDataManager) {
         self.networkManager = networkManager

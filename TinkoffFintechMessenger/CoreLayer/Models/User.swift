@@ -11,5 +11,5 @@ import Foundation
 struct User: Codable {
     var fullName: String
     var description: String?
-    var imageUrl: URL?
+    var imageFileName: String?
 }

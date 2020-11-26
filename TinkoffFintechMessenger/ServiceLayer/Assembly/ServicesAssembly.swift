@@ -23,7 +23,7 @@ class ServicesAssembly: IServicesAssembly {
     // MARK: - IServicesAssembly
     
     func conversationsDataProvider() -> IConversationsDataProvider {
-        let dataProvider = FirestoreDataProvider(networkManager: coreAssembly.networkManager(),
+        let dataProvider = FirestoreDataProvider(networkManager: coreAssembly.conversationNetworkManager(),
                                                  userDataProvider: gcdUserDataProvider(),
                                                  coreDataManager: coreAssembly.coreDataManager())
         return dataProvider
@@ -64,5 +64,9 @@ class ServicesAssembly: IServicesAssembly {
     
     func loggerService(sourceName: String) -> ILoggerService {
         return LoggerService(logger: coreAssembly.logger(sourceName: sourceName))
+    }
+    
+    func imagesService() -> IImagesService {
+        return PixabayService(networkManager: coreAssembly.networkManager())
     }
 }

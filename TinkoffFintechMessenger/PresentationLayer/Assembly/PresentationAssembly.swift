@@ -49,6 +49,7 @@ class PresentationAssembly: IPresentationAssembly {
     func profileViewController(profileDataUpdatedHandler: @escaping () -> Void) -> ProfileViewController {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
         if let profileViewController = storyboard.instantiateInitialViewController() as? ProfileViewController {
+            profileViewController.presentationAssembly = self
             profileViewController.profileDataUpdatedHandler = profileDataUpdatedHandler
             profileViewController.gcdDataProvider = serviceAssembly.gcdUserDataProvider()
             profileViewController.operationDataProvider = serviceAssembly.operationUserDataProvider()
@@ -67,5 +68,12 @@ class PresentationAssembly: IPresentationAssembly {
     
     func createChannelAlertController(title: String?, message: String?) -> CreateChannelAlertController {
         return CreateChannelAlertController(title: title, message: message, preferredStyle: .alert)
+    }
+    
+    func networkImagesViewController(imageSelectedBlock: @escaping (UIImage) -> Void) -> NetworkImagesViewController {
+        let networkImagesViewController = NetworkImagesViewController()
+        networkImagesViewController.imagesService = serviceAssembly.imagesService()
+        networkImagesViewController.imageSelectedBlock = imageSelectedBlock
+        return networkImagesViewController
     }
 }
