@@ -53,6 +53,7 @@
 		725B0F682566BDDF00B718E0 /* BaseCodableParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725B0F672566BDDF00B718E0 /* BaseCodableParser.swift */; };
 		725B0F6A2566CD7F00B718E0 /* PixabayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725B0F692566CD7F00B718E0 /* PixabayResponse.swift */; };
 		725B0F6C2566CDFF00B718E0 /* PixabayImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725B0F6B2566CDFF00B718E0 /* PixabayImage.swift */; };
+		726DCECD25700E010025C76A /* IWindowAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726DCECC25700E010025C76A /* IWindowAnimator.swift */; };
 		7276ABEE250E67510017245A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276ABED250E67510017245A /* AppDelegate.swift */; };
 		7276ABF2250E67510017245A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276ABF1250E67510017245A /* ProfileViewController.swift */; };
 		7276ABF5250E67510017245A /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7276ABF3250E67510017245A /* Profile.storyboard */; };
@@ -80,6 +81,8 @@
 		72A175852534E2AC00D4D81D /* ImagePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A175842534E2AC00D4D81D /* ImagePickerDelegate.swift */; };
 		72A9B451255329ED00F5FCA8 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A9B450255329ED00F5FCA8 /* AlertHelper.swift */; };
 		72AF92C8252934DB00335DF4 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AF92C7252934DB00335DF4 /* BaseNavigationController.swift */; };
+		72B94AB6256FD2D10019D6DD /* ParticlesAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B94AB5256FD2D10019D6DD /* ParticlesAnimator.swift */; };
+		72B94AB8257003570019D6DD /* AnimatedWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B94AB7257003570019D6DD /* AnimatedWindow.swift */; };
 		72DAD5FF250F4489008C8762 /* UIApplication.State+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DAD5FE250F4489008C8762 /* UIApplication.State+description.swift */; };
 		72EAD6FA251D10E2003DC6E4 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EAD6F9251D10E2003DC6E4 /* ProfileImageView.swift */; };
 		72EAD6FF251D11B0003DC6E4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EAD6FE251D11B0003DC6E4 /* User.swift */; };
@@ -161,6 +164,7 @@
 		725B0F672566BDDF00B718E0 /* BaseCodableParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCodableParser.swift; sourceTree = "<group>"; };
 		725B0F692566CD7F00B718E0 /* PixabayResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayResponse.swift; sourceTree = "<group>"; };
 		725B0F6B2566CDFF00B718E0 /* PixabayImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayImage.swift; sourceTree = "<group>"; };
+		726DCECC25700E010025C76A /* IWindowAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IWindowAnimator.swift; sourceTree = "<group>"; };
 		7276ABEA250E67510017245A /* Messenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7276ABED250E67510017245A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7276ABF1250E67510017245A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -190,6 +194,8 @@
 		72A175842534E2AC00D4D81D /* ImagePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerDelegate.swift; sourceTree = "<group>"; };
 		72A9B450255329ED00F5FCA8 /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
 		72AF92C7252934DB00335DF4 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
+		72B94AB5256FD2D10019D6DD /* ParticlesAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticlesAnimator.swift; sourceTree = "<group>"; };
+		72B94AB7257003570019D6DD /* AnimatedWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedWindow.swift; sourceTree = "<group>"; };
 		72DAD5FE250F4489008C8762 /* UIApplication.State+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication.State+description.swift"; sourceTree = "<group>"; };
 		72EAD6F9251D10E2003DC6E4 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		72EAD6FE251D11B0003DC6E4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -280,8 +286,10 @@
 		72377D49256D7ECC003DB019 /* Animators */ = {
 			isa = PBXGroup;
 			children = (
+				72B94AB7257003570019D6DD /* AnimatedWindow.swift */,
 				72579443256B05DD00B56656 /* ShakeViewAnimator.swift */,
 				72377D4A256D81B8003DB019 /* PopVCAnimator.swift */,
+				72B94AB5256FD2D10019D6DD /* ParticlesAnimator.swift */,
 			);
 			path = Animators;
 			sourceTree = "<group>";
@@ -530,6 +538,7 @@
 				72579445256B084E00B56656 /* IViewAnimator.swift */,
 				72377D4C256D86A0003DB019 /* IViewControllerAnimator.swift */,
 				727AD2AD256F83D500C1BFE2 /* IPopAnimatableViewController.swift */,
+				726DCECC25700E010025C76A /* IWindowAnimator.swift */,
 			);
 			path = Contracts;
 			sourceTree = "<group>";
@@ -901,6 +910,7 @@
 				72EAD704251D392F003DC6E4 /* ConversationsListViewController.swift in Sources */,
 				7276ABF2250E67510017245A /* ProfileViewController.swift in Sources */,
 				6DD805D5251151910070594D /* UIViewController+State.swift in Sources */,
+				72B94AB6256FD2D10019D6DD /* ParticlesAnimator.swift in Sources */,
 				7240BEFF253CA15D00C00BB9 /* ConversationListTableViewHeader.swift in Sources */,
 				72A175822534DDD200D4D81D /* AccessHelper.swift in Sources */,
 				723E18B0255716C600085D21 /* PresentationAssembly.swift in Sources */,
@@ -920,6 +930,7 @@
 				72EFC8F1255DB547004D128A /* ProfileImageModel.swift in Sources */,
 				722119F42565C34A00EBE32B /* NetworkImageCellModel.swift in Sources */,
 				722EB0592549D42500C37106 /* Channel_db+Init.swift in Sources */,
+				72B94AB8257003570019D6DD /* AnimatedWindow.swift in Sources */,
 				7240BEFD253B48F500C00BB9 /* FirestoreNetworkManager.swift in Sources */,
 				72EAD710251DC3D0003DC6E4 /* ConversationListTableViewCell.swift in Sources */,
 				72EFC8EF255DB474004D128A /* ConversationCellModel.swift in Sources */,
@@ -955,6 +966,7 @@
 				7256E6B72527821200DA0608 /* ThemePickerView.swift in Sources */,
 				72F69F42251E82FF00FCC09B /* Date+Formatter.swift in Sources */,
 				72F69F4525210EB700FCC09B /* Appearance.swift in Sources */,
+				726DCECD25700E010025C76A /* IWindowAnimator.swift in Sources */,
 				72202ACB2566F770006B4BBA /* IImagesService.swift in Sources */,
 				72FF172D2521DC6B00B60547 /* IConversationsDataProvider.swift in Sources */,
 				72202ACF2566F925006B4BBA /* DataParser.swift in Sources */,
@@ -1132,7 +1144,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = Messenger;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1152,7 +1164,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = Messenger;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

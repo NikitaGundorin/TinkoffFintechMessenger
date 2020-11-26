@@ -55,10 +55,11 @@ extension PopVCAnimator: UIViewControllerAnimatedTransitioning {
                                                y: yScaleFactor)
         let centerY = originFrame.midY - (originContainerFrame.midY - presentingViewFrame.midY) * yScaleFactor
         if presenting {
+            let statusBarHeight = UIApplication.shared.statusBarFrame.size.height
             presentingView.transform = scaleTransform
             presentingView.center = CGPoint(
                 x: originFrame.midX,
-                y: centerY)
+                y: centerY - statusBarHeight * yScaleFactor)
             presentingView.clipsToBounds = true
         }
         
@@ -97,7 +98,7 @@ extension PopVCAnimator: UIViewControllerAnimatedTransitioning {
         let translation = CATransform3DMakeTranslation(-(frame.minX + 100),
                                                        -(frame.minY + 100),
                                                        0)
-        let scaledValue = CATransform3DScale(translation, 6, 6, 1)
+        let scaledValue = CATransform3DScale(translation, 10, 10, 1)
         animation.fromValue = presenting ? CATransform3DIdentity : scaledValue
         animation.toValue = presenting ? scaledValue : CATransform3DIdentity
         animation.isRemovedOnCompletion = false
