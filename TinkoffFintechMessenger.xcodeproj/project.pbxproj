@@ -22,7 +22,8 @@
 		722119F42565C34A00EBE32B /* NetworkImageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722119F32565C34A00EBE32B /* NetworkImageCellModel.swift */; };
 		722EB0592549D42500C37106 /* Channel_db+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722EB0582549D42500C37106 /* Channel_db+Init.swift */; };
 		722EB05B2549D66300C37106 /* Message_db+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722EB05A2549D66300C37106 /* Message_db+Init.swift */; };
-		72377D4B256D81B8003DB019 /* PopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72377D4A256D81B8003DB019 /* PopAnimator.swift */; };
+		72377D4B256D81B8003DB019 /* PopVCAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72377D4A256D81B8003DB019 /* PopVCAnimator.swift */; };
+		72377D4D256D86A0003DB019 /* IViewControllerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72377D4C256D86A0003DB019 /* IViewControllerAnimator.swift */; };
 		723E18A82557165900085D21 /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E18A72557165900085D21 /* RootAssembly.swift */; };
 		723E18AA2557167D00085D21 /* IPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E18A92557167D00085D21 /* IPresentationAssembly.swift */; };
 		723E18AC2557169F00085D21 /* IServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E18AB2557169F00085D21 /* IServicesAssembly.swift */; };
@@ -58,6 +59,7 @@
 		7276ABF7250E67520017245A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7276ABF6250E67520017245A /* Assets.xcassets */; };
 		7276ABFA250E67520017245A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7276ABF8250E67520017245A /* LaunchScreen.storyboard */; };
 		7276AC05250E81DF0017245A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276AC04250E81DF0017245A /* Logger.swift */; };
+		727AD2AE256F83D500C1BFE2 /* IPopAnimatableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727AD2AD256F83D500C1BFE2 /* IPopAnimatableViewController.swift */; };
 		72924C352558444D008944E8 /* IUserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72924C342558444D008944E8 /* IUserDataProvider.swift */; };
 		72924C3C25584DE1008944E8 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72924C3B25584DE1008944E8 /* DataManager.swift */; };
 		72924C4025588997008944E8 /* ICoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72924C3F25588997008944E8 /* ICoreDataManager.swift */; };
@@ -127,7 +129,8 @@
 		722119F32565C34A00EBE32B /* NetworkImageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkImageCellModel.swift; sourceTree = "<group>"; };
 		722EB0582549D42500C37106 /* Channel_db+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Channel_db+Init.swift"; sourceTree = "<group>"; };
 		722EB05A2549D66300C37106 /* Message_db+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message_db+Init.swift"; sourceTree = "<group>"; };
-		72377D4A256D81B8003DB019 /* PopAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopAnimator.swift; sourceTree = "<group>"; };
+		72377D4A256D81B8003DB019 /* PopVCAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopVCAnimator.swift; sourceTree = "<group>"; };
+		72377D4C256D86A0003DB019 /* IViewControllerAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IViewControllerAnimator.swift; sourceTree = "<group>"; };
 		723E18A72557165900085D21 /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
 		723E18A92557167D00085D21 /* IPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPresentationAssembly.swift; sourceTree = "<group>"; };
 		723E18AB2557169F00085D21 /* IServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IServicesAssembly.swift; sourceTree = "<group>"; };
@@ -166,6 +169,7 @@
 		7276ABF9250E67520017245A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7276ABFB250E67520017245A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7276AC04250E81DF0017245A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		727AD2AD256F83D500C1BFE2 /* IPopAnimatableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPopAnimatableViewController.swift; sourceTree = "<group>"; };
 		72924C342558444D008944E8 /* IUserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IUserDataProvider.swift; sourceTree = "<group>"; };
 		72924C3B25584DE1008944E8 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		72924C3F25588997008944E8 /* ICoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICoreDataManager.swift; sourceTree = "<group>"; };
@@ -277,7 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				72579443256B05DD00B56656 /* ShakeViewAnimator.swift */,
-				72377D4A256D81B8003DB019 /* PopAnimator.swift */,
+				72377D4A256D81B8003DB019 /* PopVCAnimator.swift */,
 			);
 			path = Animators;
 			sourceTree = "<group>";
@@ -525,6 +529,8 @@
 			children = (
 				72EAD715251DD0A5003DC6E4 /* IConfigurableView.swift */,
 				72579445256B084E00B56656 /* IViewAnimator.swift */,
+				72377D4C256D86A0003DB019 /* IViewControllerAnimator.swift */,
+				727AD2AD256F83D500C1BFE2 /* IPopAnimatableViewController.swift */,
 			);
 			path = Contracts;
 			sourceTree = "<group>";
@@ -883,6 +889,7 @@
 				7293C6E32537624E0081BA1C /* Constants.swift in Sources */,
 				72EFC8F3255DB666004D128A /* ThemeModel.swift in Sources */,
 				72EFC8F7255DC073004D128A /* ConversationsListTableViewDelegate.swift in Sources */,
+				727AD2AE256F83D500C1BFE2 /* IPopAnimatableViewController.swift in Sources */,
 				72A175852534E2AC00D4D81D /* ImagePickerDelegate.swift in Sources */,
 				72924C352558444D008944E8 /* IUserDataProvider.swift in Sources */,
 				72579446256B084E00B56656 /* IViewAnimator.swift in Sources */,
@@ -951,11 +958,12 @@
 				72202ACB2566F770006B4BBA /* IImagesService.swift in Sources */,
 				72FF172D2521DC6B00B60547 /* IConversationsDataProvider.swift in Sources */,
 				72202ACF2566F925006B4BBA /* DataParser.swift in Sources */,
+				72377D4D256D86A0003DB019 /* IViewControllerAnimator.swift in Sources */,
 				725B0F6C2566CDFF00B718E0 /* PixabayImage.swift in Sources */,
 				7276ABEE250E67510017245A /* AppDelegate.swift in Sources */,
 				72EAD716251DD0A5003DC6E4 /* IConfigurableView.swift in Sources */,
 				72EFC8ED255DB321004D128A /* ConversationModel.swift in Sources */,
-				72377D4B256D81B8003DB019 /* PopAnimator.swift in Sources */,
+				72377D4B256D81B8003DB019 /* PopVCAnimator.swift in Sources */,
 				725B0F6425663CA000B718E0 /* IRequest.swift in Sources */,
 				722119F22565655200EBE32B /* NetworkImageCell.swift in Sources */,
 				7293C6E92537A38A0081BA1C /* UIImage+Comparer.swift in Sources */,

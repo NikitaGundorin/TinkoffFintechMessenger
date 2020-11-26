@@ -18,9 +18,11 @@ final class ProfileViewController: UIViewController {
     var profileDataUpdatedHandler: (() -> Void)?
     var gcdDataProvider: IUserDataProvider?
     var operationDataProvider: IUserDataProvider?
+    var initialImage: UIImage?
     
     // MARK: - IBOutlets
     
+    @IBOutlet private weak var profileImageContainerView: UIView!
     @IBOutlet private weak var profileImageView: ProfileImageView!
     @IBOutlet private weak var profileImageEditButton: UIButton!
     @IBOutlet private weak var gcdSaveButton: UIButton!
@@ -76,6 +78,7 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setInitialImage()
         loadData()
     }
     
@@ -130,6 +133,12 @@ final class ProfileViewController: UIViewController {
     }
     
     // MARK: - Private methods
+    
+    private func setInitialImage() {
+        if let image = initialImage, profileImageView.profileImage == nil {
+            profileImageView.configure(with: .init(initials: "", image: image))
+        }
+    }
     
     private func loadData() {
         activityIndicator.startAnimating()
@@ -339,5 +348,11 @@ final class ProfileViewController: UIViewController {
         }
         userNameTextView.isUserInteractionEnabled.toggle()
         userDescriptionTextView.isUserInteractionEnabled.toggle()
+    }
+}
+
+extension ProfileViewController: IPopAnimatableViewController {
+    var containerView: UIView {
+        profileImageContainerView
     }
 }

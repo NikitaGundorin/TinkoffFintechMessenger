@@ -46,10 +46,12 @@ class PresentationAssembly: IPresentationAssembly {
         return conversationViewController
     }
     
-    func profileViewController(profileDataUpdatedHandler: @escaping () -> Void) -> ProfileViewController {
+    func profileViewController(initialImage: UIImage?,
+                               profileDataUpdatedHandler: @escaping () -> Void) -> ProfileViewController {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
         if let profileViewController = storyboard.instantiateInitialViewController() as? ProfileViewController {
             profileViewController.presentationAssembly = self
+            profileViewController.initialImage = initialImage
             profileViewController.profileDataUpdatedHandler = profileDataUpdatedHandler
             profileViewController.gcdDataProvider = serviceAssembly.gcdUserDataProvider()
             profileViewController.operationDataProvider = serviceAssembly.operationUserDataProvider()
