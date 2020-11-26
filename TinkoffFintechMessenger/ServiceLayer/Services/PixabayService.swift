@@ -21,7 +21,7 @@ class PixabayService: IImagesService {
     }
     
     func getImagesUrls(completion: @escaping (Result<[ImageModel], PixabayServiceError>) -> Void) {
-        let request = RequestFabric.getImagesRequest(forQuery: "animals")
+        let request = RequestFactory.getImagesRequest(forQuery: "animals")
         networkManager.makeRequest(request,
                                    session: URLSession.shared) { result in
                                     switch result {
@@ -37,7 +37,7 @@ class PixabayService: IImagesService {
     }
     
     func getImageData(byUrl url: URL, completion: @escaping (Result<Data, PixabayServiceError>) -> Void) {
-        let request = RequestFabric.getImageDataRequest(forUrl: url)
+        let request = RequestFactory.getImageDataRequest(forUrl: url)
         networkManager.makeRequest(request,
                                    session: URLSession.shared) { result in
                                     switch result {

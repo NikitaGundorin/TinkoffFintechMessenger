@@ -10,7 +10,7 @@
 		57519E203F217CD03346D6B4 /* Pods_TinkoffFintechMessenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A375116B19233D65668473 /* Pods_TinkoffFintechMessenger.framework */; };
 		6DD805D5251151910070594D /* UIViewController+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD805D4251151910070594D /* UIViewController+State.swift */; };
 		72202AC52566F111006B4BBA /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72202AC42566F111006B4BBA /* Request.swift */; };
-		72202AC72566F165006B4BBA /* RequestFabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72202AC62566F165006B4BBA /* RequestFabric.swift */; };
+		72202AC72566F165006B4BBA /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72202AC62566F165006B4BBA /* RequestFactory.swift */; };
 		72202AC92566F51E006B4BBA /* INetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72202AC82566F51E006B4BBA /* INetworkManager.swift */; };
 		72202ACB2566F770006B4BBA /* IImagesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72202ACA2566F770006B4BBA /* IImagesService.swift */; };
 		72202ACD2566F7F6006B4BBA /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72202ACC2566F7F6006B4BBA /* ImageModel.swift */; };
@@ -117,7 +117,7 @@
 		6DD805D4251151910070594D /* UIViewController+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+State.swift"; sourceTree = "<group>"; };
 		6F5C6EBCC32D1CACA43E7F81 /* Pods-TinkoffFintechMessenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffFintechMessenger.release.xcconfig"; path = "Target Support Files/Pods-TinkoffFintechMessenger/Pods-TinkoffFintechMessenger.release.xcconfig"; sourceTree = "<group>"; };
 		72202AC42566F111006B4BBA /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		72202AC62566F165006B4BBA /* RequestFabric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFabric.swift; sourceTree = "<group>"; };
+		72202AC62566F165006B4BBA /* RequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
 		72202AC82566F51E006B4BBA /* INetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INetworkManager.swift; sourceTree = "<group>"; };
 		72202ACA2566F770006B4BBA /* IImagesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IImagesService.swift; sourceTree = "<group>"; };
 		72202ACC2566F7F6006B4BBA /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
@@ -474,7 +474,6 @@
 			children = (
 				725B0F6325663CA000B718E0 /* IRequest.swift */,
 				72202AC42566F111006B4BBA /* Request.swift */,
-				72202AC62566F165006B4BBA /* RequestFabric.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -699,6 +698,7 @@
 				72EFC8DD255C8EE3004D128A /* MessagesRepository.swift */,
 				72EFC8E8255DA900004D128A /* LoggerService.swift */,
 				725B0F652566BB6900B718E0 /* PixabayService.swift */,
+				72202AC62566F165006B4BBA /* RequestFactory.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -971,7 +971,7 @@
 				72DAD5FF250F4489008C8762 /* UIApplication.State+description.swift in Sources */,
 				722119EC2565630000EBE32B /* NetworkImagesViewController.swift in Sources */,
 				72AF92C8252934DB00335DF4 /* BaseNavigationController.swift in Sources */,
-				72202AC72566F165006B4BBA /* RequestFabric.swift in Sources */,
+				72202AC72566F165006B4BBA /* RequestFactory.swift in Sources */,
 				7256E6BA2527821F00DA0608 /* Theme.swift in Sources */,
 				7240BEF7253B469A00C00BB9 /* FirestoreDataProvider.swift in Sources */,
 				722119EE2565639B00EBE32B /* NetworkImagesColelctionViewDataSource.swift in Sources */,

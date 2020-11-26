@@ -1,5 +1,5 @@
 //
-//  RequestFabric.swift
+//  RequestFactory.swift
 //  TinkoffFintechMessenger
 //
 //  Created by Nikita Gundorin on 19.11.2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RequestFabric {
+class RequestFactory {
     private static let baseUrl = "https://pixabay.com/api/"
     private static var apiKey: String? {
         Bundle.main.object(forInfoDictionaryKey: "PixabayAPIKey") as? String
