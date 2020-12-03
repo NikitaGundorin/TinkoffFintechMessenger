@@ -22,6 +22,12 @@
 		722119F42565C34A00EBE32B /* NetworkImageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722119F32565C34A00EBE32B /* NetworkImageCellModel.swift */; };
 		722EB0592549D42500C37106 /* Channel_db+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722EB0582549D42500C37106 /* Channel_db+Init.swift */; };
 		722EB05B2549D66300C37106 /* Message_db+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722EB05A2549D66300C37106 /* Message_db+Init.swift */; };
+		72331E5C2576AC3B006F14C0 /* GCDDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72331E5B2576AC3B006F14C0 /* GCDDataManagerTests.swift */; };
+		72331E642576ADBB006F14C0 /* DataManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72331E632576ADBB006F14C0 /* DataManagerMock.swift */; };
+		72331E692577E9B9006F14C0 /* FirestoreDataProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72331E682577E9B9006F14C0 /* FirestoreDataProviderTests.swift */; };
+		72331E6F2577EA7D006F14C0 /* UserDataProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72331E6E2577EA7D006F14C0 /* UserDataProviderMock.swift */; };
+		72331E712577EC04006F14C0 /* ConversationNetworkManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72331E702577EC04006F14C0 /* ConversationNetworkManagerMock.swift */; };
+		72331E732577EE61006F14C0 /* CoreDataManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72331E722577EE61006F14C0 /* CoreDataManagerMock.swift */; };
 		72377D4B256D81B8003DB019 /* PopVCAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72377D4A256D81B8003DB019 /* PopVCAnimator.swift */; };
 		72377D4D256D86A0003DB019 /* IViewControllerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72377D4C256D86A0003DB019 /* IViewControllerAnimator.swift */; };
 		723E18A82557165900085D21 /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E18A72557165900085D21 /* RootAssembly.swift */; };
@@ -112,13 +118,27 @@
 		72F79DD72545E2E500F4E6AC /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 72F79DD52545E2E500F4E6AC /* Chat.xcdatamodeld */; };
 		72FEC2F7254F62CA0006D8EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7240BEEC253B28CA00C00BB9 /* GoogleService-Info.plist */; };
 		72FF172D2521DC6B00B60547 /* IConversationsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FF172C2521DC6B00B60547 /* IConversationsDataProvider.swift */; };
+		BC78D14696444B4430C1D3BC /* Pods_MessengerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F8827AE05ED237709E987B1 /* Pods_MessengerTests.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		72331E5E2576AC3B006F14C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7276ABE2250E67510017245A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7276ABE9250E67510017245A;
+			remoteInfo = TinkoffFintechMessenger;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		0622A5317C62B6E7D4A5457C /* Pods-MessengerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessengerTests.debug.xcconfig"; path = "Target Support Files/Pods-MessengerTests/Pods-MessengerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1FD8756D697DB36E462A9513 /* Pods-MessengerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessengerTests.release.xcconfig"; path = "Target Support Files/Pods-MessengerTests/Pods-MessengerTests.release.xcconfig"; sourceTree = "<group>"; };
 		23A375116B19233D65668473 /* Pods_TinkoffFintechMessenger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinkoffFintechMessenger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5786F2FF9963D4A506F1D523 /* Pods-TinkoffFintechMessenger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffFintechMessenger.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffFintechMessenger/Pods-TinkoffFintechMessenger.debug.xcconfig"; sourceTree = "<group>"; };
 		6DD805D4251151910070594D /* UIViewController+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+State.swift"; sourceTree = "<group>"; };
 		6F5C6EBCC32D1CACA43E7F81 /* Pods-TinkoffFintechMessenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffFintechMessenger.release.xcconfig"; path = "Target Support Files/Pods-TinkoffFintechMessenger/Pods-TinkoffFintechMessenger.release.xcconfig"; sourceTree = "<group>"; };
+		6F8827AE05ED237709E987B1 /* Pods_MessengerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MessengerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		72202AC42566F111006B4BBA /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		72202AC62566F165006B4BBA /* RequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
 		72202AC82566F51E006B4BBA /* INetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INetworkManager.swift; sourceTree = "<group>"; };
@@ -132,6 +152,14 @@
 		722119F32565C34A00EBE32B /* NetworkImageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkImageCellModel.swift; sourceTree = "<group>"; };
 		722EB0582549D42500C37106 /* Channel_db+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Channel_db+Init.swift"; sourceTree = "<group>"; };
 		722EB05A2549D66300C37106 /* Message_db+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message_db+Init.swift"; sourceTree = "<group>"; };
+		72331E592576AC3B006F14C0 /* MessengerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessengerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		72331E5B2576AC3B006F14C0 /* GCDDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManagerTests.swift; sourceTree = "<group>"; };
+		72331E5D2576AC3B006F14C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		72331E632576ADBB006F14C0 /* DataManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerMock.swift; sourceTree = "<group>"; };
+		72331E682577E9B9006F14C0 /* FirestoreDataProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreDataProviderTests.swift; sourceTree = "<group>"; };
+		72331E6E2577EA7D006F14C0 /* UserDataProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataProviderMock.swift; sourceTree = "<group>"; };
+		72331E702577EC04006F14C0 /* ConversationNetworkManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationNetworkManagerMock.swift; sourceTree = "<group>"; };
+		72331E722577EE61006F14C0 /* CoreDataManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerMock.swift; sourceTree = "<group>"; };
 		72377D4A256D81B8003DB019 /* PopVCAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopVCAnimator.swift; sourceTree = "<group>"; };
 		72377D4C256D86A0003DB019 /* IViewControllerAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IViewControllerAnimator.swift; sourceTree = "<group>"; };
 		723E18A72557165900085D21 /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
@@ -227,6 +255,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		72331E562576AC3B006F14C0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC78D14696444B4430C1D3BC /* Pods_MessengerTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7276ABE7250E67510017245A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -281,6 +317,52 @@
 				722EB05A2549D66300C37106 /* Message_db+Init.swift */,
 			);
 			path = ObjectsExtensions;
+			sourceTree = "<group>";
+		};
+		72331E5A2576AC3B006F14C0 /* MessengerTests */ = {
+			isa = PBXGroup;
+			children = (
+				72331E6A2577E9E6006F14C0 /* ServiceLayerTests */,
+				72331E5D2576AC3B006F14C0 /* Info.plist */,
+				72331E6B2577E9EE006F14C0 /* Mocks */,
+			);
+			path = MessengerTests;
+			sourceTree = "<group>";
+		};
+		72331E6A2577E9E6006F14C0 /* ServiceLayerTests */ = {
+			isa = PBXGroup;
+			children = (
+				72331E5B2576AC3B006F14C0 /* GCDDataManagerTests.swift */,
+				72331E682577E9B9006F14C0 /* FirestoreDataProviderTests.swift */,
+			);
+			path = ServiceLayerTests;
+			sourceTree = "<group>";
+		};
+		72331E6B2577E9EE006F14C0 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				72331E6D2577EA5C006F14C0 /* ServiceLayerMocks */,
+				72331E6C2577E9FD006F14C0 /* CoreLayerMocks */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		72331E6C2577E9FD006F14C0 /* CoreLayerMocks */ = {
+			isa = PBXGroup;
+			children = (
+				72331E632576ADBB006F14C0 /* DataManagerMock.swift */,
+				72331E702577EC04006F14C0 /* ConversationNetworkManagerMock.swift */,
+				72331E722577EE61006F14C0 /* CoreDataManagerMock.swift */,
+			);
+			path = CoreLayerMocks;
+			sourceTree = "<group>";
+		};
+		72331E6D2577EA5C006F14C0 /* ServiceLayerMocks */ = {
+			isa = PBXGroup;
+			children = (
+				72331E6E2577EA7D006F14C0 /* UserDataProviderMock.swift */,
+			);
+			path = ServiceLayerMocks;
 			sourceTree = "<group>";
 		};
 		72377D49256D7ECC003DB019 /* Animators */ = {
@@ -491,6 +573,7 @@
 			children = (
 				7276ABEC250E67510017245A /* TinkoffFintechMessenger */,
 				7240BEEA253B28A200C00BB9 /* .swiftlint.yml */,
+				72331E5A2576AC3B006F14C0 /* MessengerTests */,
 				7276ABEB250E67510017245A /* Products */,
 				9C3E90073EAF3239864F9EC3 /* Pods */,
 				A46A0D01D1F2CC60CB3C3D79 /* Frameworks */,
@@ -501,6 +584,7 @@
 			isa = PBXGroup;
 			children = (
 				7276ABEA250E67510017245A /* Messenger.app */,
+				72331E592576AC3B006F14C0 /* MessengerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -741,6 +825,8 @@
 			children = (
 				5786F2FF9963D4A506F1D523 /* Pods-TinkoffFintechMessenger.debug.xcconfig */,
 				6F5C6EBCC32D1CACA43E7F81 /* Pods-TinkoffFintechMessenger.release.xcconfig */,
+				0622A5317C62B6E7D4A5457C /* Pods-MessengerTests.debug.xcconfig */,
+				1FD8756D697DB36E462A9513 /* Pods-MessengerTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -749,6 +835,7 @@
 			isa = PBXGroup;
 			children = (
 				23A375116B19233D65668473 /* Pods_TinkoffFintechMessenger.framework */,
+				6F8827AE05ED237709E987B1 /* Pods_MessengerTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -756,6 +843,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		72331E582576AC3B006F14C0 /* MessengerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 72331E622576AC3B006F14C0 /* Build configuration list for PBXNativeTarget "MessengerTests" */;
+			buildPhases = (
+				3F81246C4DB3A8AEC939781D /* [CP] Check Pods Manifest.lock */,
+				72331E552576AC3B006F14C0 /* Sources */,
+				72331E562576AC3B006F14C0 /* Frameworks */,
+				72331E572576AC3B006F14C0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				72331E5F2576AC3B006F14C0 /* PBXTargetDependency */,
+			);
+			name = MessengerTests;
+			productName = MessengerTests;
+			productReference = 72331E592576AC3B006F14C0 /* MessengerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		7276ABE9250E67510017245A /* TinkoffFintechMessenger */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7276ABFE250E67520017245A /* Build configuration list for PBXNativeTarget "TinkoffFintechMessenger" */;
@@ -786,6 +892,10 @@
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Nikita Gundorin";
 				TargetAttributes = {
+					72331E582576AC3B006F14C0 = {
+						CreatedOnToolsVersion = 11.7;
+						TestTargetID = 7276ABE9250E67510017245A;
+					};
 					7276ABE9250E67510017245A = {
 						CreatedOnToolsVersion = 11.7;
 					};
@@ -805,11 +915,19 @@
 			projectRoot = "";
 			targets = (
 				7276ABE9250E67510017245A /* TinkoffFintechMessenger */,
+				72331E582576AC3B006F14C0 /* MessengerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		72331E572576AC3B006F14C0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7276ABE8250E67510017245A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -825,6 +943,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3F81246C4DB3A8AEC939781D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MessengerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		62EE1EA9E617A3733754E069 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -884,6 +1024,19 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		72331E552576AC3B006F14C0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				72331E5C2576AC3B006F14C0 /* GCDDataManagerTests.swift in Sources */,
+				72331E712577EC04006F14C0 /* ConversationNetworkManagerMock.swift in Sources */,
+				72331E692577E9B9006F14C0 /* FirestoreDataProviderTests.swift in Sources */,
+				72331E642576ADBB006F14C0 /* DataManagerMock.swift in Sources */,
+				72331E732577EE61006F14C0 /* CoreDataManagerMock.swift in Sources */,
+				72331E6F2577EA7D006F14C0 /* UserDataProviderMock.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7276ABE6250E67510017245A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -992,6 +1145,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		72331E5F2576AC3B006F14C0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7276ABE9250E67510017245A /* TinkoffFintechMessenger */;
+			targetProxy = 72331E5E2576AC3B006F14C0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		7276ABF3250E67510017245A /* Profile.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -1012,6 +1173,48 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		72331E602576AC3B006F14C0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0622A5317C62B6E7D4A5457C /* Pods-MessengerTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = MessengerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = nikitagundorin.MessengerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Messenger.app/Messenger";
+			};
+			name = Debug;
+		};
+		72331E612576AC3B006F14C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FD8756D697DB36E462A9513 /* Pods-MessengerTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = MessengerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = nikitagundorin.MessengerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Messenger.app/Messenger";
+			};
+			name = Release;
+		};
 		7276ABFC250E67520017245A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1171,6 +1374,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		72331E622576AC3B006F14C0 /* Build configuration list for PBXNativeTarget "MessengerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				72331E602576AC3B006F14C0 /* Debug */,
+				72331E612576AC3B006F14C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		7276ABE5250E67510017245A /* Build configuration list for PBXProject "TinkoffFintechMessenger" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

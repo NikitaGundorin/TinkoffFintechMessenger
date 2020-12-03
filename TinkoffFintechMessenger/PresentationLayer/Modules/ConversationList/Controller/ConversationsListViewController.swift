@@ -74,12 +74,6 @@ final class ConversationsListViewController: UIViewController {
         tableView.reloadData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-//        presentProfileViewController()
-    }
-    
     // MARK: - Private methods
     
     private func setupLayout() {

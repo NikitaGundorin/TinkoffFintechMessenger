@@ -42,10 +42,7 @@ class FirestoreDataProvider: IConversationsDataProvider {
             
             self?.networkManager.subscribeChannels { changes, error in
                 guard let changes = changes else {
-                    if let error = error {
-                        return completion(error)
-                    }
-                    return
+                    return completion(error)
                 }
                 
                 self?.handleChannelsChanges(changes)
@@ -81,10 +78,7 @@ class FirestoreDataProvider: IConversationsDataProvider {
                 
                 self?.networkManager.subscribeMessages(forChannelWithId: channelId) { changes, error in
                     guard let changes = changes else {
-                        if let error = error {
-                            return completion(error)
-                        }
-                        return
+                        return completion(error)
                     }
                     
                     self?.handleMessagesChanges(changes, channelId: channelId)
