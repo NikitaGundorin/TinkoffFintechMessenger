@@ -100,6 +100,7 @@ final class ConversationsListViewController: UIViewController {
         ])
         
         let rightBarButton = UIBarButtonItem(customView: rightBarButtonView)
+        rightBarButtonView.accessibilityIdentifier = "profileImageView"
         navigationItem.rightBarButtonItem = rightBarButton
         
         let leftBarButtonItem = UIBarButtonItem(image: Appearance.settingsIcon,

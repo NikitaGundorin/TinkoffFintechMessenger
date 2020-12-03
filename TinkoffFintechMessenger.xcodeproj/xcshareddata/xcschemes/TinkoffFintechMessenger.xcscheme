@@ -38,6 +38,16 @@
                ReferencedContainer = "container:TinkoffFintechMessenger.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7204A2182578F9740081061A"
+               BuildableName = "MessengerUITests.xctest"
+               BlueprintName = "MessengerUITests"
+               ReferencedContainer = "container:TinkoffFintechMessenger.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
