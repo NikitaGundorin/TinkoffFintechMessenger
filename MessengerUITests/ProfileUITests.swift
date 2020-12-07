@@ -21,7 +21,7 @@ class ProfileUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
         
-        app.otherElements["profileImageView"].tap()
+        app.navigationBars.buttons["profileImageView"].tap()
         XCTAssertTrue(app.textViews["userDescription"].exists)
         XCTAssertTrue(app.textViews["userName"].exists)
     }

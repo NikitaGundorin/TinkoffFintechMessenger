@@ -83,7 +83,7 @@ final class ConversationsListViewController: UIViewController {
         
         profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                      action: #selector(presentProfileViewController)))
-        let rightBarButtonView = UIView()
+        let rightBarButtonView = UIButton()
         rightBarButtonView.addSubview(profileImageView)
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         
