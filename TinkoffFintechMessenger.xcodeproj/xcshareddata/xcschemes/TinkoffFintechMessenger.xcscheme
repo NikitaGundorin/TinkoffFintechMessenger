@@ -28,6 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "72331E582576AC3B006F14C0"
+               BuildableName = "MessengerTests.xctest"
+               BlueprintName = "MessengerTests"
+               ReferencedContainer = "container:TinkoffFintechMessenger.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7204A2182578F9740081061A"
+               BuildableName = "MessengerUITests.xctest"
+               BlueprintName = "MessengerUITests"
+               ReferencedContainer = "container:TinkoffFintechMessenger.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

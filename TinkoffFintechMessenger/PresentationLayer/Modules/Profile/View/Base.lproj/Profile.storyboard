@@ -46,6 +46,7 @@
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="kGL-SG-wYc">
                                 <rect key="frame" x="120.66666666666667" y="396.66666666666669" width="133.66666666666663" height="54.333333333333314"/>
+                                <accessibility key="accessibilityConfiguration" identifier="userDescription"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" id="1wV-XL-x7j"/>
                                 </constraints>
@@ -66,6 +67,7 @@ Saint-Petersburg</string>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" text="Nikita Gundorin" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ST7-Tt-Ll3">
                                 <rect key="frame" x="95.666666666666686" y="336" width="184" height="44.666666666666686"/>
+                                <accessibility key="accessibilityConfiguration" identifier="userName"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" id="TPU-ac-uYR"/>
                                 </constraints>

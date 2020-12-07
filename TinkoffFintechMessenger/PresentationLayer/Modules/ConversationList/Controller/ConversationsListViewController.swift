@@ -74,12 +74,6 @@ final class ConversationsListViewController: UIViewController {
         tableView.reloadData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-//        presentProfileViewController()
-    }
-    
     // MARK: - Private methods
     
     private func setupLayout() {
@@ -89,7 +83,7 @@ final class ConversationsListViewController: UIViewController {
         
         profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                      action: #selector(presentProfileViewController)))
-        let rightBarButtonView = UIView()
+        let rightBarButtonView = UIButton()
         rightBarButtonView.addSubview(profileImageView)
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -106,6 +100,7 @@ final class ConversationsListViewController: UIViewController {
         ])
         
         let rightBarButton = UIBarButtonItem(customView: rightBarButtonView)
+        rightBarButtonView.accessibilityIdentifier = "profileImageView"
         navigationItem.rightBarButtonItem = rightBarButton
         
         let leftBarButtonItem = UIBarButtonItem(image: Appearance.settingsIcon,
