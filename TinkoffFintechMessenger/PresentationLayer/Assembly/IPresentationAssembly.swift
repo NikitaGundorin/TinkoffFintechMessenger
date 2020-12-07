@@ -12,7 +12,8 @@ protocol IPresentationAssembly {
     func baseNavigationViewController(rootViewController: UIViewController) -> BaseNavigationController
     func conversationsListViewController() -> ConversationsListViewController
     func conversationViewController(conversationModel: ConversationModel, userId: String) -> ConversationViewController
-    func profileViewController(profileDataUpdatedHandler: @escaping () -> Void) -> ProfileViewController
+    func profileViewController(initialImage: UIImage?,
+                               profileDataUpdatedHandler: @escaping () -> Void) -> ProfileViewController
     func themesViewController() -> ThemesViewController
     func createChannelAlertController(title: String?, message: String?) -> CreateChannelAlertController
     func networkImagesViewController(imageSelectedBlock: @escaping (UIImage) -> Void) -> NetworkImagesViewController

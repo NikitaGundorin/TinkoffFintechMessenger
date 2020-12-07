@@ -13,7 +13,6 @@ class NetworkManager: INetworkManager {
     func makeRequest<Request>(_ request: Request,
                               session: URLSession,
                               completion: @escaping (Result<Request.Parser.Model, NetworkError>) -> Void) where Request: IRequest {
-        print("MAKE REQUEST FOR URL: \(request.url?.absoluteString ?? "")")
         guard let url = request.url else {
             return completion(.failure(.invalidUrl))
         }

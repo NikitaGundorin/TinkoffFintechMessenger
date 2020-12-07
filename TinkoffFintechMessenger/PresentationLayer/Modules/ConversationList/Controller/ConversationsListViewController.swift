@@ -44,6 +44,7 @@ final class ConversationsListViewController: UIViewController {
     var userId: String?
     private lazy var tableViewDelegate = ConversationsListTableViewDelegate(viewController: self)
     private lazy var tableViewDataSource = ConversationsListTableViewDataSource(cellId: cellId)
+    private lazy var profileVCAnimator: IViewControllerAnimator = PopVCAnimator()
     
     // MARK: - UI
     
@@ -71,6 +72,12 @@ final class ConversationsListViewController: UIViewController {
         super.viewWillAppear(animated)
         
         tableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+//        presentProfileViewController()
     }
     
     // MARK: - Private methods
@@ -175,10 +182,13 @@ final class ConversationsListViewController: UIViewController {
     
     @objc private func presentProfileViewController() {
         if let profileVC =
-            presentationAssembly?.profileViewController(profileDataUpdatedHandler: { [weak self] in
+            presentationAssembly?.profileViewController(initialImage: profileImageView.profileImage,
+                                                        profileDataUpdatedHandler: { [weak self] in
                 self?.loadUserData()
             }),
             let navigationController = presentationAssembly?.baseNavigationViewController(rootViewController: profileVC) {
+            navigationController.transitioningDelegate = self
+            navigationController.modalPresentationStyle = .fullScreen
             present(navigationController, animated: true)
         }
     }
@@ -187,5 +197,20 @@ final class ConversationsListViewController: UIViewController {
         if let vc = presentationAssembly?.themesViewController() {
             navigationController?.pushViewController(vc, animated: true)
         }
+    }
+}
+
+extension ConversationsListViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        profileVCAnimator.originFrame = profileImageView.convert(profileImageView.frame, to: nil)
+        profileVCAnimator.presenting = true
+        return profileVCAnimator
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        profileVCAnimator.presenting = false
+        return profileVCAnimator
     }
 }

@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController =
             rootAssembly.presentationAssembly.baseNavigationViewController(rootViewController: conversationListVC)
         
-        window = UIWindow()
+        window = AnimatedWindow()
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
