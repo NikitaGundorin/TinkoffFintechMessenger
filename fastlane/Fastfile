@@ -1,0 +1,33 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Install dependencies and build app for testing"
+  lane :build_for_testing do
+    cocoapods
+    scan(
+      #clean: true,
+      build_for_testing: true,
+      derived_data_path: "DerivedData/"
+    )
+    discord_notifier(
+      webhook_url: ENV['DISCORD_WEBHOOK_URL'],
+      title: "TFS Messenger",
+      description: "Build for testing finished",
+      image_url:"https://www.meme-arsenal.com/memes/826b7590228e28ce99106b91d354cea3.jpg"
+    )
+  end
+
+  desc "Run tests on built app"
+  lane :run_tests_without_building do
+    scan(
+      derived_data_path: "DerivedData/",
+      test_without_building: true
+    )
+  end
+
+  desc "Run build_for_testing and run_tests_without_building lanes"
+  lane :build_and_run_tests do
+    build_for_testing
+    run_tests_without_building
+  end
+end
