@@ -14,6 +14,11 @@ Install _fastlane_ using
 ```
 or alternatively using `brew install fastlane`
 
+For running send_notification_to_discord you need to install _libsodium_
+```
+brew install libsodium
+```
+
 # Available Actions
 ## iOS
 ### ios build_for_testing
