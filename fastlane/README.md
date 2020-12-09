@@ -26,6 +26,11 @@ Install dependencies and build app for testing
 fastlane ios run_tests_without_building
 ```
 Run tests on built app
+### ios send_notification_to_discord
+```
+fastlane ios send_notification_to_discord
+```
+Send notification to Discord
 ### ios build_and_run_tests
 ```
 fastlane ios build_and_run_tests

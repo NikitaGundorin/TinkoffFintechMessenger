@@ -4,5 +4,5 @@ before_install:
   - brew install libsodium
 install:
   - bundle install
-scripto:
+script:
   - bundle exec fastlane build_and_run_tests

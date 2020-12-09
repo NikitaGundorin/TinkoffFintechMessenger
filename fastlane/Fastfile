@@ -1,3 +1,4 @@
+setup_travis
 default_platform(:ios)
 
 platform :ios do
@@ -5,15 +6,9 @@ platform :ios do
   lane :build_for_testing do
     cocoapods
     scan(
-      #clean: true,
+      clean: true,
       build_for_testing: true,
       derived_data_path: "DerivedData/"
-    )
-    discord_notifier(
-      webhook_url: ENV['DISCORD_WEBHOOK_URL'],
-      title: "TFS Messenger",
-      description: "Build for testing finished",
-      image_url:"https://www.meme-arsenal.com/memes/826b7590228e28ce99106b91d354cea3.jpg"
     )
   end
 
@@ -25,9 +20,37 @@ platform :ios do
     )
   end
 
+  desc "Send notification to Discord"
+  lane :send_notification_to_discord do |options|
+    discord_notifier(
+      webhook_url: ENV['DISCORD_WEBHOOK_URL'],
+      title: "TFS Messenger",
+      description: options[:message],
+      image_url: options[:image_url],
+      success: options[:success],
+      fields:[
+        {
+          name: "Author:", 
+          value: "Nikita Gundorin"
+        }
+      ]
+    )
+  end
+
   desc "Run build_for_testing and run_tests_without_building lanes"
   lane :build_and_run_tests do
     build_for_testing
     run_tests_without_building
+    send_notification_to_discord(
+      message: "Build and tests finished.",
+      image_url: "https://www.meme-arsenal.com/memes/01407ddd1273ccc7bca1659d77d8256c.jpg",
+      success: true
+    )
+    rescue
+      send_notification_to_discord(
+        message: "Lane failed: #{$!}",
+        image_url: "https://www.meme-arsenal.com/memes/e74f84f5b2117a75bdd45979cadcad0e.jpg",
+        success: false
+      )
   end
 end
