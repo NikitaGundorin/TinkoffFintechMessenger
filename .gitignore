@@ -13,3 +13,5 @@ Pods/
 **/fastlane/screenshots
 **/fastlane/test_output
 **/fastlane/.env
+
+**/Private.xcconfig
