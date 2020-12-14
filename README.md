@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/NikitaGundorin/TinkoffFintechMessenger.svg?branch=HW-14)](https://travis-ci.org/NikitaGundorin/TinkoffFintechMessenger)
 
-
 # Tinkoff Fintech Messenger
 ## Study project for iOS Tinkoff Fintech School
 Messenger for chatting in channels.

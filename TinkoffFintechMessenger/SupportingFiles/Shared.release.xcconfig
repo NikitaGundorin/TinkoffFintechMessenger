@@ -1,0 +1,10 @@
+//
+//  Shared.release.xcconfig
+//  TinkoffFintechMessenger
+//
+//  Created by Nikita Gundorin on 09.12.2020.
+//  Copyright © 2020 Nikita Gundorin. All rights reserved.
+//
+
+#include "Pods/Target Support Files/Pods-TinkoffFintechMessenger/Pods-TinkoffFintechMessenger.release.xcconfig"
+#include "./Private.xcconfig"
